@@ -2,7 +2,6 @@ import {QueryResultRow, sql} from '@vercel/postgres';
 
 export default async function ping(): Promise<QueryResultRow[] | null> {
     try {
-        // Test query to fetch data from a table, e.g., "users"
         var query = await sql`SELECT * FROM ping`
         return query.rows;
     } catch (error) {
