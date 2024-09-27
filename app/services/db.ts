@@ -1,11 +1,12 @@
-import { Pool } from 'pg';
+import {QueryResultRow, sql} from '@vercel/postgres';
 
-const pool = new Pool({
-    user: process.env.DB_USER,
-    host: 'localhost', // or 'db' if you're using Docker Compose networking
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: Number(process.env.DB_PORT ?? 3000)
-});
-
-export default pool;
+export default async function ping(): Promise<QueryResultRow[] | null> {
+    try {
+        // Test query to fetch data from a table, e.g., "users"
+        var query = await sql`SELECT * FROM ping`
+        return query.rows;
+    } catch (error) {
+        console.error('Error running query:', error);
+        return null;
+    }
+}
