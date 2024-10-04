@@ -18,7 +18,7 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className="bg-white text-gray-600 dark:bg-blue-900 dark:text-white">
+      <body className="bg-white text-gray-700 dark:bg-blue-950 dark:text-white">
         <Header />
         {children}
         <Footer />
