@@ -1,12 +1,12 @@
 'use client';
 
-import Markdown from "../../README.mdx";
+import markdownContent from "../../README.md";
 
 export default function ReadMe(){
-    //TOPDO
+    //TODO: remove dangerously set inner html
     return (
         <div>
-            <Markdown/>
+            <article dangerouslySetInnerHTML={{__html: markdownContent}}/>
         </div>
     )
 }
