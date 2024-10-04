@@ -1,9 +1,12 @@
-import markdown from "../../README.md";
+'use client';
+
+import Markdown from "../../README.mdx";
 
 export default function ReadMe(){
+    //TOPDO
     return (
         <div>
-            <h1>README</h1>
+            <Markdown/>
         </div>
     )
 }
