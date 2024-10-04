@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.9",
+    "@heroicons/react": "^2.1.5",
     "@vercel/postgres": "^0.10.0",
     "dotenv": "^16.4.5",
     "next": "14.2.13",
