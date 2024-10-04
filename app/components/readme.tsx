@@ -1,12 +1,11 @@
 'use client';
 
 import markdownContent from "../../README.md";
-
+import ReactMarkdown from "react-markdown";
 export default function ReadMe(){
-    //TODO: remove dangerously set inner html
     return (
         <div>
-            <article dangerouslySetInnerHTML={{__html: markdownContent}}/>
+            <ReactMarkdown>{markdownContent}</ReactMarkdown>
         </div>
     )
 }
