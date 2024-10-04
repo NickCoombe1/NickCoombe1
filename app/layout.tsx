@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import 'dotenv/config';
+import "dotenv/config";
+import Header from "@/app/components/common/header";
+import Footer from "@/app/components/common/footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,9 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body 
-      >
+      <body>
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
