@@ -6,6 +6,20 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  theme: {
+    extend: {
+      colors: {
+        primary: "white",
+        secondary: "#1F2937",
+      },
+      fontFamily: {
+        serif: ["serif"],
+      },
+      fontSize: {
+        "2xl": "12.5rem",
+      },
+    },
+  },
   plugins: [],
   darkMode: "class",
 };
