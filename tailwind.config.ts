@@ -13,7 +13,7 @@ const config: Config = {
         secondary: "#1F2937",
       },
       fontFamily: {
-        serif: ["serif"],
+        roboto: ["Roboto", "sans-serif"],
       },
       fontSize: {
         "2xl": "12.5rem",
