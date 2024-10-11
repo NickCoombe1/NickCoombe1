@@ -3,6 +3,7 @@ import "./globals.css";
 import "dotenv/config";
 import Header from "@/app/components/common/header";
 import Footer from "@/app/components/common/footer";
+
 export const metadata: Metadata = {
   title: "Nick Coombe",
   description: "Welcome :)",
@@ -20,8 +21,11 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className="bg-white text-gray-700 dark:bg-secondary dark:text-primary">
-        <Header />
-        {children}
+        <div className="max-w-7xl mx-auto p-8">
+          {" "}
+          <Header />
+          <main> {children}</main>
+        </div>
         <Footer />
       </body>
     </html>
