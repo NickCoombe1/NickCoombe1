@@ -1,9 +1,12 @@
 "use client";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import ThemeToggle from "@/app/components/utility/themeToggle";
 import Link from "next/link";
 
-export default function Header() {
+interface HeaderProps {
+  initialTheme: string;
+}
+export default function Header({ initialTheme }: HeaderProps): ReactNode {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const toggleAnimation = () => {
@@ -45,7 +48,7 @@ export default function Header() {
               >
                 <Link href="/about">About</Link>
               </li>
-              <ThemeToggle />
+              <ThemeToggle initialTheme={initialTheme} />
             </ul>
           </div>{" "}
         </div>
