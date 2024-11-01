@@ -44,7 +44,6 @@ export default async function fetchFplData(): Promise<
           scoringData,
           teamData,
         );
-        console.log(picksWithPoints);
         return {
           teamID,
           picks: picksWithPoints,
