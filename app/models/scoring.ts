@@ -4,21 +4,40 @@ export interface PlayerPick {
   is_captain: boolean;
   is_vice_captain: boolean;
   multiplier: number;
+  name: string;
+  points: number;
 }
 
 export interface PlayerData {
   explain: PlayerExplain;
   stats: PlayerStats;
+  web_name: string;
 }
 
+export interface PlayerBootstrapData {
+  web_name: string;
+  id: number;
+}
 export interface PlayerDataResponse {
-  elements: Record<string, PlayerData>;
+  elements: PlayerElements;
 }
 
+type PlayerElements = Record<string, PlayerData>;
+type PlayerBootstrapElements = Record<string, PlayerBootstrapData>;
 export interface FplTeamPicksResponse {
   picks: PlayerPick[];
   entry_history: Record<string, any>;
   subs: any[];
+}
+
+export interface FplBootstrapResponse {
+  element_stats: [];
+  element_types: [];
+  elements: PlayerBootstrapElements;
+  events: [];
+  fixtures: [];
+  settings: [];
+  teams: [];
 }
 
 interface StatExplanation {
