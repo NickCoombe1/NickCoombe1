@@ -1,5 +1,6 @@
 import React from "react";
 import { PlayerPick } from "@/app/models/scoring";
+import { HandThumbDownIcon } from "@heroicons/react/20/solid";
 
 type ScoreBoardProps = {
   picks: PlayerPick[];
@@ -16,11 +17,16 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ picks, teamID }) => {
         {picks.map((pick) => (
           <div
             key={pick.element}
-            className="flex justify-between items-center py-2 border-b"
+            className="flex items-center py-2 border-b justify-center gap-4"
           >
-            <span className="font-medium ">
-              {pick.name} - {pick.element} - {pick.points}
-            </span>
+            <span className="font-medium ">{pick.name}</span>
+            <span className="font-medium ">{pick.points}</span>
+
+            {pick.points <= 0 ? (
+              <HandThumbDownIcon height={20} width={20} />
+            ) : (
+              ""
+            )}
             <span className="text-right font-bold text-lg"></span>
           </div>
         ))}
