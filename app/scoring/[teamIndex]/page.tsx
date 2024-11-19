@@ -3,7 +3,7 @@ import ScoreBoard from "@/app/components/scoring/scoreboard";
 import fetchFplData from "@/app/api/fetchFPL";
 import getGameWeek from "@/app/api/fetchGame";
 import getLeague from "@/app/api/fetchLeague";
-import { LeagueEntry } from "@/app/models/league";
+import { LeagueEntry, Match } from "@/app/models/league";
 
 export default async function ScoringPage({
   params,
@@ -11,10 +11,50 @@ export default async function ScoringPage({
   params: { teamIndex: string };
 }) {
   const leagueID = 90342;
-  const teamIDs = [401955, 406387];
+
+  //move this to user input
+  const teamID = 401955;
+
   const gameweekInfo = await getGameWeek();
-  const leagueInfo = await getLeague(90342);
-  const teamsData = await fetchFplData(gameweekInfo?.current_event!, teamIDs);
+  const leagueInfo = await getLeague(leagueID);
+
+  const currentGameweek = gameweekInfo?.current_event;
+
+  var currentGameweekMatchup: Match | undefined;
+  var teamEntry: LeagueEntry | undefined;
+  var teamsData;
+  var teamIDs: number[] = [];
+
+  if (currentGameweek) {
+    teamEntry = leagueInfo?.league_entries.find(
+      (team) => team.entry_id == teamID,
+    );
+
+    currentGameweekMatchup = leagueInfo?.matches.find(
+      (match) =>
+        match.event == currentGameweek &&
+        (match.league_entry_1 == teamEntry?.id ||
+          match.league_entry_2 == teamEntry?.id),
+    );
+
+    if (currentGameweekMatchup) {
+      let team1ID = leagueInfo?.league_entries.find(
+        (team) => team.id == currentGameweekMatchup?.league_entry_1,
+      )?.entry_id;
+      if (team1ID) {
+        teamIDs.push(team1ID);
+      }
+      let team2ID = leagueInfo?.league_entries.find(
+        (team) => team.id == currentGameweekMatchup?.league_entry_2,
+      )?.entry_id;
+
+      if (team2ID) {
+        teamIDs.push(team2ID);
+      }
+    }
+
+    teamsData = await fetchFplData(currentGameweek, teamIDs);
+  }
 
   const teamIndex = parseInt(params.teamIndex, 10);
   const nextTeamIndex = teamIndex === 0 ? 1 : 0;
@@ -37,14 +77,15 @@ export default async function ScoringPage({
       </div>
       <div className=" mb-4">Gameweek {gameweekInfo?.current_event}</div>
       <div className="min-h-screen gap-16 flex justify-evenly">
-        {teamsData.map((team, index) => (
-          <div
-            key={team.teamID}
-            className={`${teamIndex === index ? "block" : "hidden lg:block"} w-full max-w-md mx-2`}
-          >
-            <ScoreBoard picks={team.picks} team={teams[index]} />
-          </div>
-        ))}
+        {teamsData &&
+          teamsData.map((team, index) => (
+            <div
+              key={team.teamID}
+              className={`${teamIndex === index ? "block" : "hidden lg:block"} w-full max-w-md mx-2`}
+            >
+              <ScoreBoard picks={team.picks} team={teams[index]} />
+            </div>
+          ))}
       </div>{" "}
     </div>
   );
