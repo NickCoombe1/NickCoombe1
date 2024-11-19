@@ -1,4 +1,19 @@
-import { FplBootstrapResponse } from "@/app/models/scoring";
+export interface FplBootstrapResponse {
+  element_stats: [];
+  element_types: [];
+  elements: PlayerBootstrapElements;
+  events: [];
+  fixtures: [];
+  settings: [];
+  teams: [];
+}
+
+export interface PlayerBootstrapData {
+  web_name: string;
+  id: number;
+}
+
+type PlayerBootstrapElements = Record<string, PlayerBootstrapData>;
 
 export async function fetchBootstrapData(): Promise<FplBootstrapResponse> {
   const url = "https://draft.premierleague.com/api/bootstrap-static";

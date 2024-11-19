@@ -1,4 +1,10 @@
-import { PlayerDataResponse } from "@/app/models/scoring";
+import { PlayerData } from "../models/playerData";
+
+type PlayerElements = Record<string, PlayerData>;
+
+export interface PlayerDataResponse {
+  elements: PlayerElements;
+}
 
 export async function fetchScoringData(
   gameweek: number,

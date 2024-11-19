@@ -1,13 +1,8 @@
-import {
-  FplBootstrapResponse,
-  FplTeamPicksResponse,
-  PlayerDataResponse,
-  PlayerPick,
-} from "@/app/models/scoring";
-import { fetchBootstrapData } from "./fetchBootStrap";
-import { fetchScoringData } from "./fetchScoring";
+import { fetchBootstrapData, FplBootstrapResponse } from "./fetchBootStrap";
+import { fetchScoringData, PlayerDataResponse } from "./fetchScoring";
 import { fetchTeamData } from "./fetchTeam";
-
+import { PlayerPick } from "../models/playerPick";
+import { FplTeamPicksResponse } from "../models/fplTeamPicksResponse";
 interface TeamPicks {
   teamID: number;
   picks: PlayerPick[];
