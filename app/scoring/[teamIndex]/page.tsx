@@ -1,6 +1,6 @@
 import React from "react";
 import ScoreBoard from "@/app/components/scoring/scoreboard";
-import fetchFplData from "@/app/api/fetchFPLData";
+import fetchFplData from "@/app/api/fetchFPL";
 import getGameWeek from "@/app/api/fetchGame";
 import getLeague from "@/app/api/fetchLeague";
 
@@ -10,13 +10,14 @@ export default async function ScoringPage({
   params: { teamIndex: string };
 }) {
   const leagueID = 90342;
+
   const gameweekInfo = await getGameWeek();
   const leagueInfo = await getLeague(90342);
-  const [teamsData] = await Promise.all([
-    fetchFplData(gameweekInfo?.current_event!),
-  ]);
+  const teamsData = await fetchFplData(gameweekInfo?.current_event!);
+
   const teamIndex = parseInt(params.teamIndex, 10);
   const nextTeamIndex = teamIndex === 0 ? 1 : 0;
+
   return (
     <div className="min-h-screen flex flex-col gap-2">
       <div className="flex justify-center lg:hidden">
@@ -33,7 +34,7 @@ export default async function ScoringPage({
             key={team.teamID}
             className={`${teamIndex === index ? "block" : "hidden lg:block"} w-full max-w-md mx-2`}
           >
-            <ScoreBoard teamID={team.teamID} picks={team.picks} />
+            <ScoreBoard picks={team.picks} />
           </div>
         ))}
       </div>{" "}

@@ -4,14 +4,13 @@ import { HandThumbDownIcon } from "@heroicons/react/20/solid";
 
 type ScoreBoardProps = {
   picks: PlayerPick[];
-  teamID: number;
 };
 
-export default async function ScoreBoard({ picks, teamID }: ScoreBoardProps) {
+export default async function ScoreBoard({ picks }: ScoreBoardProps) {
   return (
     <div className="p-6 bg-gray-100 dark:bg-blue-300 rounded-lg shadow-lg flex-1">
       <h2 className="text-l font-semibold text-center mb-6">
-        Head-to-Head Scoreboard: {teamID}
+        Head-to-Head Scoreboard:
       </h2>
       <div className="bg-white dark:bg-secondary p-4 rounded-lg shadow-sm">
         {picks.map((pick) => (
