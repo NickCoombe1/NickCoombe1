@@ -56,7 +56,7 @@ export interface Standing {
   total: number;
 }
 
-export interface LeagueData {
+export interface LeagueResponse {
   league: League;
   league_entries: LeagueEntry[];
   matches: Match[];

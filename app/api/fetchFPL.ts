@@ -10,9 +10,8 @@ interface TeamPicks {
 
 export default async function fetchFplData(
   gameweek: number,
+  teamIDs: number[],
 ): Promise<TeamPicks[]> {
-  const teamIDs = [401955, 406387];
-
   try {
     const [bootstrapData, scoringData] = await Promise.all([
       fetchBootstrapData(),

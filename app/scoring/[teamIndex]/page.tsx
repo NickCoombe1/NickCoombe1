@@ -3,6 +3,7 @@ import ScoreBoard from "@/app/components/scoring/scoreboard";
 import fetchFplData from "@/app/api/fetchFPL";
 import getGameWeek from "@/app/api/fetchGame";
 import getLeague from "@/app/api/fetchLeague";
+import { LeagueEntry } from "@/app/models/league";
 
 export default async function ScoringPage({
   params,
@@ -10,13 +11,20 @@ export default async function ScoringPage({
   params: { teamIndex: string };
 }) {
   const leagueID = 90342;
-
+  const teamIDs = [401955, 406387];
   const gameweekInfo = await getGameWeek();
   const leagueInfo = await getLeague(90342);
-  const teamsData = await fetchFplData(gameweekInfo?.current_event!);
+  const teamsData = await fetchFplData(gameweekInfo?.current_event!, teamIDs);
 
   const teamIndex = parseInt(params.teamIndex, 10);
   const nextTeamIndex = teamIndex === 0 ? 1 : 0;
+  const teams: LeagueEntry[] = [];
+  teams.push(
+    leagueInfo?.league_entries.find((team) => team.entry_id === teamIDs[0])!,
+  );
+  teams.push(
+    leagueInfo?.league_entries.find((team) => team.entry_id === teamIDs[1])!,
+  );
 
   return (
     <div className="min-h-screen flex flex-col gap-2">
@@ -34,7 +42,7 @@ export default async function ScoringPage({
             key={team.teamID}
             className={`${teamIndex === index ? "block" : "hidden lg:block"} w-full max-w-md mx-2`}
           >
-            <ScoreBoard picks={team.picks} />
+            <ScoreBoard picks={team.picks} team={teams[index]} />
           </div>
         ))}
       </div>{" "}
