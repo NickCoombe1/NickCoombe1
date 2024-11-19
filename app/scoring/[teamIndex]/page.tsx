@@ -2,13 +2,16 @@ import React from "react";
 import ScoreBoard from "@/app/components/scoring/scoreboard";
 import fetchFplData from "@/app/api/fetchFPLData";
 import getGameWeek from "@/app/api/fetchGame";
+import getLeague from "@/app/api/fetchLeague";
 
 export default async function ScoringPage({
   params,
 }: {
   params: { teamIndex: string };
 }) {
+  const leagueID = 90342;
   const gameweekInfo = await getGameWeek();
+  const leagueInfo = await getLeague(90342);
   const [teamsData] = await Promise.all([
     fetchFplData(gameweekInfo?.current_event!),
   ]);
