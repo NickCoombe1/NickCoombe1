@@ -1,12 +1,14 @@
 import React from "react";
 import ScoreBoard from "@/app/components/scoring/scoreboard";
 import fetchFplData from "@/app/api/fetchFPLData";
+import getGameWeek from "@/app/api/fetchGame";
 
 export default async function ScoringPage({
   params,
 }: {
   params: { teamIndex: string };
 }) {
+  const gameweekInfo = await getGameWeek();
   const [teamsData] = await Promise.all([fetchFplData()]);
   const teamIndex = parseInt(params.teamIndex, 10);
   const nextTeamIndex = teamIndex === 0 ? 1 : 0;
@@ -19,6 +21,7 @@ export default async function ScoringPage({
           </span>
         </button>
       </div>
+      <div className=" mb-4">Gameweek {gameweekInfo?.current_event}</div>
       <div className="min-h-screen gap-16 flex justify-evenly">
         {teamsData.map((team, index) => (
           <div

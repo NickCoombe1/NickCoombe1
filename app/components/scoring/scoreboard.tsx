@@ -7,7 +7,7 @@ type ScoreBoardProps = {
   teamID: number;
 };
 
-const ScoreBoard: React.FC<ScoreBoardProps> = ({ picks, teamID }) => {
+export default async function ScoreBoard({ picks, teamID }: ScoreBoardProps) {
   return (
     <div className="p-6 bg-gray-100 dark:bg-blue-300 rounded-lg shadow-lg flex-1">
       <h2 className="text-l font-semibold text-center mb-6">
@@ -33,6 +33,4 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ picks, teamID }) => {
       </div>
     </div>
   );
-};
-
-export default ScoreBoard;
+}
