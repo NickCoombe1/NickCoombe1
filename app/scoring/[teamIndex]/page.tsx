@@ -9,7 +9,9 @@ export default async function ScoringPage({
   params: { teamIndex: string };
 }) {
   const gameweekInfo = await getGameWeek();
-  const [teamsData] = await Promise.all([fetchFplData()]);
+  const [teamsData] = await Promise.all([
+    fetchFplData(gameweekInfo?.current_event!),
+  ]);
   const teamIndex = parseInt(params.teamIndex, 10);
   const nextTeamIndex = teamIndex === 0 ? 1 : 0;
   return (

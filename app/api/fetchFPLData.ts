@@ -5,14 +5,13 @@ import {
   PlayerPick,
 } from "@/app/models/scoring";
 
-export default async function fetchFplData(): Promise<
+export default async function fetchFplData(gameweek: number): Promise<
   {
     teamID: number;
     picks: PlayerPick[];
   }[]
 > {
   const teamIDs = [401955, 406387];
-  const gameweek = 9;
 
   try {
     return await Promise.all(
