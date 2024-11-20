@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-
+import { FplTeamResponse } from "@/app/models/fplTeamResponse";
 export default function WelcomePage() {
   const [teamInput, setTeamInput] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
@@ -37,7 +37,7 @@ export default function WelcomePage() {
 
     document.cookie = `teamID=${teamID}; path=/; max-age=${60 * 60 * 24 * 30}`; // Expires in 30 days
 
-    const data = await fetchLeagueID(Number(teamID));
+    const data: FplTeamResponse = await fetchLeagueID(Number(teamID));
 
     if (data) {
       setTeamData(data);

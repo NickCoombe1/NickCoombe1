@@ -2,8 +2,8 @@ import React from "react";
 import ScoreBoard from "@/app/components/scoring/scoreboard";
 import fetchFplData from "@/app/api/fetchFPL";
 import getGameWeek from "@/app/api/fetchGame";
-import getLeague from "@/app/api/fetchLeague";
 import { LeagueEntry, Match } from "@/app/models/league";
+import { LeagueResponse } from "@/app/models/league";
 
 export default async function ScoringPage({
   params,
@@ -14,7 +14,7 @@ export default async function ScoringPage({
   const teamID = params.teamID;
 
   const gameweekInfo = await getGameWeek();
-  const leagueInfo = await getLeague(leagueID);
+  const leagueInfo: LeagueResponse = await fetchLeagueData(leagueID);
 
   const currentGameweek = gameweekInfo?.current_event;
 
@@ -102,3 +102,14 @@ export default async function ScoringPage({
     </div>
   );
 }
+
+const fetchLeagueData = async (leagueID: number) => {
+  const response = await fetch(
+    //todo move this to env
+    `http://localhost:3000/api/fetchLeagueDetails?leagueID=${leagueID}`,
+  );
+  if (response.ok) {
+    return response.json();
+  }
+  throw new Error("Failed to fetch league data");
+};
