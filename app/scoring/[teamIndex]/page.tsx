@@ -20,10 +20,10 @@ export default async function ScoringPage({
 
   const currentGameweek = gameweekInfo?.current_event;
 
-  var currentGameweekMatchup: Match | undefined;
-  var teamEntry: LeagueEntry | undefined;
-  var teamsData;
-  var teamIDs: number[] = [];
+  let currentGameweekMatchup: Match | undefined;
+  let teamEntry: LeagueEntry | undefined;
+  let teamsData;
+  const teamIDs: number[] = [];
 
   if (currentGameweek) {
     teamEntry = leagueInfo?.league_entries.find(
@@ -38,13 +38,13 @@ export default async function ScoringPage({
     );
 
     if (currentGameweekMatchup) {
-      let team1ID = leagueInfo?.league_entries.find(
+      const team1ID = leagueInfo?.league_entries.find(
         (team) => team.id == currentGameweekMatchup?.league_entry_1,
       )?.entry_id;
       if (team1ID) {
         teamIDs.push(team1ID);
       }
-      let team2ID = leagueInfo?.league_entries.find(
+      const team2ID = leagueInfo?.league_entries.find(
         (team) => team.id == currentGameweekMatchup?.league_entry_2,
       )?.entry_id;
 
@@ -59,12 +59,19 @@ export default async function ScoringPage({
   const teamIndex = parseInt(params.teamIndex, 10);
   const nextTeamIndex = teamIndex === 0 ? 1 : 0;
   const teams: LeagueEntry[] = [];
-  teams.push(
-    leagueInfo?.league_entries.find((team) => team.entry_id === teamIDs[0])!,
+  const team1 = leagueInfo?.league_entries.find(
+    (team) => team.entry_id === teamIDs[0],
   );
-  teams.push(
-    leagueInfo?.league_entries.find((team) => team.entry_id === teamIDs[1])!,
+  const team2 = leagueInfo?.league_entries.find(
+    (team) => team.entry_id === teamIDs[1],
   );
+
+  if (team1) {
+    teams.push(team1);
+  }
+  if (team2) {
+    teams.push(team2);
+  }
 
   return (
     <div className="min-h-screen flex flex-col gap-2">
