@@ -1,4 +1,4 @@
-import { FplTeamPicksResponse } from "@/app/models/scoring";
+import { FplTeamPicksResponse } from "@/app/models/fplTeamPicksResponse";
 
 export async function fetchTeamData(
   teamID: number,
