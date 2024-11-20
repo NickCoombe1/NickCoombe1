@@ -15,9 +15,6 @@ const config: Config = {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
-      fontSize: {
-        "2xl": "12.5rem",
-      },
     },
   },
   plugins: [],

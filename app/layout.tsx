@@ -22,7 +22,7 @@ export default function RootLayout({
       <head title={metadata.title?.toString()}>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className="bg-white text-gray-700 dark:bg-secondary dark:text-primary">
+      <body className="bg-gray-50 text-gray-700 dark:bg-secondary dark:text-primary">
         <div className="max-w-7xl mx-auto p-8">
           {" "}
           <Header initialTheme={theme} />

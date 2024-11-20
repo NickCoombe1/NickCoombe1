@@ -72,29 +72,24 @@ export default async function ScoringPage({
   }
 
   return (
-    <div className="min-h-screen flex flex-col gap-4">
-      <div
-        className={
-          "flex justify-center gap-4 align-center items-center flex-col"
-        }
-      >
-        <div className="text-3xl">Gameweek {gameweekInfo?.current_event}</div>
-        <div className="flex justify-center lg:hidden mb-2">
-          <button className="relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-            <span className="relative px-5 py-2.5 items-center transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              <a href={`/scoring/${leagueID}/${teamID}/${nextTeamIndex}`}>
-                Other Team
-              </a>
-            </span>
-          </button>
-        </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6 p-4">
+      <div className="flex flex-col items-center gap-4">
+        <h1 className="text-3xl font-bold">Gameweek {currentGameweek}</h1>
+        <a
+          href={`/scoring/${leagueID}/${teamID}/${nextTeamIndex}`}
+          className="inline-block px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-600 rounded-lg shadow-md hover:from-purple-600 hover:to-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+        >
+          View Other Team
+        </a>
       </div>
-      <div className="gap-8 flex justify-evenly items-center">
+      <div className="flex flex-col lg:flex-row justify-center gap-8">
         {teamsData &&
           teamsData.map((team, index) => (
             <div
               key={team.teamID}
-              className={`${teamIndex === index ? "block" : "hidden lg:block"} w-full max-w-md `}
+              className={`${
+                nextTeamIndex === index ? "block" : "hidden lg:block"
+              } w-full max-w-md`}
             >
               <ScoreBoard
                 picks={team.picks}
@@ -103,7 +98,7 @@ export default async function ScoringPage({
               />
             </div>
           ))}
-      </div>{" "}
+      </div>
     </div>
   );
 }

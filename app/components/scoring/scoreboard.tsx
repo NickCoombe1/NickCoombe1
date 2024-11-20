@@ -9,46 +9,61 @@ type ScoreBoardProps = {
   totalPoints: number;
 };
 
-export default async function ScoreBoard({
+export default function ScoreBoard({
   picks,
   team,
   totalPoints,
 }: ScoreBoardProps) {
   return (
-    <div className="p-6 bg-gray-100 dark:bg-blue-300 rounded-lg shadow-lg flex-1">
-      <h2 className="font-bold text-center mb-7 flex-col">
-        <div className="text-xl">{team.entry_name}</div>
-        <hr className="w-50 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-secondary bg-primary"></hr>
-        <div className="text-5xl">{totalPoints}</div>
-      </h2>
-      <div className="bg-white dark:bg-secondary px-4 py-2 rounded-lg shadow-sm">
-        {picks
-          .sort((a, b) => a.position - b.position)
-          .map((pick) => (
-            <div
-              key={pick.element}
-              className="flex items-center py-2 [&:not(:last-child)]:border-b justify-center gap-4"
-            >
-              <span className="font-medium ">{pick.name}</span>
-              <span className="font-medium ">{pick.points}</span>
-              <div className="relative group inline-block">
-                {pick.points <= 0 && !pick.isSub ? (
-                  <div className="flex items-center">
-                    <HandThumbDownIcon
-                      height={20}
-                      width={20}
-                      className="text-red-500"
-                    />
-                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max rounded-md dark:bg-white dark:text-secondary bg-secondary text-primary text-sm px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      Certified Bum Indicator
-                    </span>
-                  </div>
-                ) : (
-                  ""
-                )}
+    <div className="p-8 bg-white dark:bg-gray-700 rounded-lg shadow-md max-w-3xl mx-auto">
+      <div className="text-center mb-6">
+        <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+          {team.entry_name}
+        </h2>
+        <hr className="my-4 border-gray-300 dark:border-gray-600" />
+        <p className="text-4xl font-extrabold text-indigo-600">{totalPoints}</p>
+      </div>
+      <div className="bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner p-4">
+        <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+          Player Picks
+        </h3>
+        <div className="space-y-3">
+          {picks
+            .sort((a, b) => a.position - b.position)
+            .map((pick) => (
+              <div
+                key={pick.element}
+                className="flex justify-between items-center p-3 rounded-md bg-white dark:bg-gray-600 shadow-sm border border-gray-200 dark:border-gray-500"
+              >
+                <span className="text-sm font-medium text-gray-800 dark:text-gray-100 flex gap-2">
+                  {pick.name}{" "}
+                  {pick.points <= 0 && !pick.isSub && (
+                    <div className="relative group">
+                      <HandThumbDownIcon
+                        height={20}
+                        width={20}
+                        className="text-red-500"
+                      />
+                      <span className="absolute left-1/2 transform -translate-x-1/2 mt-2 text-xs bg-red-500 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+                        Certified Bum
+                      </span>
+                    </div>
+                  )}
+                </span>
+                <span
+                  className={`text-sm font-semibold ${
+                    pick.points > 0
+                      ? "text-green-600"
+                      : pick.points === 0
+                        ? "text-gray-500"
+                        : "text-red-600"
+                  }`}
+                >
+                  {pick.points}
+                </span>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     </div>
   );
