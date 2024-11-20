@@ -7,12 +7,28 @@ export default function WelcomePage() {
   const [teamInput, setTeamInput] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
   const [error, setError] = useState("");
+  const [teamData, setTeamData] = useState<any | null>(null);
   const router = useRouter();
+
+  const fetchLeagueID = async (teamID: number) => {
+    try {
+      const response = await fetch(`/api/fetchLeagueID?teamId=${teamID}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch team data");
+      }
+      const data = await response.json();
+      setError("");
+      return data;
+    } catch (error) {
+      console.error("Error fetching team data:", error);
+      setError("Failed to fetch team data. Please try again.");
+      return null;
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Extract Team ID from the input (either direct ID or URL)
     const match = teamInput.match(/entry\/(\d+)/);
     const teamID = match ? match[1] : teamInput;
 
@@ -21,11 +37,18 @@ export default function WelcomePage() {
       return;
     }
 
-    // Store the teamID in cookies
     document.cookie = `teamID=${teamID}; path=/; max-age=${60 * 60 * 24 * 30}`; // Expires in 30 days
 
-    // Redirect or confirm
-    router.push(`/scoring/${teamID}`);
+    const data = await fetchLeagueID(Number(teamID));
+
+    if (data) {
+      setTeamData(data);
+      // router.push(`/scoring/${teamID}`);
+    } else {
+      setError(
+        "Failed to fetch team data. Please check the Team ID and try again.",
+      );
+    }
   };
 
   return (
@@ -53,6 +76,24 @@ export default function WelcomePage() {
             Get in!
           </button>
         </form>
+
+        {teamData && (
+          <div className="mt-6 text-left">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
+              Team Information:
+            </h2>
+            <p className="text-gray-700 dark:text-gray-300 mt-2">
+              <strong>Team Name:</strong> {teamData.entry.name}
+            </p>
+            <p className="text-gray-700 dark:text-gray-300">
+              <strong>Overall Points:</strong> {teamData.entry.overall_points}
+            </p>
+            <p className="text-gray-700 dark:text-gray-300">
+              <strong>Event Points:</strong> {teamData.entry.event_points}
+            </p>
+          </div>
+        )}
+
         <div className="mt-6">
           <button
             onClick={() => setShowTutorial(!showTutorial)}
