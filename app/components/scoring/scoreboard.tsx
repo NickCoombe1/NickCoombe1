@@ -27,7 +27,7 @@ export default async function ScoreBoard({
           .map((pick) => (
             <div
               key={pick.element}
-              className="flex items-center py-2 border-b justify-center gap-4"
+              className="flex items-center py-2 [&:not(:last-child)]:border-b justify-center gap-4"
             >
               <span className="font-medium ">{pick.name}</span>
               <span className="font-medium ">{pick.points}</span>
@@ -47,7 +47,6 @@ export default async function ScoreBoard({
                   ""
                 )}
               </div>
-              <span className="text-right font-bold text-lg"></span>
             </div>
           ))}
       </div>

@@ -37,20 +37,15 @@ export default function Header({ initialTheme }: HeaderProps): ReactNode {
               Nick Coombe
             </span>
           </div>{" "}
-          <div
-            className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-            id="mobile-menu-2"
-          >
-            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 items-center">
-              <li
-                className="block py-2 pr-4 pl-3 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white hover:underline underline-offset-4"
-                aria-current="page"
-              >
-                <Link href="/about">About</Link>
-              </li>
-              <ThemeToggle initialTheme={initialTheme} />
-            </ul>
-          </div>{" "}
+          <ul className="flex flex-col font-medium lg:flex-row lg:space-x-8 lg:mt-0 items-center">
+            <li
+              className="hidden lg:block  py-2 pr-4 pl-3 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white hover:underline underline-offset-4"
+              aria-current="page"
+            >
+              <Link href="/about">About</Link>
+            </li>
+            <ThemeToggle initialTheme={initialTheme} />
+          </ul>
         </div>
       </nav>
     </header>
