@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import "dotenv/config";
 import Header from "@/app/components/common/header";
 import Footer from "@/app/components/common/footer";
