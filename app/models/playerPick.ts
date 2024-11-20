@@ -6,4 +6,5 @@ export interface PlayerPick {
   multiplier: number;
   name: string;
   points: number;
+  isSub: boolean;
 }

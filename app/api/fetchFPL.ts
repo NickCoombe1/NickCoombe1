@@ -5,6 +5,7 @@ import { PlayerPick } from "../models/playerPick";
 import { FplTeamPicksResponse } from "../models/fplTeamPicksResponse";
 interface TeamPicks {
   teamID: number;
+  totalPoints: number;
   picks: PlayerPick[];
 }
 
@@ -36,8 +37,11 @@ async function processTeamData(
 ): Promise<TeamPicks> {
   const teamData = await fetchTeamData(teamID, gameweek);
   const picks = mapBootstrapData(bootstrapData, scoringData, teamData);
-
-  return { teamID, picks };
+  const totalPoints = picks.reduce(
+    (acc, pick) => acc + (pick.isSub ? 0 : pick.points),
+    0,
+  );
+  return { teamID, picks, totalPoints };
 }
 
 function mapBootstrapData(
@@ -49,7 +53,7 @@ function mapBootstrapData(
     const playerData = scoringData.elements[pick.element];
     const basePoints = playerData?.stats.total_points || 0;
     const totalPoints = basePoints * pick.multiplier;
-
+    const isSub = pick.position > 11;
     const playerInfo = Object.values(bootstrapData.elements).find(
       (player) => player.id === pick.element,
     );
@@ -60,6 +64,7 @@ function mapBootstrapData(
       points: totalPoints,
       pointDetails: playerData?.explain,
       name: playerName,
+      isSub,
     };
   });
 }

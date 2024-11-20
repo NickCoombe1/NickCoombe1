@@ -96,7 +96,11 @@ export default async function ScoringPage({
               key={team.teamID}
               className={`${teamIndex === index ? "block" : "hidden lg:block"} w-full max-w-md `}
             >
-              <ScoreBoard picks={team.picks} team={teams[index]} />
+              <ScoreBoard
+                picks={team.picks}
+                team={teams[index]}
+                totalPoints={team.totalPoints}
+              />
             </div>
           ))}
       </div>{" "}
