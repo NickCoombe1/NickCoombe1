@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { FplTeamResponse } from "../models/fplTeamResponse";
+import { FplTeamResponse } from "../../models/fplTeamResponse";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -21,7 +21,14 @@ export async function GET(request: Request) {
     const data: FplTeamResponse = await response.json();
 
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: error.message || "An error occurred" },
+        { status: 500 },
+      );
+    } else {
+      return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+    }
   }
 }

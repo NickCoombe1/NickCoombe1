@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function WelcomePage() {
   const [teamInput, setTeamInput] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
   const [error, setError] = useState("");
   const [teamData, setTeamData] = useState<any | null>(null);
-  const router = useRouter();
 
   const fetchLeagueID = async (teamID: number) => {
     try {
