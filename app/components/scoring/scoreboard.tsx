@@ -23,7 +23,7 @@ export default function ScoreBoard({
         <hr className="my-4 border-gray-300 dark:border-gray-600" />
         <p className="text-4xl font-extrabold text-indigo-600">{totalPoints}</p>
       </div>
-      <div className="bg-gray-50 dark:bg-gray-700 rounded-lg shadow-inner p-4">
+      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-inner p-4">
         <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
           Player Picks
         </h3>
