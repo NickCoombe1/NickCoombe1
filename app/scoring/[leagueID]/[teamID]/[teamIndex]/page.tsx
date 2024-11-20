@@ -8,12 +8,10 @@ import { LeagueEntry, Match } from "@/app/models/league";
 export default async function ScoringPage({
   params,
 }: {
-  params: { teamIndex: string };
+  params: { leagueID: number; teamID: number; teamIndex: string };
 }) {
-  const leagueID = 90342;
-
-  //move this to user input
-  const teamID = 401955;
+  const leagueID = params.leagueID;
+  const teamID = params.teamID;
 
   const gameweekInfo = await getGameWeek();
   const leagueInfo = await getLeague(leagueID);
