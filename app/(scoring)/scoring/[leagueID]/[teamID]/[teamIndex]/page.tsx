@@ -105,8 +105,7 @@ export default async function ScoringPage({
 
 const fetchLeagueData = async (leagueID: number) => {
   const response = await fetch(
-    //todo move this to env
-    `http://localhost:3000/api/fetchLeagueDetails?leagueID=${leagueID}`,
+    process.env.VERCEL_URL + `/api/fetchLeagueDetails?leagueID=${leagueID}`,
   );
   if (response.ok) {
     return response.json();
