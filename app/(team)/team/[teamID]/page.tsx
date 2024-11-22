@@ -9,7 +9,7 @@ import { LeagueResponse } from "@/app/models/league";
 export default function TeamPage() {
   const router = useRouter();
   const params = useParams();
-  const { teamID } = params; // Extract teamID from the URL
+  const { teamID } = params;
   const [teamData, setTeamData] = useState<FplTeamResponse | null>(null);
   const [leagueData, setLeagueData] = useState<LeagueResponse[] | null>(null);
   const [error, setError] = useState("");
@@ -49,8 +49,6 @@ export default function TeamPage() {
             }
             return await response.json();
           });
-
-          // Wait for all league data to be fetched
           const leagueResponses = await Promise.all(leaguePromises);
           setLeagueData(leagueResponses); // Set all league data
           setTeamData(data); // Set team data
@@ -64,7 +62,7 @@ export default function TeamPage() {
     };
 
     fetchData();
-  }, [teamID]); // Only runs when teamID changes
+  }, [teamID]);
 
   if (error) {
     return (
@@ -100,7 +98,14 @@ export default function TeamPage() {
                 key={index}
                 className="hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer"
               >
-                <td className="py-3 px-4">{league.league.name}</td>
+                <td
+                  className="py-3 px-4"
+                  onClick={() =>
+                    router.push(`/scoring/${league.league.id}/${teamID}/0`)
+                  }
+                >
+                  {league.league.name}
+                </td>
               </tr>
             ))}
           </tbody>
