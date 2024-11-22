@@ -13,7 +13,7 @@ export default {
     return [
       {
         source: "/", // The path to match
-        destination: "/about", // The path to redirect to
+        destination: "/welcome", // The path to redirect to
         permanent: true, // Set to true for a 308 permanent redirect
       },
     ];
