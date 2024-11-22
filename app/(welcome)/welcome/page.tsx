@@ -1,15 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useParams } from "next/navigation";
 export default function WelcomePage() {
   const router = useRouter();
-  const params = useParams();
   const [teamInput, setTeamInput] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
   const [error, setError] = useState("");
-  const [teamData, setTeamData] = useState<any | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +20,7 @@ export default function WelcomePage() {
     }
 
     document.cookie = `teamID=${teamID}; path=/; max-age=${60 * 60 * 24 * 30}`; // Expires in 30 days
-    router.push(`/team/${teamData.entry.id}`);
+    router.push(`/team/${teamID}`);
   };
 
   return (
