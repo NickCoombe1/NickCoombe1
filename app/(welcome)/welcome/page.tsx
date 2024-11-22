@@ -1,28 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { FplTeamResponse } from "@/app/models/fplTeamResponse";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 export default function WelcomePage() {
+  const router = useRouter();
+  const params = useParams();
   const [teamInput, setTeamInput] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
   const [error, setError] = useState("");
   const [teamData, setTeamData] = useState<any | null>(null);
-
-  const fetchLeagueID = async (teamID: number) => {
-    try {
-      const response = await fetch(`/api/fetchLeagueID?teamId=${teamID}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch team data");
-      }
-      const data = await response.json();
-      setError("");
-      return data;
-    } catch (error) {
-      console.error("Error fetching team data:", error);
-      setError("Failed to fetch team data. Please try again.");
-      return null;
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,24 +23,14 @@ export default function WelcomePage() {
     }
 
     document.cookie = `teamID=${teamID}; path=/; max-age=${60 * 60 * 24 * 30}`; // Expires in 30 days
-
-    const data: FplTeamResponse = await fetchLeagueID(Number(teamID));
-
-    if (data) {
-      setTeamData(data);
-      // router.push(`/scoring/${teamID}`);
-    } else {
-      setError(
-        "Failed to fetch team data. Please check the Team ID and try again.",
-      );
-    }
+    router.push(`/team/${teamData.entry.id}`);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 flex flex-col items-center justify-center p-6">
+    <div className="min-h-[80vh] bg-gray-50 dark:bg-gray-800 flex flex-col items-center justify-center p-6">
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-          Welcome to Draft Fantasy Tracker!
+          Welcome to the Draft Fantasy Scoreboard!
         </h1>
         <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
           Enter your Team ID or your Points Page URL to get started.
@@ -74,24 +51,6 @@ export default function WelcomePage() {
             Get in!
           </button>
         </form>
-
-        {teamData && (
-          <div className="mt-6 text-left">
-            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
-              Team Information:
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300 mt-2">
-              <strong>Team Name:</strong> {teamData.entry.name}
-            </p>
-            <p className="text-gray-700 dark:text-gray-300">
-              <strong>Overall Points:</strong> {teamData.entry.overall_points}
-            </p>
-            <p className="text-gray-700 dark:text-gray-300">
-              <strong>Event Points:</strong> {teamData.entry.event_points}
-            </p>
-          </div>
-        )}
-
         <div className="mt-6">
           <button
             onClick={() => setShowTutorial(!showTutorial)}
