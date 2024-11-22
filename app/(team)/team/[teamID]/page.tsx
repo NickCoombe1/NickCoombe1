@@ -11,20 +11,6 @@ export default function TeamPage() {
   const [teamData, setTeamData] = useState<any | null>(null);
   const [error, setError] = useState("");
 
-  const fetchData = async () => {
-    try {
-      const data = await fetchLeagueID(Number(teamID));
-      if (data) {
-        setTeamData(data);
-      } else {
-        setError("Failed to fetch team data.");
-      }
-    } catch (error) {
-      console.error("Error in fetching data:", error);
-      setError("An unexpected error occurred.");
-    }
-  };
-
   const fetchLeagueID = async (teamID: number) => {
     try {
       const response = await fetch(`/api/fetchLeagueID?teamId=${teamID}`);
@@ -46,7 +32,19 @@ export default function TeamPage() {
       setError("Team ID is missing.");
       return;
     }
-
+    const fetchData = async () => {
+      try {
+        const data = await fetchLeagueID(Number(teamID));
+        if (data) {
+          setTeamData(data);
+        } else {
+          setError("Failed to fetch team data.");
+        }
+      } catch (error) {
+        console.error("Error in fetching data:", error);
+        setError("An unexpected error occurred.");
+      }
+    };
     fetchData();
   }, [teamID]);
 
