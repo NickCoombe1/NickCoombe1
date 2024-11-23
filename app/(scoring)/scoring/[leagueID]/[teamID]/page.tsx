@@ -4,13 +4,18 @@ import React, { useEffect, useState } from "react";
 import ScoreBoard from "@/app/components/scoring/scoreboard";
 import { LeagueData } from "@/app/models/league";
 import { GameStatusData } from "@/app/models/game";
-import { ScoringData } from "@/app/api/fetchScoringData/route";
+import {
+  fetchTeamDetails,
+  ScoringData,
+} from "@/app/api/fetchScoringData/route";
 import LoadingSpinner from "@/app/components/common/loadingSpinner";
+import { fetchLeagueData } from "@/app/api/fetchLeagueDetails/route";
+import { fetchGameWeekDetails } from "@/app/api/fetchGameWeekDetails/route";
 
 export default function ScoringPage({
   params,
 }: {
-  params: { leagueID: string; teamID: string; teamIndex: string };
+  params: { leagueID: string; teamID: string };
 }) {
   const leagueID = Number(params.leagueID);
   const teamID = Number(params.teamID);
@@ -95,37 +100,3 @@ export default function ScoringPage({
     </div>
   );
 }
-
-const fetchLeagueData = async (leagueID: number): Promise<LeagueData> => {
-  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : "http://localhost:3000";
-  const response = await fetch(
-    `${baseUrl}/api/fetchLeagueDetails?leagueID=${leagueID}`,
-  );
-  if (response.ok) return response.json();
-  throw new Error("Failed to fetch league data");
-};
-
-const fetchGameWeekDetails = async (): Promise<GameStatusData> => {
-  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : "http://localhost:3000";
-  const response = await fetch(`${baseUrl}/api/fetchGameWeekDetails`);
-  if (response.ok) return response.json();
-  throw new Error("Failed to fetch gameweek details");
-};
-
-const fetchTeamDetails = async (
-  teamID: number,
-  gameweek: number,
-): Promise<ScoringData> => {
-  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : "http://localhost:3000";
-  const response = await fetch(
-    `${baseUrl}/api/fetchScoringData?teamID=${teamID}&gameweek=${gameweek}`,
-  );
-  if (response.ok) return response.json();
-  throw new Error("Failed to fetch team details");
-};

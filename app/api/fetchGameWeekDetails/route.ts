@@ -27,3 +27,12 @@ export async function GET() {
     }
   }
 }
+
+export const fetchGameWeekDetails = async (): Promise<GameStatusData> => {
+  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
+    : "http://localhost:3000";
+  const response = await fetch(`${baseUrl}/api/fetchGameWeekDetails`);
+  if (response.ok) return response.json();
+  throw new Error("Failed to fetch gameweek details");
+};

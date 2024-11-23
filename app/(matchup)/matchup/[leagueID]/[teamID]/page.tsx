@@ -2,60 +2,72 @@
 
 import React, { useEffect, useState } from "react";
 import ScoreBoard from "@/app/components/scoring/scoreboard";
-import { LeagueData, LeagueEntry } from "@/app/models/league";
-import { GameStatusData } from "@/app/models/game";
-import { ScoringData } from "@/app/api/fetchScoringData/route";
 import LoadingSpinner from "@/app/components/common/loadingSpinner";
+import { LeagueData, LeagueEntry } from "@/app/models/league";
+import {
+  fetchTeamDetails,
+  ScoringData,
+} from "@/app/api/fetchScoringData/route";
+import { fetchLeagueData } from "@/app/api/fetchLeagueDetails/route";
+import { fetchGameWeekDetails } from "@/app/api/fetchGameWeekDetails/route";
+import { GameStatusData } from "@/app/models/game";
 
-export default function Matchup({
+export default function MatchupPage({
   params,
 }: {
-  params: { leagueID: string; teamID: string; teamIndex: string };
+  params: { leagueID: number; teamID: number };
 }) {
   const leagueID = Number(params.leagueID);
   const teamID = Number(params.teamID);
   const [gameweekInfo, setGameweekInfo] = useState<GameStatusData | null>(null);
-  const [leagueData, setLeagueData] = useState<LeagueData | null>(null);
-  const [teamScoringData, setTeamScoringData] = useState<ScoringData | null>(
+  const [team, setTeam] = useState<LeagueEntry | null>(null);
+  const [opponent, setOpponent] = useState<LeagueEntry | null>(null);
+  const [teamScoring, setTeamScoring] = useState<ScoringData | null>(null);
+  const [opponentScoring, setOpponentScoring] = useState<ScoringData | null>(
     null,
   );
-  const [opponentTeam, setOpponentTeam] = useState<LeagueEntry | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
-        const gameweekResponse = await fetchGameWeekDetails();
-        const leagueResponse = await fetchLeagueData(leagueID);
+        setLoading(true);
+        const leagueData = await fetchLeagueData(leagueID);
+        const gameweekInfo = await fetchGameWeekDetails();
+        const currentGameweek = gameweekInfo?.current_event;
 
-        if (!gameweekResponse || !leagueResponse) {
-          new Error("Failed to load gameweek or league data");
-          return;
+        if (leagueData && currentGameweek) {
+          const foundTeam = leagueData.league_entries.find(
+            (team) => team.entry_id == teamID,
+          );
+          if (foundTeam) {
+            setTeam(foundTeam);
+          }
+
+          // Get the opponent
+          const opponent = findOpponent(leagueData, teamID, currentGameweek);
+          setOpponent(opponent);
+
+          // Fetch scores for both teams
+          const teamScoringData = await fetchTeamDetails(
+            teamID,
+            currentGameweek,
+          );
+          if (opponent) {
+            const opponentScoringData = await fetchTeamDetails(
+              opponent?.entry_id,
+              currentGameweek,
+            );
+            setOpponentScoring(opponentScoringData);
+          }
+
+          setGameweekInfo(gameweekInfo);
+          setTeamScoring(teamScoringData);
         }
-
-        setGameweekInfo(gameweekResponse);
-        setLeagueData(leagueResponse);
-
-        const currentGameweek = gameweekResponse.current_event;
-        if (!currentGameweek) return;
-
-        const matchedTeam = findOpponentTeam(
-          leagueResponse,
-          teamID,
-          currentGameweek,
-        );
-
-        if (matchedTeam) setOpponentTeam(matchedTeam);
-
-        if (currentGameweek) {
-          const teamResponse = await fetchTeamDetails(teamID, currentGameweek);
-          if (teamResponse) setTeamScoringData(teamResponse);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("An unexpected error occurred.");
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("An unexpected error occurred while loading the matchup.");
       } finally {
         setLoading(false);
       }
@@ -63,6 +75,14 @@ export default function Matchup({
 
     fetchData();
   }, [leagueID, teamID]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -72,81 +92,55 @@ export default function Matchup({
     );
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <LoadingSpinner />
-      </div>
-    );
-  }
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6 p-4">
-      {teamScoringData && (
-        <>
-          <div className="flex flex-col items-center gap-4">
-            <h1 className="text-3xl font-bold">
-              Gameweek {gameweekInfo?.current_event}
-            </h1>
-          </div>
-          <div className="flex flex-col lg:flex-row justify-center gap-8">
-            <div className="w-full max-w-md">
-              <ScoreBoard
-                picks={teamScoringData.picks}
-                team={leagueData?.league_entries.find(
-                  (team) => team.entry_id == teamID,
-                )}
-                totalPoints={teamScoringData.totalPoints}
-              />
-            </div>
-          </div>
-        </>
-      )}
+      <div className="text-center">
+        <h1 className="text-3xl font-bold">
+          Gameweek {gameweekInfo?.current_event}
+        </h1>
+      </div>
+      <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold">
+            {team?.entry_name} v {opponent?.entry_name}
+          </h2>
+          <p className="text-lg">
+            Score: {teamScoring?.totalPoints || 0} v{" "}
+            {opponentScoring?.totalPoints || 0}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-col lg:flex-row justify-center gap-8">
+        <div className="w-full max-w-md">
+          <ScoreBoard
+            picks={teamScoring?.picks || []}
+            team={team || undefined}
+            totalPoints={teamScoring?.totalPoints || 0}
+          />
+        </div>
+        <div className="w-full max-w-md">
+          <ScoreBoard
+            picks={opponentScoring?.picks || []}
+            team={opponent || undefined}
+            totalPoints={opponentScoring?.totalPoints || 0}
+          />
+        </div>
+      </div>
     </div>
   );
 }
 
-const fetchLeagueData = async (leagueID: number): Promise<LeagueData> => {
-  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : "http://localhost:3000";
-  const response = await fetch(
-    `${baseUrl}/api/fetchLeagueDetails?leagueID=${leagueID}`,
-  );
-  if (response.ok) return response.json();
-  throw new Error("Failed to fetch league data");
-};
-
-const fetchGameWeekDetails = async (): Promise<GameStatusData> => {
-  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : "http://localhost:3000";
-  const response = await fetch(`${baseUrl}/api/fetchGameWeekDetails`);
-  if (response.ok) return response.json();
-  throw new Error("Failed to fetch gameweek details");
-};
-
-const fetchTeamDetails = async (
-  teamID: number,
-  gameweek: number,
-): Promise<ScoringData> => {
-  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : "http://localhost:3000";
-  const response = await fetch(
-    `${baseUrl}/api/fetchScoringData?teamID=${teamID}&gameweek=${gameweek}`,
-  );
-  if (response.ok) return response.json();
-  throw new Error("Failed to fetch team details");
-};
-
-const findOpponentTeam = (
+// Helper to find opponent for the given team in the current gameweek
+const findOpponent = (
   leagueData: LeagueData,
   teamID: number,
   gameweek: number,
-) => {
+): LeagueEntry | null => {
   const teamEntry = leagueData.league_entries.find(
     (team) => team.entry_id === teamID,
   );
+
   if (!teamEntry) return null;
 
   const matchup = leagueData.matches.find(
@@ -155,9 +149,9 @@ const findOpponentTeam = (
       (match.league_entry_1 === teamEntry.id ||
         match.league_entry_2 === teamEntry.id),
   );
+
   if (!matchup) return null;
 
-  // Determine opponent ID
   const opponentID =
     matchup.league_entry_1 === teamEntry.id
       ? matchup.league_entry_2

@@ -96,3 +96,17 @@ function mapBootstrapData(
     };
   });
 }
+
+export const fetchTeamDetails = async (
+  teamID: number,
+  gameweek: number,
+): Promise<ScoringData> => {
+  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
+    : "http://localhost:3000";
+  const response = await fetch(
+    `${baseUrl}/api/fetchScoringData?teamID=${teamID}&gameweek=${gameweek}`,
+  );
+  if (response.ok) return response.json();
+  throw new Error("Failed to fetch team details");
+};
