@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 export default {
   env: {
-    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    VERCEL_PROJECT_PRODUCTION_URL: process.env.VERCEL_PROJECT_PRODUCTION_URL,
   },
   webpack: (config) => {
     // Add a rule to process markdown files
