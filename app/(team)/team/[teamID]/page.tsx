@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { FplTeamResponse } from "@/app/models/fplTeamResponse";
 import { LeagueResponse } from "@/app/models/league";
+import Loading from "@/app/(team)/loading";
 
 export default function TeamPage() {
   const router = useRouter();
@@ -72,14 +73,6 @@ export default function TeamPage() {
     );
   }
 
-  if (!teamData) {
-    return (
-      <div className="min-h-[80vh] flex items-center justify-center">
-        <p className="text-gray-700 dark:text-gray-300">Loading team data...</p>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-[80vh] bg-gray-50 dark:bg-gray-800 flex flex-col items-center justify-center p-6">
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full text-center">
@@ -93,6 +86,14 @@ export default function TeamPage() {
             </tr>
           </thead>
           <tbody>
+            {!teamData && !error && (
+              <tr className="hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer">
+                {" "}
+                <td className="py-3 px-4 flex justify-center">
+                  <Loading />
+                </td>
+              </tr>
+            )}
             {leagueData?.map((league, index) => (
               <tr
                 key={index}
