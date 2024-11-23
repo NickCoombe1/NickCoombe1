@@ -1,4 +1,4 @@
-export default function Loading() {
+export default function LoadingSpinner() {
   return (
     <div role="status">
       <svg

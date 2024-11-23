@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { FplTeamResponse } from "@/app/models/fplTeamResponse";
 import { LeagueData } from "@/app/models/league";
-import Loading from "@/app/(team)/loading";
+import LoadingSpinner from "@/app/components/common/loadingSpinner";
 
 export default function TeamPage() {
   const router = useRouter();
@@ -90,7 +90,7 @@ export default function TeamPage() {
               <tr className="hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer">
                 {" "}
                 <td className="py-3 px-4 flex justify-center">
-                  <Loading />
+                  <LoadingSpinner />
                 </td>
               </tr>
             )}
