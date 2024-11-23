@@ -1,17 +1,14 @@
-// Define the model for individual stats
 export interface Stat {
   element: number;
   value: number;
 }
 
-// Define the model for a single stat category
 export interface StatCategory {
   s: string; // Stat name, e.g., "goals_scored"
   h: Stat[]; // Home team stats
   a: Stat[]; // Away team stats
 }
 
-// Define the model for a single match
 export interface Fixture {
   id: number;
   started: boolean;
