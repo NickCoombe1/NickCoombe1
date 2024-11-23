@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 export default {
+  env: {
+    BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  },
   webpack: (config) => {
     // Add a rule to process markdown files
     config.module.rules.push({
