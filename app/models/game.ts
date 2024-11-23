@@ -1,4 +1,4 @@
-export interface GameStatusResponse {
+export interface GameStatusData {
   current_event: number;
   current_event_finished: boolean;
   next_event: number;

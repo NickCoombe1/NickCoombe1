@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { LeagueResponse } from "../../models/league";
+import { LeagueData } from "../../models/league";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
       throw new Error(`Failed to fetch league data: ${response.statusText}`);
     }
 
-    const leagueData: LeagueResponse = await response.json();
+    const leagueData: LeagueData = await response.json();
 
     return NextResponse.json(leagueData);
   } catch (error: unknown) {

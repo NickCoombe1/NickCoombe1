@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { GameStatusResponse } from "@/app/models/game";
+import { GameStatusData } from "@/app/models/game";
 
 export async function GET() {
   try {
@@ -11,7 +11,7 @@ export async function GET() {
       throw new Error(`Failed to fetch game status: ${response.statusText}`);
     }
 
-    const gameData: GameStatusResponse = await response.json();
+    const gameData: GameStatusData = await response.json();
     return NextResponse.json(gameData);
   } catch (error: unknown) {
     if (error instanceof Error) {

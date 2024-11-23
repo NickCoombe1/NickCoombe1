@@ -1,117 +1,110 @@
-import React from "react";
-import ScoreBoard from "@/app/components/scoring/scoreboard";
-import fetchFplData from "@/app/api/fetchFPL";
-import getGameWeek from "@/app/api/fetchGame";
-import { LeagueEntry, Match } from "@/app/models/league";
-import { LeagueResponse } from "@/app/models/league";
+"use client";
 
-export default async function ScoringPage({
+import React, { useEffect, useState } from "react";
+import ScoreBoard from "@/app/components/scoring/scoreboard";
+import { LeagueData } from "@/app/models/league";
+import { GameStatusData } from "@/app/models/game";
+import { ScoringData } from "@/app/api/fetchScoringData/route";
+
+export default function ScoringPage({
   params,
 }: {
   params: { leagueID: number; teamID: number; teamIndex: string };
 }) {
   const leagueID = params.leagueID;
   const teamID = params.teamID;
-
-  const gameweekInfo = await getGameWeek();
-  const leagueInfo: LeagueResponse = await fetchLeagueData(leagueID);
-
-  const currentGameweek = gameweekInfo?.current_event;
-
-  let currentGameweekMatchup: Match | undefined;
-  let teamEntry: LeagueEntry | undefined;
-  let teamsData;
-  const teamIDs: number[] = [];
-
-  if (currentGameweek) {
-    teamEntry = leagueInfo?.league_entries.find(
-      (team) => team.entry_id == teamID,
-    );
-
-    currentGameweekMatchup = leagueInfo?.matches.find(
-      (match) =>
-        match.event == currentGameweek &&
-        (match.league_entry_1 == teamEntry?.id ||
-          match.league_entry_2 == teamEntry?.id),
-    );
-
-    if (currentGameweekMatchup) {
-      const team1ID = leagueInfo?.league_entries.find(
-        (team) => team.id == currentGameweekMatchup?.league_entry_1,
-      )?.entry_id;
-      if (team1ID) {
-        teamIDs.push(team1ID);
-      }
-      const team2ID = leagueInfo?.league_entries.find(
-        (team) => team.id == currentGameweekMatchup?.league_entry_2,
-      )?.entry_id;
-
-      if (team2ID) {
-        teamIDs.push(team2ID);
-      }
-    }
-
-    teamsData = await fetchFplData(currentGameweek, teamIDs);
-  }
-
-  const teamIndex = parseInt(params.teamIndex, 10);
-  const nextTeamIndex = teamIndex === 0 ? 1 : 0;
-  const teams: LeagueEntry[] = [];
-  const team1 = leagueInfo?.league_entries.find(
-    (team) => team.entry_id === teamIDs[0],
+  const [gameweekInfo, setGameweekInfo] = useState<GameStatusData | null>(null);
+  const [leagueData, setLeagueData] = useState<LeagueData | null>(null);
+  const [teamScoringData, setTeamScoringData] = useState<ScoringData | null>(
+    null,
   );
-  const team2 = leagueInfo?.league_entries.find(
-    (team) => team.entry_id === teamIDs[1],
-  );
+  const [error, setError] = useState("");
 
-  if (team1) {
-    teams.push(team1);
-  }
-  if (team2) {
-    teams.push(team2);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const gameweekResponse = await fetchGameWeekDetails();
+        const leagueResponse = await fetchLeagueData(leagueID);
+
+        if (gameweekResponse) setGameweekInfo(gameweekResponse);
+        if (leagueResponse) setLeagueData(leagueResponse);
+
+        const currentGameweek = gameweekResponse?.current_event;
+        if (currentGameweek) {
+          const teamResponse = await fetchTeamDetails(teamID, currentGameweek);
+          if (teamResponse) setTeamScoringData(teamResponse);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("An unexpected error occurred.");
+      }
+    };
+
+    fetchData();
+  }, [leagueID, teamID]);
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6 p-4">
       <div className="flex flex-col items-center gap-4">
-        <h1 className="text-3xl font-bold">Gameweek {currentGameweek}</h1>
-        <a
-          href={`/scoring/${leagueID}/${teamID}/${nextTeamIndex}`}
-          className="inline-block px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-600 rounded-lg shadow-md hover:from-purple-600 hover:to-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-        >
-          View Other Team
-        </a>
+        <h1 className="text-3xl font-bold">
+          Gameweek {gameweekInfo?.current_event}
+        </h1>
       </div>
       <div className="flex flex-col lg:flex-row justify-center gap-8">
-        {teamsData &&
-          teamsData.map((team, index) => (
-            <div
-              key={team.teamID}
-              className={`${
-                nextTeamIndex === index ? "block" : "hidden lg:block"
-              } w-full max-w-md`}
-            >
-              <ScoreBoard
-                picks={team.picks}
-                team={teams[index]}
-                totalPoints={team.totalPoints}
-              />
-            </div>
-          ))}
+        {teamScoringData && (
+          <div className="w-full max-w-md">
+            <ScoreBoard
+              picks={teamScoringData.picks}
+              team={leagueData?.league_entries.find(
+                (team) => team.entry_id == teamID,
+              )}
+              totalPoints={teamScoringData.totalPoints}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-const fetchLeagueData = async (leagueID: number) => {
+const fetchLeagueData = async (leagueID: number): Promise<LeagueData> => {
   const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
     : "http://localhost:3000";
   const response = await fetch(
-    baseUrl + `/api/fetchLeagueDetails?leagueID=${leagueID}`,
+    `${baseUrl}/api/fetchLeagueDetails?leagueID=${leagueID}`,
   );
-  if (response.ok) {
-    return response.json();
-  }
+  if (response.ok) return response.json();
   throw new Error("Failed to fetch league data");
+};
+
+const fetchGameWeekDetails = async (): Promise<GameStatusData> => {
+  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
+    : "http://localhost:3000";
+  const response = await fetch(`${baseUrl}/api/fetchGameWeekDetails`);
+  if (response.ok) return response.json();
+  throw new Error("Failed to fetch gameweek details");
+};
+
+const fetchTeamDetails = async (
+  teamID: number,
+  gameweek: number,
+): Promise<ScoringData> => {
+  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
+    : "http://localhost:3000";
+  const response = await fetch(
+    `${baseUrl}/api/fetchScoringData?teamID=${teamID}&gameweek=${gameweek}`,
+  );
+  if (response.ok) return response.json();
+  throw new Error("Failed to fetch team details");
 };

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { FplTeamResponse } from "@/app/models/fplTeamResponse";
-import { LeagueResponse } from "@/app/models/league";
+import { LeagueData } from "@/app/models/league";
 import Loading from "@/app/(team)/loading";
 
 export default function TeamPage() {
@@ -12,7 +12,7 @@ export default function TeamPage() {
   const params = useParams();
   const { teamID } = params;
   const [teamData, setTeamData] = useState<FplTeamResponse | null>(null);
-  const [leagueData, setLeagueData] = useState<LeagueResponse[] | null>(null);
+  const [leagueData, setLeagueData] = useState<LeagueData[] | null>(null);
   const [error, setError] = useState("");
 
   const fetchLeagueID = async (teamID: number) => {
