@@ -40,4 +40,6 @@ interface PlayerStats {
   expected_goals_conceded: number;
   total_points: number;
   in_dreamteam: boolean;
+  chance_of_playing_next_round: number;
+  chance_of_playing_this_round: number;
 }
