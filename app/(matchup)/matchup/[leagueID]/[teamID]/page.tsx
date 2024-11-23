@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import ScoreBoard from "@/app/components/scoring/scoreboard";
-import { LeagueData } from "@/app/models/league";
+import { LeagueData, LeagueEntry } from "@/app/models/league";
 import { GameStatusData } from "@/app/models/game";
 import { ScoringData } from "@/app/api/fetchScoringData/route";
 import LoadingSpinner from "@/app/components/common/loadingSpinner";
 
-export default function ScoringPage({
+export default function Matchup({
   params,
 }: {
   params: { leagueID: string; teamID: string; teamIndex: string };
@@ -19,6 +19,7 @@ export default function ScoringPage({
   const [teamScoringData, setTeamScoringData] = useState<ScoringData | null>(
     null,
   );
+  const [opponentTeam, setOpponentTeam] = useState<LeagueEntry | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +40,14 @@ export default function ScoringPage({
 
         const currentGameweek = gameweekResponse.current_event;
         if (!currentGameweek) return;
+
+        const matchedTeam = findOpponentTeam(
+          leagueResponse,
+          teamID,
+          currentGameweek,
+        );
+
+        if (matchedTeam) setOpponentTeam(matchedTeam);
 
         if (currentGameweek) {
           const teamResponse = await fetchTeamDetails(teamID, currentGameweek);
@@ -128,4 +137,33 @@ const fetchTeamDetails = async (
   );
   if (response.ok) return response.json();
   throw new Error("Failed to fetch team details");
+};
+
+const findOpponentTeam = (
+  leagueData: LeagueData,
+  teamID: number,
+  gameweek: number,
+) => {
+  const teamEntry = leagueData.league_entries.find(
+    (team) => team.entry_id === teamID,
+  );
+  if (!teamEntry) return null;
+
+  const matchup = leagueData.matches.find(
+    (match) =>
+      match.event === gameweek &&
+      (match.league_entry_1 === teamEntry.id ||
+        match.league_entry_2 === teamEntry.id),
+  );
+  if (!matchup) return null;
+
+  // Determine opponent ID
+  const opponentID =
+    matchup.league_entry_1 === teamEntry.id
+      ? matchup.league_entry_2
+      : matchup.league_entry_1;
+
+  return (
+    leagueData.league_entries.find((team) => team.id === opponentID) || null
+  );
 };
