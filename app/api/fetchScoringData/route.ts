@@ -77,6 +77,8 @@ function mapBootstrapData(
   scoringData: PlayerDataResponse,
   teamData: FplTeamPicksResponse,
 ): PlayerPick[] {
+  const benchPlayers = teamData.picks.filter((pick) => pick.position > 11);
+
   return teamData.picks.map((pick) => {
     const playerData = scoringData.elements[pick.element];
     const basePoints = playerData?.stats.total_points || 0;
@@ -87,12 +89,30 @@ function mapBootstrapData(
     );
     const playerName = playerInfo?.web_name || "Unknown";
 
+    // Flag for whether the player has played
+    const hasPlayed = (playerData?.stats.minutes || 0) > 0;
+
+    // Check if the player is likely to be autosubbed
+    let willBeAutosubbed = false;
+    if (!hasPlayed && !isSub) {
+      const eligibleSubs = benchPlayers.filter((benchPick) => {
+        const benchPlayerData = scoringData.elements[benchPick.element];
+        return (
+          benchPick.multiplier === 0 && // Ensure the player is on the bench
+          (benchPlayerData?.stats.minutes || 0) > 0 // Bench player has played
+        );
+      });
+      willBeAutosubbed = eligibleSubs.length > 0;
+    }
+
     return {
       ...pick,
       points: totalPoints,
       pointDetails: playerData?.explain,
       name: playerName,
       isSub,
+      hasPlayed,
+      willBeAutosubbed,
     };
   });
 }

@@ -7,4 +7,6 @@ export interface PlayerPick {
   name: string;
   points: number;
   isSub: boolean;
+  hasPlayed: boolean;
+  willBeAutosubbed: boolean;
 }

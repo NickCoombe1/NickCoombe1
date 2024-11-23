@@ -38,7 +38,8 @@ export default function ScoreBoard({
                 >
                   <span className="text-sm font-medium text-gray-800 dark:text-gray-100 flex gap-2">
                     {pick.name}{" "}
-                    {pick.points <= 0 && !pick.isSub && (
+                    {pick.willBeAutosubbed && <span> (autosub)</span>}
+                    {pick.points <= 0 && !pick.isSub && pick.hasPlayed && (
                       <div className="relative group">
                         <HandThumbDownIcon
                           height={20}
