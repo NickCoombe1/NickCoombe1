@@ -37,7 +37,7 @@ export default function ScoreBoard({
                   className="flex justify-between items-center p-3 rounded-md bg-white dark:bg-gray-600 shadow-sm border border-gray-200 dark:border-gray-500"
                 >
                   <span className="text-sm font-medium text-gray-800 dark:text-gray-100 flex gap-2">
-                    {pick.name}{" "}
+                    {pick.name}
                     {pick.willBeAutosubbed && <span> (autosub)</span>}
                     {pick.points <= 0 && !pick.isSub && pick.hasPlayed && (
                       <div className="relative group">

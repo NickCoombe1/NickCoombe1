@@ -1,24 +1,27 @@
 import { NextResponse } from "next/server";
-import { FplTeamResponse } from "../../models/fplTeamResponse";
+import { Fixtures } from "@/app/models/fplFixtureResponse";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const teamId = searchParams.get("teamId");
+  const gameweek = searchParams.get("gameweek");
 
-  if (!teamId) {
-    return NextResponse.json({ error: "Team ID is required" }, { status: 400 });
+  if (!gameweek) {
+    return NextResponse.json(
+      { error: "gameweek is required" },
+      { status: 400 },
+    );
   }
 
   try {
     const response = await fetch(
-      `https://draft.premierleague.com/api/entry/${teamId}/public`,
+      `https://draft.premierleague.com/api/event/${gameweek}/fixtures`,
     );
 
     if (!response.ok) {
       new Error("Failed to fetch data from FPL API");
     }
 
-    const data: FplTeamResponse = await response.json();
+    const data: Fixtures = await response.json();
 
     return NextResponse.json(data);
   } catch (error: unknown) {

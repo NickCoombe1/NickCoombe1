@@ -7,6 +7,8 @@ import { fetchScoringData, PlayerDataResponse } from "../../api/fetchScoring";
 import { fetchTeamData } from "../../api/fetchTeam";
 import { PlayerPick } from "../../models/playerPick";
 import { FplTeamPicksResponse } from "../../models/fplTeamPicksResponse";
+import { fetchGameweekFixtureData } from "@/app/apiHelpers/apiHelpers";
+import { Fixtures } from "@/app/models/fplFixtureResponse";
 
 export interface ScoringData {
   totalPoints: number;
@@ -64,7 +66,13 @@ async function processTeamData(
   scoringData: PlayerDataResponse,
 ): Promise<ScoringData> {
   const teamData = await fetchTeamData(teamID, gameweek);
-  const picks = mapBootstrapData(bootstrapData, scoringData, teamData);
+  const gameweekFixtureData = await fetchGameweekFixtureData(gameweek);
+  const picks = mapBootstrapData(
+    bootstrapData,
+    scoringData,
+    teamData,
+    gameweekFixtureData,
+  );
   const totalPoints = picks.reduce(
     (acc, pick) => acc + (pick.isSub ? 0 : pick.points),
     0,
@@ -76,6 +84,7 @@ function mapBootstrapData(
   bootstrapData: FplBootstrapResponse,
   scoringData: PlayerDataResponse,
   teamData: FplTeamPicksResponse,
+  gameweekFixtureData: Fixtures,
 ): PlayerPick[] {
   const benchPlayers = teamData.picks.filter((pick) => pick.position > 11);
 
@@ -88,17 +97,22 @@ function mapBootstrapData(
       (player) => player.id === pick.element,
     );
     const playerName = playerInfo?.web_name || "Unknown";
+    const isInjured = playerInfo?.chance_of_playing_this_round == 0;
 
-    // Flag for whether the player has played
+    const gameFinished = isGameFinished(pick.element, gameweekFixtureData);
+
     const hasPlayed = (playerData?.stats.minutes || 0) > 0;
+    const hasNotPlayed = (playerData?.stats.minutes || 0) <= 0 && gameFinished;
 
-    // Check if the player is likely to be autosubbed
     let willBeAutosubbed = false;
-    if (!hasPlayed && !isSub) {
+
+    if ((hasNotPlayed && !isSub) || isInjured) {
+      // will need to account for position of player
+
       const eligibleSubs = benchPlayers.filter((benchPick) => {
         const benchPlayerData = scoringData.elements[benchPick.element];
         return (
-          benchPick.multiplier === 0 && // Ensure the player is on the bench
+          benchPick.position <= 12 && // Ensure the player is on the bench
           (benchPlayerData?.stats.minutes || 0) > 0 // Bench player has played
         );
       });
@@ -115,4 +129,20 @@ function mapBootstrapData(
       willBeAutosubbed,
     };
   });
+}
+
+function isGameFinished(
+  playerId: number,
+  gameweekFixtureData: Fixtures,
+): boolean {
+  for (const match of gameweekFixtureData) {
+    if (
+      match.started &&
+      match.finished &&
+      (match.team_a === playerId || match.team_h === playerId)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }

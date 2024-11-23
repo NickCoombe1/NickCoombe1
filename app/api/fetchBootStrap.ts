@@ -11,6 +11,8 @@ export interface FplBootstrapResponse {
 export interface PlayerBootstrapData {
   web_name: string;
   id: number;
+  chance_of_playing_next_round: number;
+  chance_of_playing_this_round: number;
 }
 
 type PlayerBootstrapElements = Record<string, PlayerBootstrapData>;
