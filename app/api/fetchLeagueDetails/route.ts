@@ -38,16 +38,3 @@ export async function GET(request: Request) {
     }
   }
 }
-
-export const fetchLeagueData = async (
-  leagueID: number,
-): Promise<LeagueData> => {
-  const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL
-    : "http://localhost:3000";
-  const response = await fetch(
-    `${baseUrl}/api/fetchLeagueDetails?leagueID=${leagueID}`,
-  );
-  if (response.ok) return response.json();
-  throw new Error("Failed to fetch league data");
-};

@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import ScoreBoard from "@/app/components/scoring/scoreboard";
 import { LeagueData } from "@/app/models/league";
 import { GameStatusData } from "@/app/models/game";
-import {
-  fetchTeamDetails,
-  ScoringData,
-} from "@/app/api/fetchScoringData/route";
+import { ScoringData } from "@/app/api/fetchScoringData/route";
 import LoadingSpinner from "@/app/components/common/loadingSpinner";
-import { fetchLeagueData } from "@/app/api/fetchLeagueDetails/route";
-import { fetchGameWeekDetails } from "@/app/api/fetchGameWeekDetails/route";
+import {
+  fetchGameWeekDetails,
+  fetchLeagueData,
+  fetchTeamDetails,
+} from "@/app/apiHelpers/apiHelpers";
 
 export default function ScoringPage({
   params,
