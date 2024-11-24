@@ -1,8 +1,9 @@
 import React from "react";
 import { PlayerPick } from "@/app/models/playerPick";
-import { HandThumbDownIcon } from "@heroicons/react/20/solid";
 import { LeagueEntry } from "@/app/models/league";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
+import { faAward } from "@fortawesome/free-solid-svg-icons";
 type ScoreBoardProps = {
   picks: PlayerPick[];
   team: LeagueEntry | undefined;
@@ -39,14 +40,16 @@ export default function ScoreBoard({
                   <span className="text-sm font-medium text-gray-800 dark:text-gray-100 flex gap-2">
                     {pick.name}
                     {pick.willBeAutosubbed && <span> (autosub)</span>}
+                    {pick.gameStatus.isInProgress && pick.isOnField && (
+                      <FontAwesomeIcon icon={faPersonRunning} />
+                    )}
                     {pick.points <= 0 && !pick.isSub && pick.hasPlayed && (
                       <div className="relative group">
-                        <HandThumbDownIcon
-                          height={20}
-                          width={20}
+                        <FontAwesomeIcon
+                          icon={faAward}
                           className="text-red-500"
                         />
-                        <span className="absolute left-1/2 transform -translate-x-1/2 mt-2 text-xs bg-red-500 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
+                        <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-red-500 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
                           Certified Bum
                         </span>
                       </div>

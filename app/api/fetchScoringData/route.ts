@@ -79,7 +79,6 @@ async function processTeamData(
   );
   return { picks, totalPoints };
 }
-
 function mapBootstrapData(
   bootstrapData: FplBootstrapResponse,
   scoringData: PlayerDataResponse,
@@ -99,16 +98,19 @@ function mapBootstrapData(
     const playerName = playerInfo?.web_name || "Unknown";
     const isInjured = playerInfo?.chance_of_playing_this_round == 0;
 
-    const gameFinished = isGameFinished(pick.element, gameweekFixtureData);
+    const gameStatus = getGameStatus(pick.element, gameweekFixtureData);
 
     const hasPlayed = (playerData?.stats.minutes || 0) > 0;
-    const hasNotPlayed = (playerData?.stats.minutes || 0) <= 0 && gameFinished;
+
+    const wasSubbedOn =
+      gameStatus.isInProgress && playerData?.stats.minutes > 0;
+    const isOnField =
+      wasSubbedOn &&
+      playerData?.stats.minutes < (gameStatus?.currentMinute || 0);
 
     let willBeAutosubbed = false;
 
-    if ((hasNotPlayed && !isSub) || isInjured) {
-      // will need to account for position of player
-
+    if ((gameStatus.isFinished && !hasPlayed && !isSub) || isInjured) {
       const eligibleSubs = benchPlayers.filter((benchPick) => {
         const benchPlayerData = scoringData.elements[benchPick.element];
         return (
@@ -127,22 +129,37 @@ function mapBootstrapData(
       isSub,
       hasPlayed,
       willBeAutosubbed,
+      isInjured,
+      isOnField,
+      gameStatus,
     };
   });
 }
 
-function isGameFinished(
+function getGameStatus(
   playerId: number,
   gameweekFixtureData: Fixtures,
-): boolean {
+): {
+  isFinished: boolean;
+  isInProgress: boolean;
+  currentMinute: number | null;
+} {
   for (const match of gameweekFixtureData) {
-    if (
-      match.started &&
-      match.finished &&
-      (match.team_a === playerId || match.team_h === playerId)
-    ) {
-      return true;
+    if (match.team_a === playerId || match.team_h === playerId) {
+      const isFinished = match.finished;
+      const isInProgress = match.started && !match.finished;
+      const currentMinute = isInProgress ? match.minutes : null;
+
+      return {
+        isFinished,
+        isInProgress,
+        currentMinute,
+      };
     }
   }
-  return false;
+  return {
+    isFinished: false,
+    isInProgress: false,
+    currentMinute: null,
+  };
 }

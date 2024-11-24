@@ -9,10 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.1",
+    "@fortawesome/free-brands-svg-icons": "^6.7.1",
+    "@fortawesome/free-regular-svg-icons": "^6.7.1",
+    "@fortawesome/free-solid-svg-icons": "^6.7.1",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@headlessui/react": "^2.1.9",
     "@heroicons/react": "^2.1.5",
     "@vercel/postgres": "^0.10.0",
     "dotenv": "^16.4.5",
+    "font-awesome": "^4.7.0",
     "next": "14.2.13",
     "raw-loader": "^4.0.2",
     "react": "^18",

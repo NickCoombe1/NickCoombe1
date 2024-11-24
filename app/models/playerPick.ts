@@ -1,12 +1,18 @@
 export interface PlayerPick {
+  id: number;
   element: number;
   position: number;
-  is_captain: boolean;
-  is_vice_captain: boolean;
   multiplier: number;
-  name: string;
-  points: number;
   isSub: boolean;
+  points: number;
+  pointDetails?: any;
+  name: string;
   hasPlayed: boolean;
   willBeAutosubbed: boolean;
+  isOnField: boolean;
+  gameStatus: {
+    isFinished: boolean;
+    isInProgress: boolean;
+    currentMinute: number | null;
+  };
 }
