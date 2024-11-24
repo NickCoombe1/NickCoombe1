@@ -147,7 +147,7 @@ function mapBootstrapData(
       const eligibleSubs = benchPlayers.filter((benchPick) => {
         const benchPlayerData = scoringData.elements[benchPick.element];
         return (
-          benchPick.position <= 12 && // Ensure the player is on the bench
+          benchPick.position >= 12 && // Ensure the player is on the bench
           (benchPlayerData?.stats.minutes || 0) > 0 // Bench player has played
         );
       });
@@ -159,6 +159,7 @@ function mapBootstrapData(
           sub.fieldPosition === pick.fieldPosition // Same position (e.g., replacing a midfielder with a midfielder)
         );
       });
+
       if (replacement) {
         // Swap the positions of the pick and replacement player
         const replacementIndex = teamData.picks.findIndex(

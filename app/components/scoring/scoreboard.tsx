@@ -93,11 +93,11 @@ export default function ScoreBoard({
                   </span>
                   <span
                     className={`text-sm font-semibold ${
-                      pick.points > 0
-                        ? "text-green-600"
-                        : pick.points === 0
-                          ? "text-gray-500"
+                      pick.hasPlayed
+                        ? pick.points > 0
+                          ? "text-green-600"
                           : "text-red-600"
+                        : "text-gray-500"
                     }`}
                   >
                     {pick.points}
