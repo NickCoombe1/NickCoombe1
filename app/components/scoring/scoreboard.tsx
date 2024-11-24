@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import { faAward } from "@fortawesome/free-solid-svg-icons";
 import { faRectangleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 type ScoreBoardProps = {
   picks: PlayerPick[];
@@ -41,7 +42,11 @@ export default function ScoreBoard({
                 >
                   <span className="text-sm font-medium text-gray-800 dark:text-gray-100 flex gap-2">
                     {pick.name}
-                    {pick.willBeAutosubbed && <span> (autosub)</span>}
+                    {pick.willBeAutosubbed && (
+                      <div className="relative groupu">
+                        <FontAwesomeIcon icon={faArrowRightArrowLeft} />
+                      </div>
+                    )}
                     {pick.gameStatus.isInProgress && pick.isOnField && (
                       <div className="relative group">
                         <FontAwesomeIcon icon={faPersonRunning} />
