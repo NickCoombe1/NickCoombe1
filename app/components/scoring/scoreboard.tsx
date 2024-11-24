@@ -60,24 +60,26 @@ export default function ScoreBoard({
                     )}
                     {pick.yellowCarded && (
                       <div className="relative group">
-                        {pick.yellowCarded && (
-                          <FontAwesomeIcon
-                            icon={faRectangleXmark}
-                            transform={{ rotate: 90 }}
-                            className="text-yellow-400"
-                          />
-                        )}
+                        <FontAwesomeIcon
+                          icon={faRectangleXmark}
+                          transform={{ rotate: 90 }}
+                          className="text-yellow-400"
+                        />
+                        <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-yellow-400 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
+                          Yellow Card
+                        </span>
                       </div>
                     )}
                     {pick.redCarded && (
                       <div className="relative group">
-                        {pick.yellowCarded && (
-                          <FontAwesomeIcon
-                            icon={faRectangleXmark}
-                            transform={{ rotate: 90 }}
-                            className="text-red-500"
-                          />
-                        )}
+                        <FontAwesomeIcon
+                          icon={faRectangleXmark}
+                          transform={{ rotate: 90 }}
+                          className="text-red-500"
+                        />
+                        <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-red-500 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
+                          Red Card
+                        </span>
                       </div>
                     )}
                   </span>

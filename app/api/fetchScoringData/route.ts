@@ -97,7 +97,8 @@ function mapBootstrapData(
     );
     const playerName = playerInfo?.web_name || "Unknown";
     const isInjured = playerInfo?.chance_of_playing_this_round == 0;
-    const gameStatus = getGameStatus(pick.element, gameweekFixtureData);
+
+    const gameStatus = getGameStatus(playerInfo?.team, gameweekFixtureData);
 
     const hasPlayed = (playerData?.stats.minutes || 0) > 0;
 
@@ -110,8 +111,6 @@ function mapBootstrapData(
     let willBeAutosubbed = false;
 
     if ((gameStatus.isFinished && !hasPlayed && !isSub) || isInjured) {
-      const playerToReplacePosition = pick.position;
-
       // Create a mapping of positions to remaining players on the field
       const positionCounts = {
         Goalkeeper: teamData.picks.filter(
@@ -168,8 +167,6 @@ function mapBootstrapData(
         const pickIndex = teamData.picks.findIndex(
           (p) => p.element === pick.element,
         );
-        console.log(replacementIndex);
-        console.log(pickIndex);
         if (replacementIndex !== -1 && pickIndex !== -1) {
           // Swap their positions
           const tempPosition = teamData.picks[pickIndex].position;
@@ -183,7 +180,6 @@ function mapBootstrapData(
         willBeAutosubbed = false; // No valid replacement found
       }
     }
-
     return {
       ...pick,
       points: totalPoints,
@@ -203,24 +199,26 @@ function mapBootstrapData(
 }
 
 function getGameStatus(
-  playerId: number,
+  teamID: number | undefined,
   gameweekFixtureData: Fixtures,
 ): {
   isFinished: boolean;
   isInProgress: boolean;
   currentMinute: number | null;
 } {
-  for (const match of gameweekFixtureData) {
-    if (match.team_a === playerId || match.team_h === playerId) {
-      const isFinished = match.finished;
-      const isInProgress = match.started && !match.finished;
-      const currentMinute = isInProgress ? match.minutes : null;
+  if (teamID) {
+    for (const match of gameweekFixtureData) {
+      if (match.team_a === teamID || match.team_h === teamID) {
+        const isFinished = match.finished;
+        const isInProgress = match.started && !match.finished;
+        const currentMinute = isInProgress ? match.minutes : null;
 
-      return {
-        isFinished,
-        isInProgress,
-        currentMinute,
-      };
+        return {
+          isFinished,
+          isInProgress,
+          currentMinute,
+        };
+      }
     }
   }
   return {

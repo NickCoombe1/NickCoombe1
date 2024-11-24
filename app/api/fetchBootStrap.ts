@@ -15,6 +15,7 @@ export interface PlayerBootstrapData {
   chance_of_playing_next_round: number;
   chance_of_playing_this_round: number;
   element_type: ElementType;
+  team: number;
 }
 
 type PlayerBootstrapElements = Record<string, PlayerBootstrapData>;
