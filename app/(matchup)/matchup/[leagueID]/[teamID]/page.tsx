@@ -99,16 +99,13 @@ export default function MatchupPage({
           Gameweek {gameweekInfo?.current_event}
         </h1>
       </div>
-      <div className="flex flex-col lg:flex-row justify-between items-center gap-6 m-auto">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold">
-            {team?.entry_name} v {opponent?.entry_name}
-          </h2>
-          <p className="text-lg">
-            Score: {teamScoring?.totalPoints || 0} v{" "}
-            {opponentScoring?.totalPoints || 0}
-          </p>
-        </div>
+      <div className="flex flex-col justify-between items-center m-auto text-center gap-4 mb-4">
+        <h2 className="text-xl font-bold">
+          {team?.entry_name} v {opponent?.entry_name}
+        </h2>
+        <p className="text-5xl font-bold">
+          {teamScoring?.totalPoints || 0} v {opponentScoring?.totalPoints || 0}
+        </p>
       </div>
 
       <div className="flex flex-col lg:flex-row justify-center gap-8">
