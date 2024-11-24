@@ -43,8 +43,11 @@ export default function ScoreBoard({
                   <span className="text-sm font-medium text-gray-800 dark:text-gray-100 flex gap-2">
                     {pick.name}
                     {pick.willBeAutosubbed && (
-                      <div className="relative groupu">
+                      <div className="relative group">
                         <FontAwesomeIcon icon={faArrowRightArrowLeft} />
+                        <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs dark:bg-white dark:text-black bg-gray-600 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
+                          Autosubbed
+                        </span>
                       </div>
                     )}
                     {pick.gameStatus.isInProgress && pick.isOnField && (
