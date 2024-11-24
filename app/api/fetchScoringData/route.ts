@@ -97,7 +97,7 @@ function mapBootstrapData(
     );
     const playerName = playerInfo?.web_name || "Unknown";
     const isInjured = playerInfo?.chance_of_playing_this_round == 0;
-
+    console.log(playerData);
     const gameStatus = getGameStatus(pick.element, gameweekFixtureData);
 
     const hasPlayed = (playerData?.stats.minutes || 0) > 0;
@@ -132,6 +132,8 @@ function mapBootstrapData(
       isInjured,
       isOnField,
       gameStatus,
+      yellowCarded: playerData.stats.yellow_cards > 0,
+      redCarded: playerData.stats.red_cards > 0,
     };
   });
 }

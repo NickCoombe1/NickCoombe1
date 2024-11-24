@@ -4,6 +4,7 @@ import { LeagueEntry } from "@/app/models/league";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import { faAward } from "@fortawesome/free-solid-svg-icons";
+import { faRectangleXmark } from "@fortawesome/free-solid-svg-icons";
 type ScoreBoardProps = {
   picks: PlayerPick[];
   team: LeagueEntry | undefined;
@@ -41,7 +42,9 @@ export default function ScoreBoard({
                     {pick.name}
                     {pick.willBeAutosubbed && <span> (autosub)</span>}
                     {pick.gameStatus.isInProgress && pick.isOnField && (
-                      <FontAwesomeIcon icon={faPersonRunning} />
+                      <div className="relative group">
+                        <FontAwesomeIcon icon={faPersonRunning} />
+                      </div>
                     )}
                     {pick.points <= 0 && !pick.isSub && pick.hasPlayed && (
                       <div className="relative group">
@@ -52,6 +55,28 @@ export default function ScoreBoard({
                         <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-red-500 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
                           Certified Bum
                         </span>
+                      </div>
+                    )}
+                    {pick.yellowCarded && (
+                      <div className="relative group">
+                        {pick.yellowCarded && (
+                          <FontAwesomeIcon
+                            icon={faRectangleXmark}
+                            transform={{ rotate: 90 }}
+                            className="text-yellow-400"
+                          />
+                        )}
+                      </div>
+                    )}
+                    {pick.redCarded && (
+                      <div className="relative group">
+                        {pick.yellowCarded && (
+                          <FontAwesomeIcon
+                            icon={faRectangleXmark}
+                            transform={{ rotate: 90 }}
+                            className="text-red-500"
+                          />
+                        )}
                       </div>
                     )}
                   </span>

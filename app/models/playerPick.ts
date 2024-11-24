@@ -10,6 +10,8 @@ export interface PlayerPick {
   hasPlayed: boolean;
   willBeAutosubbed: boolean;
   isOnField: boolean;
+  yellowCarded: boolean;
+  redCarded: boolean;
   gameStatus: {
     isFinished: boolean;
     isInProgress: boolean;
