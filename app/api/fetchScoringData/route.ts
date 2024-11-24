@@ -9,7 +9,7 @@ import { PlayerPick } from "../../models/playerPick";
 import { FplTeamPicksResponse } from "../../models/fplTeamPicksResponse";
 import { fetchGameweekFixtureData } from "@/app/apiHelpers/apiHelpers";
 import { Fixtures } from "@/app/models/fplFixtureResponse";
-
+import { ElementType } from "@/app/models/playerData";
 export interface ScoringData {
   totalPoints: number;
   picks: PlayerPick[];
@@ -97,7 +97,6 @@ function mapBootstrapData(
     );
     const playerName = playerInfo?.web_name || "Unknown";
     const isInjured = playerInfo?.chance_of_playing_this_round == 0;
-    console.log(playerData);
     const gameStatus = getGameStatus(pick.element, gameweekFixtureData);
 
     const hasPlayed = (playerData?.stats.minutes || 0) > 0;
@@ -111,6 +110,41 @@ function mapBootstrapData(
     let willBeAutosubbed = false;
 
     if ((gameStatus.isFinished && !hasPlayed && !isSub) || isInjured) {
+      const playerToReplacePosition = pick.position;
+
+      // Create a mapping of positions to remaining players on the field
+      const positionCounts = {
+        Goalkeeper: teamData.picks.filter(
+          (p) =>
+            p.fieldPosition === ElementType.Goalkeeper && // Goalkeeper type
+            !p.isSub &&
+            p.element !== pick.element, // Exclude the player being replaced
+        ).length,
+        Defender: teamData.picks.filter(
+          (p) =>
+            p.fieldPosition === ElementType.Defender && // Defender type
+            !p.isSub &&
+            p.element !== pick.element,
+        ).length,
+        Midfielder: teamData.picks.filter(
+          (p) =>
+            p.fieldPosition === ElementType.Midfielder && // Midfielder type
+            !p.isSub &&
+            p.element !== pick.element,
+        ).length,
+        Forward: teamData.picks.filter(
+          (p) =>
+            p.fieldPosition === ElementType.Forward && // Forward type
+            !p.isSub &&
+            p.element !== pick.element,
+        ).length,
+      };
+      const minRequirements = {
+        Goalkeeper: 1,
+        Defender: 3,
+        Midfielder: 2,
+        Forward: 1,
+      };
       const eligibleSubs = benchPlayers.filter((benchPick) => {
         const benchPlayerData = scoringData.elements[benchPick.element];
         return (
@@ -118,7 +152,36 @@ function mapBootstrapData(
           (benchPlayerData?.stats.minutes || 0) > 0 // Bench player has played
         );
       });
-      willBeAutosubbed = eligibleSubs.length > 0;
+      const replacement = eligibleSubs.find((sub) => {
+        const subType =
+          sub.fieldPosition as unknown as keyof typeof positionCounts; // Assert that sub.fieldPosition is one of the valid keys
+        return (
+          positionCounts[subType] < minRequirements[subType] || // Position requirement not met
+          sub.fieldPosition === pick.fieldPosition // Same position (e.g., replacing a midfielder with a midfielder)
+        );
+      });
+      if (replacement) {
+        // Swap the positions of the pick and replacement player
+        const replacementIndex = teamData.picks.findIndex(
+          (p) => p.element === replacement.element,
+        );
+        const pickIndex = teamData.picks.findIndex(
+          (p) => p.element === pick.element,
+        );
+        console.log(replacementIndex);
+        console.log(pickIndex);
+        if (replacementIndex !== -1 && pickIndex !== -1) {
+          // Swap their positions
+          const tempPosition = teamData.picks[pickIndex].position;
+          teamData.picks[pickIndex].position =
+            teamData.picks[replacementIndex].position;
+          teamData.picks[replacementIndex].position = tempPosition;
+        }
+
+        willBeAutosubbed = true; // Set to true as substitution is happening
+      } else {
+        willBeAutosubbed = false; // No valid replacement found
+      }
     }
 
     return {
@@ -134,6 +197,7 @@ function mapBootstrapData(
       gameStatus,
       yellowCarded: playerData.stats.yellow_cards > 0,
       redCarded: playerData.stats.red_cards > 0,
+      fieldPosition: playerInfo?.element_type ? playerInfo?.element_type : 1,
     };
   });
 }

@@ -8,6 +8,13 @@ export interface PlayerExplain {
   explain: [StatExplanation[], number][];
 }
 
+export enum ElementType {
+  Goalkeeper = 1,
+  Defender = 2,
+  Midfielder = 3,
+  Forward = 4,
+}
+
 interface StatExplanation {
   name: string;
   points: number;

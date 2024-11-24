@@ -1,3 +1,4 @@
+import { ElementType } from "../models/playerData";
 export interface FplBootstrapResponse {
   element_stats: [];
   element_types: [];
@@ -13,6 +14,7 @@ export interface PlayerBootstrapData {
   id: number;
   chance_of_playing_next_round: number;
   chance_of_playing_this_round: number;
+  element_type: ElementType;
 }
 
 type PlayerBootstrapElements = Record<string, PlayerBootstrapData>;

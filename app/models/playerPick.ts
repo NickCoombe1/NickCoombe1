@@ -1,3 +1,5 @@
+import { ElementType } from "./playerData";
+
 export interface PlayerPick {
   id: number;
   element: number;
@@ -12,6 +14,7 @@ export interface PlayerPick {
   isOnField: boolean;
   yellowCarded: boolean;
   redCarded: boolean;
+  fieldPosition: ElementType;
   gameStatus: {
     isFinished: boolean;
     isInProgress: boolean;
