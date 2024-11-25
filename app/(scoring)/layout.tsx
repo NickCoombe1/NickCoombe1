@@ -5,9 +5,22 @@ import Header from "@/app/components/common/header";
 import Footer from "@/app/components/common/footer";
 import { cookies } from "next/headers";
 export const metadata: Metadata = {
-  title: "Nick Coombe",
-  description: "Welcome :)",
-  icons: { icon: "/hippo-solid.svg" },
+  title: "FPL Scoreboard",
+  description: "",
+  icons: {
+    icon: [
+      {
+        media: "(prefers-color-scheme: light)",
+        url: "/soccer-ball-light.svg",
+        href: "/soccer-ball-light.svg",
+      },
+      {
+        media: "(prefers-color-scheme: dark)",
+        url: "/soccer-ball-dark.svg",
+        href: "/soccer-ball-dark.svg",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

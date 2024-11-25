@@ -102,7 +102,7 @@ export default function TeamPage() {
                 <td
                   className="py-3 px-4"
                   onClick={() =>
-                    router.push(`/scoring/${league.league.id}/${teamID}/0`)
+                    router.push(`/matchup/${league.league.id}/${teamID}`)
                   }
                 >
                   {league.league.name}

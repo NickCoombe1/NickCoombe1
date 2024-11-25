@@ -1,13 +1,27 @@
-import type { Metadata } from "next";
 import "../globals.css";
 import "dotenv/config";
 import Header from "@/app/components/common/header";
 import Footer from "@/app/components/common/footer";
 import { cookies } from "next/headers";
+import type { Metadata } from "next";
+
 export const metadata: Metadata = {
-  title: "Nick Coombe",
-  description: "Welcome :)",
-  icons: { icon: "/hippo-solid.svg" },
+  title: "FPL Scoreboard",
+  description: "",
+  icons: {
+    icon: [
+      {
+        media: "(prefers-color-scheme: light)",
+        url: "/soccer-ball-light.svg",
+        href: "/soccer-ball-light.svg",
+      },
+      {
+        media: "(prefers-color-scheme: dark)",
+        url: "/soccer-ball-dark.svg",
+        href: "/soccer-ball-dark.svg",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -25,7 +39,7 @@ export default function RootLayout({
       <body className="bg-gray-50 text-gray-700 dark:bg-secondary dark:text-primary">
         <div className="max-w-7xl mx-auto p-8">
           {" "}
-          <Header initialTheme={theme} />
+          <Header initialTheme={theme} headerText={"Matchup"} />
           <main> {children}</main>
         </div>
         <Footer />

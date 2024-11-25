@@ -1,40 +1,36 @@
-"use client";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import ThemeToggle from "@/app/components/utility/themeToggle";
 import Link from "next/link";
-
+import NextImage from "next/image";
 interface HeaderProps {
   initialTheme: string;
+  headerText?: string;
 }
-export default function Header({ initialTheme }: HeaderProps): ReactNode {
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const toggleAnimation = () => {
-    setIsAnimating((prev) => !prev);
-  };
-
+export default function Header({
+  initialTheme,
+  headerText,
+}: HeaderProps): ReactNode {
   return (
     <header>
       <nav className="border-gray-200 dark:bg-gray-800 mb-6">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <div className="flex items-center">
-            {isAnimating ? (
-              <img
-                src="/hippo-solid-animate.svg"
-                className="mr-3 h-6 sm:h-9"
-                alt="Nick Logo"
-                onClick={toggleAnimation}
-              />
-            ) : (
-              <img
-                src="/hippo-solid.svg"
-                className="mr-3 h-6 sm:h-9"
-                alt="Nick Logo"
-                onClick={toggleAnimation}
-              />
-            )}
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              Nick Coombe
+            <NextImage
+              src="/soccer-ball-light.svg"
+              className="mr-3 h-6 sm:h-9 dark:hidden"
+              alt="soccerBallFPl"
+              width={24}
+              height={24}
+            />
+            <NextImage
+              src="/soccer-ball-dark.svg"
+              className="mr-3 h-6 sm:h-9 hidden dark:block"
+              alt="soccerBallFPl"
+              width={24}
+              height={24}
+            />
+            <span className="self-center text-xl font-semibold whitespace-nowrap text-gray-700 dark:text-white">
+              {headerText ? headerText : "FPL Scoreboard"}
             </span>
           </div>{" "}
           <ul className="flex flex-col font-medium lg:flex-row lg:space-x-8 lg:mt-0 items-center">
