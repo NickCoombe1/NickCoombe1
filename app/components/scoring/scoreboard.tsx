@@ -50,7 +50,7 @@ export default function ScoreBoard({
                         </span>
                       </div>
                     )}
-                    {pick.gameStatus.isInProgress && pick.isOnField && (
+                    {pick.gameStatus.isInProgress && pick.wasSubbedOn && (
                       <div className="relative group">
                         <FontAwesomeIcon icon={faPersonRunning} />
                       </div>

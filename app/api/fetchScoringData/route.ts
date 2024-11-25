@@ -104,9 +104,6 @@ function mapBootstrapData(
 
     const wasSubbedOn =
       gameStatus.isInProgress && playerData?.stats.minutes > 0;
-    const isOnField =
-      wasSubbedOn &&
-      playerData?.stats.minutes < (gameStatus?.currentMinute || 0);
 
     let willBeAutosubbed = false;
 
@@ -190,7 +187,7 @@ function mapBootstrapData(
       hasPlayed,
       willBeAutosubbed,
       isInjured,
-      isOnField,
+      wasSubbedOn,
       gameStatus,
       yellowCarded: playerData.stats.yellow_cards > 0,
       redCarded: playerData.stats.red_cards > 0,
