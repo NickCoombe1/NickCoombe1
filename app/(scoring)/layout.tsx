@@ -4,6 +4,7 @@ import "dotenv/config";
 import Header from "@/app/components/common/header";
 import Footer from "@/app/components/common/footer";
 import { cookies } from "next/headers";
+
 export const metadata: Metadata = {
   title: "FPL Scoreboard",
   description: "",
@@ -11,13 +12,15 @@ export const metadata: Metadata = {
     icon: [
       {
         media: "(prefers-color-scheme: light)",
-        url: "/soccer-ball-light.svg",
-        href: "/soccer-ball-light.svg",
+        url: "/soccer-ball-light.png",
+        sizes: "32x32",
+        href: "/soccer-ball-light.png",
       },
       {
         media: "(prefers-color-scheme: dark)",
-        url: "/soccer-ball-dark.svg",
-        href: "/soccer-ball-dark.svg",
+        url: "/soccer-ball-dark.png",
+        sizes: "32x32",
+        href: "/soccer-ball-dark.png",
       },
     ],
   },
