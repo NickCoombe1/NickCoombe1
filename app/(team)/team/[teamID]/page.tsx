@@ -100,7 +100,7 @@ export default function TeamPage() {
                 className="hover:bg-gray-200 dark:hover:bg-gray-600"
               >
                 <td className="py-3 px-4">{league.league.name}</td>
-                <td className="py-3 px-4 flex flex-wrap justify-center gap-2">
+                <td className="py-3 px-4 border-l-2 border-gray-300 dark:border-gray-600 flex flex-wrap justify-center gap-2">
                   <button
                     onClick={() =>
                       router.push(`/scoring/${league.league.id}/${teamID}`)
