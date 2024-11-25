@@ -19,7 +19,7 @@ export default function TeamPage() {
     try {
       const response = await fetch(`/api/fetchLeagueID?teamId=${teamID}`);
       if (!response.ok) {
-        new Error("Failed to fetch team data");
+        throw new Error("Failed to fetch team data");
       }
       const data = await response.json();
       setError(""); // Clear any previous errors
@@ -74,7 +74,7 @@ export default function TeamPage() {
   }
 
   return (
-    <div className="min-h-[80vh] bg-gray-50 dark:bg-gray-800 flex flex-col items-center justify-center p-6">
+    <div className="min-h-[80vh] bg-gray-50 dark:bg-secondary flex flex-col items-center justify-center p-6">
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Select a League
@@ -82,14 +82,14 @@ export default function TeamPage() {
         <table className="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
           <thead>
             <tr className="text-left bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
-              <th className="py-3 px-4">League Name</th>
+              <th className="py-3 px-4">Leagues</th>
+              <th className="py-3 px-4 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {!teamData && !error && (
-              <tr className="hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer">
-                {" "}
-                <td className="py-3 px-4 flex justify-center">
+              <tr>
+                <td colSpan={2} className="py-3 px-4 flex justify-center">
                   <LoadingSpinner />
                 </td>
               </tr>
@@ -97,24 +97,40 @@ export default function TeamPage() {
             {leagueData?.map((league, index) => (
               <tr
                 key={index}
-                className="hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer"
+                className="hover:bg-gray-200 dark:hover:bg-gray-600"
               >
-                <td
-                  className="py-3 px-4"
-                  onClick={() =>
-                    router.push(`/matchup/${league.league.id}/${teamID}`)
-                  }
-                >
-                  {league.league.name}
+                <td className="py-3 px-4">{league.league.name}</td>
+                <td className="py-3 px-4 flex flex-wrap justify-center gap-2">
+                  <button
+                    onClick={() =>
+                      router.push(`/scoring/${league.league.id}/${teamID}`)
+                    }
+                    className="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    View Scoring
+                  </button>
+                  <button
+                    onClick={() =>
+                      router.push(`/matchup/${league.league.id}/${teamID}`)
+                    }
+                    className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                  >
+                    View Matchup
+                  </button>
+                  <button
+                    onClick={() => router.push(`/scoring/${league.league.id}`)}
+                    className="px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                  >
+                    League Scoring
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-
         <button
           onClick={() => router.push("/")}
-          className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="mt-6 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
         >
           Back to Welcome Page
         </button>
