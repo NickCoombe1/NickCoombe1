@@ -101,7 +101,9 @@ function mapBootstrapData(
     const gameStatus = getGameStatus(playerInfo?.team, gameweekFixtureData);
 
     const hasPlayed = (playerData?.stats.minutes || 0) > 0;
-
+    const fieldPosition = playerInfo?.element_type
+      ? playerInfo?.element_type
+      : 1;
     const wasSubbedOn =
       gameStatus.isInProgress && playerData?.stats.minutes > 0;
 
@@ -152,12 +154,22 @@ function mapBootstrapData(
         );
       });
       const replacement = eligibleSubs.find((sub) => {
-        const subType =
-          sub.fieldPosition as unknown as keyof typeof positionCounts; // Assert that sub.fieldPosition is one of the valid keys
-        return (
-          positionCounts[subType] < minRequirements[subType] || // Position requirement not met
-          sub.fieldPosition === pick.fieldPosition // Same position (e.g., replacing a midfielder with a midfielder)
+        const subPlayerInfo = Object.values(bootstrapData.elements).find(
+          (player) => player.id === sub.element,
         );
+        const subType = subPlayerInfo?.element_type;
+        if (
+          subType === ElementType.Goalkeeper &&
+          fieldPosition === ElementType.Goalkeeper
+        ) {
+          return true;
+        } else if (
+          subType === ElementType.Goalkeeper &&
+          fieldPosition !== ElementType.Goalkeeper
+        ) {
+          return false;
+        }
+        return true;
       });
 
       if (replacement) {
@@ -194,7 +206,7 @@ function mapBootstrapData(
       gameStatus,
       yellowCarded: playerData.stats.yellow_cards > 0,
       redCarded: playerData.stats.red_cards > 0,
-      fieldPosition: playerInfo?.element_type ? playerInfo?.element_type : 1,
+      fieldPosition: fieldPosition,
     };
   });
 }
