@@ -107,7 +107,10 @@ function mapBootstrapData(
 
     let willBeAutosubbed = false;
 
-    if ((gameStatus.isFinished && !hasPlayed && !isSub) || isInjured) {
+    if (
+      (gameStatus.isFinished && !hasPlayed && !isSub) ||
+      (isInjured && pick.position < 12)
+    ) {
       // Create a mapping of positions to remaining players on the field
       const positionCounts = {
         Goalkeeper: teamData.picks.filter(
