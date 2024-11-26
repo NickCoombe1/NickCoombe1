@@ -125,7 +125,7 @@ function mapBootstrapData(
   });
 }
 
-function calculateAutoSubs(
+export function calculateAutoSubs(
   team: PlayerPick[],
   benchPlayers: PlayerPick[],
 ): PlayerPick[] {
