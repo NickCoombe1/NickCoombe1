@@ -1,6 +1,6 @@
 import { PlayerPick } from "@/app/models/playerPick";
 import { ElementType } from "@/app/models/playerData";
-import { calculateAutoSubs } from "@/app/api/fetchScoringData/route";
+import { calculateAutoSubs } from "@/app/apiHelpers/calculateAutoSubs";
 
 const mockTeam: PlayerPick[] = [
   {
