@@ -32,19 +32,21 @@ export async function GET(request: Request) {
     const teamIDNumber = parseInt(teamID, 10);
     const gameweekNumber = parseInt(gameweek, 10);
 
-    const [bootstrapData, scoringData] = await Promise.all([
-      fetchBootstrapData(),
-      fetchScoringData(gameweekNumber),
-    ]);
-
-    const teamData = await processTeamData(
-      teamIDNumber,
-      gameweekNumber,
+    const [bootstrapData, scoringData, teamData, gameweekFixtureData] =
+      await Promise.all([
+        fetchBootstrapData(),
+        fetchScoringData(gameweekNumber),
+        fetchTeamData(teamIDNumber, gameweekNumber),
+        fetchGameweekFixtureData(gameweekNumber),
+      ]);
+    const processedTeamData = await processTeamData(
       bootstrapData,
       scoringData,
+      teamData,
+      gameweekFixtureData,
     );
 
-    return NextResponse.json(teamData);
+    return NextResponse.json(processedTeamData);
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json(
@@ -61,13 +63,11 @@ export async function GET(request: Request) {
 }
 
 async function processTeamData(
-  teamID: number,
-  gameweek: number,
   bootstrapData: FplBootstrapResponse,
   scoringData: PlayerDataResponse,
+  teamData: FplTeamPicksResponse,
+  gameweekFixtureData: Fixtures,
 ): Promise<ScoringData> {
-  const teamData = await fetchTeamData(teamID, gameweek);
-  const gameweekFixtureData = await fetchGameweekFixtureData(gameweek);
   const picks = mapBootstrapData(
     bootstrapData,
     scoringData,
@@ -82,6 +82,7 @@ async function processTeamData(
   const sortedTeam = calculateAutoSubs(picks, benchPlayers);
   return { picks: sortedTeam, totalPoints };
 }
+
 function mapBootstrapData(
   bootstrapData: FplBootstrapResponse,
   scoringData: PlayerDataResponse,
@@ -176,6 +177,7 @@ function calculateAutoSubs(
   });
   return team;
 }
+
 function getGameStatus(
   teamID: number | undefined,
   gameweekFixtureData: Fixtures,
