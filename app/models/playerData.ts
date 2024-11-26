@@ -22,7 +22,7 @@ interface StatExplanation {
   stat: string;
 }
 
-interface PlayerStats {
+export interface PlayerStats {
   minutes: number;
   goals_scored: number;
   assists: number;
