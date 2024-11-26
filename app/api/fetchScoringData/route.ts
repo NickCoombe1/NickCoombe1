@@ -113,39 +113,6 @@ function mapBootstrapData(
       (gameStatus.isFinished && !hasPlayed && !isSub) ||
       (isInjured && pick.position < 12)
     ) {
-      // Create a mapping of positions to remaining players on the field
-      const positionCounts = {
-        Goalkeeper: teamData.picks.filter(
-          (p) =>
-            p.fieldPosition === ElementType.Goalkeeper && // Goalkeeper type
-            !p.isSub &&
-            p.element !== pick.element, // Exclude the player being replaced
-        ).length,
-        Defender: teamData.picks.filter(
-          (p) =>
-            p.fieldPosition === ElementType.Defender && // Defender type
-            !p.isSub &&
-            p.element !== pick.element,
-        ).length,
-        Midfielder: teamData.picks.filter(
-          (p) =>
-            p.fieldPosition === ElementType.Midfielder && // Midfielder type
-            !p.isSub &&
-            p.element !== pick.element,
-        ).length,
-        Forward: teamData.picks.filter(
-          (p) =>
-            p.fieldPosition === ElementType.Forward && // Forward type
-            !p.isSub &&
-            p.element !== pick.element,
-        ).length,
-      };
-      const minRequirements = {
-        Goalkeeper: 1,
-        Defender: 3,
-        Midfielder: 2,
-        Forward: 1,
-      };
       const eligibleSubs = benchPlayers.filter((benchPick) => {
         const benchPlayerData = scoringData.elements[benchPick.element];
         return (
