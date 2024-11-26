@@ -11,6 +11,7 @@ export interface PlayerPick {
   name: string;
   hasPlayed: boolean;
   willBeAutosubbed: boolean;
+  isInjured: boolean;
   wasSubbedOn: boolean;
   yellowCarded: boolean;
   redCarded: boolean;

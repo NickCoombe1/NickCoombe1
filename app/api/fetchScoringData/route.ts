@@ -10,6 +10,7 @@ import { FplTeamPicksResponse } from "../../models/fplTeamPicksResponse";
 import { fetchGameweekFixtureData } from "@/app/apiHelpers/apiHelpers";
 import { Fixtures } from "@/app/models/fplFixtureResponse";
 import { ElementType } from "@/app/models/playerData";
+
 export interface ScoringData {
   totalPoints: number;
   picks: PlayerPick[];
@@ -77,7 +78,9 @@ async function processTeamData(
     (acc, pick) => acc + (pick.isSub ? 0 : pick.points),
     0,
   );
-  return { picks, totalPoints };
+  const benchPlayers = teamData.picks.filter((pick) => pick.position > 11);
+  const sortedTeam = calculateAutoSubs(picks, benchPlayers);
+  return { picks: sortedTeam, totalPoints };
 }
 function mapBootstrapData(
   bootstrapData: FplBootstrapResponse,
@@ -85,8 +88,6 @@ function mapBootstrapData(
   teamData: FplTeamPicksResponse,
   gameweekFixtureData: Fixtures,
 ): PlayerPick[] {
-  const benchPlayers = teamData.picks.filter((pick) => pick.position > 11);
-
   return teamData.picks.map((pick) => {
     const playerData = scoringData.elements[pick.element];
     const basePoints = playerData?.stats.total_points || 0;
@@ -106,60 +107,6 @@ function mapBootstrapData(
       : 1;
     const wasSubbedOn =
       gameStatus.isInProgress && playerData?.stats.minutes > 0;
-
-    let willBeAutosubbed = false;
-
-    if (
-      (gameStatus.isFinished && !hasPlayed && !isSub) ||
-      (isInjured && pick.position < 12)
-    ) {
-      const eligibleSubs = benchPlayers.filter((benchPick) => {
-        const benchPlayerData = scoringData.elements[benchPick.element];
-        return (
-          benchPick.position >= 12 && // Ensure the player is on the bench
-          (benchPlayerData?.stats.minutes || 0) > 0 // Bench player has played
-        );
-      });
-      const replacement = eligibleSubs.find((sub) => {
-        const subPlayerInfo = Object.values(bootstrapData.elements).find(
-          (player) => player.id === sub.element,
-        );
-        const subType = subPlayerInfo?.element_type;
-        if (
-          subType === ElementType.Goalkeeper &&
-          fieldPosition === ElementType.Goalkeeper
-        ) {
-          return true;
-        } else if (
-          subType === ElementType.Goalkeeper &&
-          fieldPosition !== ElementType.Goalkeeper
-        ) {
-          return false;
-        }
-        return true;
-      });
-
-      if (replacement) {
-        // Swap the positions of the pick and replacement player
-        const replacementIndex = teamData.picks.findIndex(
-          (p) => p.element === replacement.element,
-        );
-        const pickIndex = teamData.picks.findIndex(
-          (p) => p.element === pick.element,
-        );
-        if (replacementIndex !== -1 && pickIndex !== -1) {
-          // Swap their positions
-          const tempPosition = teamData.picks[pickIndex].position;
-          teamData.picks[pickIndex].position =
-            teamData.picks[replacementIndex].position;
-          teamData.picks[replacementIndex].position = tempPosition;
-        }
-
-        willBeAutosubbed = true; // Set to true as substitution is happening
-      } else {
-        willBeAutosubbed = false; // No valid replacement found
-      }
-    }
     return {
       ...pick,
       points: totalPoints,
@@ -167,7 +114,6 @@ function mapBootstrapData(
       name: playerName,
       isSub,
       hasPlayed,
-      willBeAutosubbed,
       isInjured,
       wasSubbedOn,
       gameStatus,
@@ -178,6 +124,58 @@ function mapBootstrapData(
   });
 }
 
+function calculateAutoSubs(
+  team: PlayerPick[],
+  benchPlayers: PlayerPick[],
+): PlayerPick[] {
+  team.forEach((pick) => {
+    if (
+      (pick.gameStatus.isFinished && !pick.hasPlayed && !pick.isSub) ||
+      (pick.isInjured && pick.position < 12)
+    ) {
+      const eligibleSubs = benchPlayers.filter((benchPick) => {
+        return (
+          benchPick.position >= 12 && // Ensure the player is on the bench
+          benchPick.hasPlayed
+        );
+      });
+      const replacement = eligibleSubs.find((sub) => {
+        const subType = sub?.fieldPosition;
+        if (
+          subType === ElementType.Goalkeeper &&
+          pick.fieldPosition === ElementType.Goalkeeper
+        ) {
+          return true;
+        } else if (
+          subType === ElementType.Goalkeeper &&
+          pick.fieldPosition !== ElementType.Goalkeeper
+        ) {
+          return false;
+        }
+        return true;
+      });
+
+      if (replacement) {
+        // Swap the positions of the pick and replacement player
+        const replacementIndex = team.findIndex(
+          (p) => p.element === replacement.element,
+        );
+        const pickIndex = team.findIndex((p) => p.element === pick.element);
+        if (replacementIndex !== -1 && pickIndex !== -1) {
+          // Swap their positions
+          const tempPosition = team[pickIndex].position;
+          team[pickIndex].position = team[replacementIndex].position;
+          team[replacementIndex].position = tempPosition;
+        }
+
+        pick.willBeAutosubbed = true; // Set to true as substitution is happening
+      } else {
+        pick.willBeAutosubbed = false; // No valid replacement found
+      }
+    }
+  });
+  return team;
+}
 function getGameStatus(
   teamID: number | undefined,
   gameweekFixtureData: Fixtures,
