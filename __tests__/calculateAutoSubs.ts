@@ -72,9 +72,26 @@ const mockTeam: PlayerPick[] = [
     gameStatus: { isFinished: true, isInProgress: false, currentMinute: null },
   },
   {
-    id: 5,
-    element: 105,
+    id: 12,
+    element: 112,
     position: 12,
+    multiplier: 1,
+    isSub: false,
+    points: 0,
+    name: "Goalkeeper",
+    hasPlayed: true,
+    willBeAutosubbed: false,
+    wasSubbedOn: false,
+    isInjured: false,
+    yellowCarded: false,
+    redCarded: false,
+    fieldPosition: ElementType.Goalkeeper,
+    gameStatus: { isFinished: false, isInProgress: false, currentMinute: null },
+  },
+  {
+    id: 13,
+    element: 105,
+    position: 13,
     multiplier: 1,
     isSub: true,
     points: 5,
@@ -89,9 +106,9 @@ const mockTeam: PlayerPick[] = [
     gameStatus: { isFinished: true, isInProgress: false, currentMinute: null },
   },
   {
-    id: 6,
+    id: 14,
     element: 106,
-    position: 13,
+    position: 14,
     multiplier: 1,
     isSub: true,
     points: 6,
@@ -107,7 +124,7 @@ const mockTeam: PlayerPick[] = [
   },
 ];
 
-describe("Defender substitution tests", () => {
+describe("Team substitution tests", () => {
   it("Substitutes a Defender when Defenders = 3 and Defender is unavailable", () => {
     const startingTeam: PlayerPick[] = [...mockTeam]; // Clone the mock data
 
@@ -122,7 +139,7 @@ describe("Defender substitution tests", () => {
 
     // Validate the results
     const injuredDefender = updatedTeam.find((p) => p.id === 3); // Original Defender 2
-    const subDefender = updatedTeam.find((p) => p.id === 5); // Substituted Defender
+    const subDefender = updatedTeam.find((p) => p.id === 13); // Substituted Defender
 
     // Original injured defender should have been substituted
     expect(injuredDefender?.position).toBeGreaterThan(11); // Moved to bench
@@ -131,5 +148,27 @@ describe("Defender substitution tests", () => {
     // Confirm substitution occurred
     expect(injuredDefender?.willBeAutosubbed).toBe(true);
     expect(subDefender?.willBeAutosubbed).toBe(false); // Sub itself is not substituted
+  });
+
+  it("Substitutes a Goalkeeper for a Goalkeeper and no other player", () => {
+    const startingTeam: PlayerPick[] = [...mockTeam]; // Clone the mock data
+
+    startingTeam[0].hasPlayed = false;
+    startingTeam[0].isInjured = true;
+
+    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
+
+    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+
+    const injuredGK = updatedTeam.find((p) => p.id === 1);
+    const subGK = updatedTeam.find((p) => p.id === 12);
+
+    // Original injured defender should have been substituted
+    expect(injuredGK?.position).toBeGreaterThan(11); // Moved to bench
+    expect(subGK?.position).toBe(1); // Moved to starting XI
+
+    // Confirm substitution occurred
+    expect(injuredGK?.willBeAutosubbed).toBe(true);
+    expect(subGK?.willBeAutosubbed).toBe(false); // Sub itself is not substituted
   });
 });
