@@ -118,7 +118,7 @@ export default function TeamPage() {
                     View Matchup
                   </button>
                   <button
-                    onClick={() => router.push(`/scoring/${league.league.id}`)}
+                    onClick={() => router.push(`/league/${league.league.id}`)}
                     className="px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
                   >
                     League Scoring
