@@ -341,4 +341,66 @@ describe("Team substitution tests", () => {
     expect(injuredGK?.willBeAutosubbed).toBe(false);
     expect(benchGK?.willBeAutosubbed).toBe(false);
   });
+
+  it("Substitutes a Forward when Forwards = 1 and Forward is unavailable", () => {
+    const startingTeam: PlayerPick[] = JSON.parse(JSON.stringify(mockFullTeam));
+
+    // Simulate unavailable forward
+    startingTeam[7].hasPlayed = false; // Forward 1 hasn't played
+    startingTeam[7].isInjured = true; // Forward 1 is injured
+
+    // Ensure the bench Forward is available
+    startingTeam[14].hasPlayed = true;
+    startingTeam[14].isInjured = false;
+
+    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
+
+    // Apply substitution logic
+    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+
+    // Validate the results
+    const injuredForward = updatedTeam.find((p) => p.id === 8); // Original Forward 1
+    const subForward = updatedTeam.find((p) => p.id === 15); // Substituted Forward
+
+    // Original injured forward should have been substituted
+    expect(injuredForward?.position).toBeGreaterThan(11); // Moved to bench
+    expect(subForward?.position).toBe(8); // Moved to starting XI
+
+    // Confirm substitution occurred
+    expect(injuredForward?.willBeAutosubbed).toBe(true);
+    expect(subForward?.willBeAutosubbed).toBe(true); // Sub itself is not substituted
+  });
+
+  it("Substitutes the first available player off the bench when anyone is injured", () => {
+    const startingTeam: PlayerPick[] = JSON.parse(JSON.stringify(mockFullTeam));
+
+    // Simulate unavailable forward
+    startingTeam[7].hasPlayed = false; // Forward 1 hasn't played
+    startingTeam[7].isInjured = true; // Forward 1 is injured
+
+    // Ensure the bench midfielder is available
+    startingTeam[13].hasPlayed = true;
+    startingTeam[13].isInjured = false;
+
+    // Ensure the bench Forward is available
+    startingTeam[14].hasPlayed = true;
+    startingTeam[14].isInjured = false;
+
+    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
+
+    // Apply substitution logic
+    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+
+    // Validate the results
+    const injuredForward = updatedTeam.find((p) => p.id === 8); // Original Forward 1
+    const sub = updatedTeam.find((p) => p.id === 14);
+
+    // Original injured forward should have been substituted
+    expect(injuredForward?.position).toBeGreaterThan(11);
+    expect(sub?.position).toBe(8);
+
+    // Confirm substitution occurred
+    expect(injuredForward?.willBeAutosubbed).toBe(true);
+    expect(sub?.willBeAutosubbed).toBe(true);
+  });
 });
