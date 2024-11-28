@@ -270,8 +270,16 @@ describe("Team substitution tests", () => {
     startingTeam[2].hasPlayed = false; // Defender 2 hasn't played
     startingTeam[2].isInjured = true; // Defender 2 is injured
 
+    //set this bench player to a mid for test purpose
     startingTeam[12].hasPlayed = true;
     startingTeam[12].isInjured = false;
+    startingTeam[12].fieldPosition = ElementType.Midfielder;
+
+    //set this bench player to a def for test purpose
+    startingTeam[13].hasPlayed = true;
+    startingTeam[13].isInjured = false;
+    startingTeam[13].fieldPosition = ElementType.Defender;
+
     const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
 
     // Apply substitution logic
@@ -279,7 +287,7 @@ describe("Team substitution tests", () => {
 
     // Validate the results
     const injuredDefender = updatedTeam.find((p) => p.id === 3); // Original Defender 2
-    const subDefender = updatedTeam.find((p) => p.id === 13); // Substituted Defender
+    const subDefender = updatedTeam.find((p) => p.id === 14); // Substituted Defender
 
     // Original injured defender should have been substituted
     expect(injuredDefender?.position).toBeGreaterThan(11); // Moved to bench

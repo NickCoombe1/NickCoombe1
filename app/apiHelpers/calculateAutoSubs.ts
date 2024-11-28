@@ -5,6 +5,31 @@ export function calculateAutoSubs(
   team: PlayerPick[],
   benchPlayers: PlayerPick[],
 ): PlayerPick[] {
+  const FORMATION_REQUIREMENTS = {
+    [ElementType.Goalkeeper]: 1,
+    [ElementType.Defender]: 3,
+    [ElementType.Midfielder]: 2,
+    [ElementType.Forward]: 1,
+  };
+
+  const isFormationValid = (updatedTeam: PlayerPick[]): boolean => {
+    for (const [position, minRequired] of Object.entries(
+      FORMATION_REQUIREMENTS,
+    )) {
+      const count = getFieldPlayersByType(
+        Number(position) as ElementType,
+        updatedTeam,
+      ).length;
+      if (count < minRequired) return false;
+    }
+    return true;
+  };
+
+  const getFieldPlayersByType = (type: ElementType, players: PlayerPick[]) =>
+    players.filter(
+      (player) => player.fieldPosition === type && player.position < 12,
+    );
+
   team.forEach((pick) => {
     if (
       (pick.gameStatus.isFinished && !pick.hasPlayed && !pick.isSub) ||
@@ -13,23 +38,28 @@ export function calculateAutoSubs(
       const eligibleSubs = benchPlayers.filter((benchPick) => {
         return (
           benchPick.position >= 12 && // Ensure the player is on the bench
-          benchPick.hasPlayed
+          benchPick.hasPlayed &&
+          !benchPick.isInjured
         );
       });
       const replacement = eligibleSubs.find((sub) => {
-        const subType = sub?.fieldPosition;
-        if (
-          subType === ElementType.Goalkeeper &&
-          pick.fieldPosition === ElementType.Goalkeeper
-        ) {
-          return true;
-        } else if (
-          subType === ElementType.Goalkeeper &&
-          pick.fieldPosition !== ElementType.Goalkeeper
-        ) {
-          return false;
+        // Check if this substitution is valid by simulating the change
+        const originalTeam = JSON.parse(JSON.stringify(team)); // Clone team for validation
+        const subIndex = team.findIndex((p) => p.element === sub.element);
+        const pickIndex = team.findIndex((p) => p.element === pick.element);
+
+        // Perform the substitution in the cloned team
+        if (subIndex !== -1 && pickIndex !== -1) {
+          originalTeam[subIndex].position = team[pickIndex].position;
+          originalTeam[pickIndex].position = team[subIndex].position;
+
+          // Check if the updated team meets formation requirements
+          if (isFormationValid(originalTeam)) {
+            return true;
+          }
         }
-        return true;
+
+        return false; // Reject substitution if it invalidates the formation
       });
 
       if (replacement) {
