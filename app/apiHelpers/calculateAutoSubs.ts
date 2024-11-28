@@ -43,6 +43,8 @@ export function calculateAutoSubs(
           const tempPosition = team[pickIndex].position;
           team[pickIndex].position = team[replacementIndex].position;
           team[replacementIndex].position = tempPosition;
+
+          team[replacementIndex].willBeAutosubbed = true;
         }
 
         pick.willBeAutosubbed = true; // Set to true as substitution is happening

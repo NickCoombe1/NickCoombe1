@@ -287,7 +287,7 @@ describe("Team substitution tests", () => {
 
     // Confirm substitution occurred
     expect(injuredDefender?.willBeAutosubbed).toBe(true);
-    expect(subDefender?.willBeAutosubbed).toBe(false); // Sub itself is not substituted
+    expect(subDefender?.willBeAutosubbed).toBe(true);
   });
 
   it("Substitutes a Goalkeeper for a Goalkeeper and no other player", () => {
@@ -312,7 +312,7 @@ describe("Team substitution tests", () => {
 
     // Confirm substitution occurred
     expect(injuredGK?.willBeAutosubbed).toBe(true);
-    expect(subGK?.willBeAutosubbed).toBe(false); // Sub itself is not substituted
+    expect(subGK?.willBeAutosubbed).toBe(true);
   });
 
   it("It doesn't substitute a Goalkeeper for a Goalkeeper when bench GK is injured or didn't play", () => {
