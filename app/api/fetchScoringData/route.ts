@@ -111,7 +111,7 @@ function mapBootstrapData(
     return {
       ...pick,
       points: totalPoints,
-      pointDetails: playerData?.explain,
+      pointDetails: playerData?.explain[0],
       name: playerName,
       isSub,
       hasPlayed,
