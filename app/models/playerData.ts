@@ -1,11 +1,7 @@
 export interface PlayerData {
-  explain: PlayerExplain;
+  explain: [[StatExplanation[], number][]];
   stats: PlayerStats;
   web_name: string;
-}
-
-export interface PlayerExplain {
-  explain: [StatExplanation[], number][];
 }
 
 export enum ElementType {
@@ -15,7 +11,7 @@ export enum ElementType {
   Forward = 4,
 }
 
-interface StatExplanation {
+export interface StatExplanation {
   name: string;
   points: number;
   value: number;

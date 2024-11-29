@@ -1,4 +1,4 @@
-import { ElementType } from "./playerData";
+import { ElementType, PlayerStats, StatExplanation } from "./playerData";
 
 export interface PlayerPick {
   id: number;
@@ -7,7 +7,8 @@ export interface PlayerPick {
   multiplier: number;
   isSub: boolean;
   points: number;
-  pointDetails?: any;
+  pointDetails?: [StatExplanation[], number][];
+  stats?: PlayerStats;
   name: string;
   hasPlayed: boolean;
   willBeAutosubbed: boolean;

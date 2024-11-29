@@ -121,6 +121,7 @@ function mapBootstrapData(
       yellowCarded: playerData.stats.yellow_cards > 0,
       redCarded: playerData.stats.red_cards > 0,
       fieldPosition: fieldPosition,
+      stats: playerData?.stats,
     };
   });
 }
