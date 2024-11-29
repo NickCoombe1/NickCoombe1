@@ -1,7 +1,10 @@
+"use client";
 import { ReactNode } from "react";
 import ThemeToggle from "@/app/components/utility/themeToggle";
 import Link from "next/link";
 import NextImage from "next/image";
+import { useParams, useRouter } from "next/navigation";
+
 interface HeaderProps {
   initialTheme: string;
   headerText?: string;
@@ -10,6 +13,15 @@ export default function Header({
   initialTheme,
   headerText,
 }: HeaderProps): ReactNode {
+  const params = useParams();
+  const router = useRouter();
+  const teamID = params?.teamID;
+  const handleBackClick = () => {
+    if (teamID) router.push(`/team/${teamID}`);
+    else {
+      router.back();
+    }
+  };
   return (
     <header>
       <nav className="border-gray-200 dark:bg-secondary mb-6">
@@ -21,6 +33,7 @@ export default function Header({
               alt="soccerBallFPl"
               width={24}
               height={24}
+              onClick={handleBackClick}
             />
             <NextImage
               src="/soccer-ball-dark.svg"
@@ -28,8 +41,12 @@ export default function Header({
               alt="soccerBallFPl"
               width={24}
               height={24}
+              onClick={handleBackClick}
             />
-            <span className="self-center text-xl font-semibold whitespace-nowrap text-gray-700 dark:text-white">
+            <span
+              className="self-center text-xl font-semibold whitespace-nowrap text-gray-700 dark:text-white"
+              onClick={handleBackClick}
+            >
               {headerText ? headerText : "FPL Scoreboard"}
             </span>
           </div>{" "}

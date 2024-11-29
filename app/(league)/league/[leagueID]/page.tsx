@@ -101,7 +101,7 @@ export default function LeaguePage({
             </h1>
           </div>
 
-          <div className="w-full max-w-md">
+          <div className="w-full ">
             {leagueData &&
               leagueData.matches
                 .filter((x) => x.event == gameweekInfo?.current_event)
