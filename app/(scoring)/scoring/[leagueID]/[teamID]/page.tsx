@@ -76,7 +76,7 @@ export default function ScoringPage({
     );
   }
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6 p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6">
       {teamScoringData && (
         <>
           <div className="flex flex-col items-center gap-4">
@@ -85,7 +85,7 @@ export default function ScoringPage({
             </h1>
           </div>
           <div className="flex flex-col lg:flex-row justify-center gap-8">
-            <div className="w-full max-w-md">
+            <div className="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md max-w-3xl">
               <ScoreBoard
                 picks={teamScoringData.picks}
                 team={leagueData?.league_entries.find(

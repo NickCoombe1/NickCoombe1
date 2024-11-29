@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import ScoreBoard from "@/app/components/scoring/scoreboard";
+
 import { LeagueData } from "@/app/models/league";
 import { GameStatusData } from "@/app/models/game";
 import { ScoringData } from "@/app/api/fetchScoringData/route";
@@ -11,6 +11,7 @@ import {
   fetchLeagueData,
   fetchTeamDetails,
 } from "@/app/apiHelpers/apiHelpers";
+import MatchUpCard from "@/app/components/scoring/matchup";
 
 export default function LeaguePage({
   params,
@@ -28,8 +29,8 @@ export default function LeaguePage({
 
   useEffect(() => {
     const leagueID = Number(params.leagueID);
-    const teamID = Number(401955);
-    if (isNaN(leagueID) || isNaN(teamID)) {
+
+    if (isNaN(leagueID)) {
       setError("Invalid leagueID: must be a number");
       return;
     }
@@ -40,7 +41,7 @@ export default function LeaguePage({
         const leagueResponse = await fetchLeagueData(leagueID);
 
         if (!gameweekResponse || !leagueResponse) {
-          new Error("Failed to load gameweek or league data");
+          setError("Failed to load gameweek or league data");
           return;
         }
 
@@ -59,7 +60,7 @@ export default function LeaguePage({
             if (teamsResponse) {
               setTeamsScoringData((prev) => ({
                 ...prev,
-                [team.entry_id]: teamsResponse,
+                [team.id]: teamsResponse,
               }));
             }
           }
@@ -91,7 +92,7 @@ export default function LeaguePage({
     );
   }
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6 p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6">
       {teamsScoringData && (
         <>
           <div className="flex flex-col items-center gap-4">
@@ -99,19 +100,54 @@ export default function LeaguePage({
               Gameweek {gameweekInfo?.current_event}
             </h1>
           </div>
-          <div className="flex flex-col lg:flex-row justify-center gap-8">
-            <div className="w-full max-w-md">
-              {Object.entries(teamsScoringData).map(([teamID, teamData]) => (
-                <ScoreBoard
-                  key={teamID}
-                  picks={teamData.picks}
-                  team={leagueData?.league_entries.find(
-                    (team) => team.entry_id == Number(teamID),
-                  )}
-                  totalPoints={teamData.totalPoints}
-                />
-              ))}
-            </div>
+
+          <div className="w-full max-w-md">
+            {leagueData &&
+              leagueData.matches
+                .filter((x) => x.event == gameweekInfo?.current_event)
+                .map((match, index) => {
+                  const team1 = leagueData?.league_entries.find(
+                    (team) =>
+                      team.id == match.league_entry_1 &&
+                      match.event == gameweekInfo?.current_event,
+                  );
+                  const team2 = leagueData?.league_entries.find(
+                    (team) =>
+                      team.id == match.league_entry_2 &&
+                      match.event == gameweekInfo?.current_event,
+                  );
+                  if (!team1 || !team2) {
+                    setError("An unexpected error occurred.");
+                    return;
+                  }
+                  const team1Data = Object.entries(teamsScoringData).find(
+                    ([key]) => Number(key) == match.league_entry_1,
+                  )?.[1];
+                  const team2Data = Object.entries(teamsScoringData).find(
+                    ([key]) => Number(key) == match.league_entry_2,
+                  )?.[1];
+                  if (!team1Data || !team2Data) {
+                    setError("An unexpected error occurred.");
+                    return;
+                  }
+                  return (
+                    <div key={index} className={"mb-2"}>
+                      <MatchUpCard
+                        key={index}
+                        team1={{
+                          picks: team1Data.picks,
+                          team: team1,
+                          totalPoints: match.league_entry_1_points,
+                        }}
+                        team2={{
+                          picks: team2Data.picks,
+                          team: team2,
+                          totalPoints: match.league_entry_2_points,
+                        }}
+                      />{" "}
+                    </div>
+                  );
+                })}
           </div>
         </>
       )}

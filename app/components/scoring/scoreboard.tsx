@@ -2,10 +2,12 @@ import React from "react";
 import { PlayerPick } from "@/app/models/playerPick";
 import { LeagueEntry } from "@/app/models/league";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
-import { faAward } from "@fortawesome/free-solid-svg-icons";
-import { faRectangleXmark } from "@fortawesome/free-solid-svg-icons";
-import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPersonRunning,
+  faAward,
+  faRectangleXmark,
+  faArrowRightArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 type ScoreBoardProps = {
   picks: PlayerPick[];
@@ -13,86 +15,80 @@ type ScoreBoardProps = {
   totalPoints: number;
 };
 
-export default function ScoreBoard({
+export default function Scoreboard({
   picks,
   team,
   totalPoints,
 }: ScoreBoardProps) {
   return (
-    <div className="p-8 bg-white dark:bg-gray-700 rounded-lg shadow-md max-w-3xl mx-auto">
-      <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+    <>
+      {/* Team Name and Points */}
+      <div className="text-center mb-4">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white truncate">
           {team?.entry_name}
         </h2>
-        <hr className="my-4 border-gray-300 dark:border-gray-600" />
-        <p className="text-4xl font-extrabold text-indigo-600">{totalPoints}</p>
+        <p className="text-3xl font-extrabold text-indigo-600 mt-1">
+          {totalPoints}
+        </p>
       </div>
-      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-inner p-4">
-        <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+
+      {/* Player Picks */}
+      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-inner p-3">
+        <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
           Player Picks
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-2">
           {picks &&
             picks
               .sort((a, b) => a.position - b.position)
               .map((pick) => (
                 <div
                   key={pick.element}
-                  className="flex justify-between items-center p-3 rounded-md bg-white dark:bg-gray-600 shadow-sm border border-gray-200 dark:border-gray-500"
+                  className="flex justify-between items-center p-2 rounded-md bg-white dark:bg-gray-600 shadow-sm border border-gray-200 dark:border-gray-500 text-sm"
                 >
-                  <span className="text-sm font-medium text-gray-800 dark:text-gray-100 flex gap-2">
+                  {/* Player Info */}
+                  <span className="text-gray-800 dark:text-gray-100 flex gap-1 items-center">
                     {pick.name}
                     {pick.willBeAutosubbed && (
-                      <div className="relative group">
-                        <FontAwesomeIcon icon={faArrowRightArrowLeft} />
-                        <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs dark:bg-white dark:text-black bg-gray-600 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
-                          Autosubbed
-                        </span>
-                      </div>
+                      <FontAwesomeIcon
+                        icon={faArrowRightArrowLeft}
+                        title="Autosubbed"
+                      />
                     )}
                     {pick.gameStatus.isInProgress && pick.wasSubbedOn && (
-                      <div className="relative group">
-                        <FontAwesomeIcon icon={faPersonRunning} />
-                      </div>
+                      <FontAwesomeIcon
+                        icon={faPersonRunning}
+                        title="Subbed On"
+                      />
                     )}
                     {pick.points <= 0 && !pick.isSub && pick.hasPlayed && (
-                      <div className="relative group">
-                        <FontAwesomeIcon
-                          icon={faAward}
-                          className="text-red-500"
-                        />
-                        <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-red-500 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
-                          Certified Bum
-                        </span>
-                      </div>
+                      <FontAwesomeIcon
+                        icon={faAward}
+                        className="text-red-500"
+                        title="Certified Bum"
+                      />
                     )}
                     {pick.yellowCarded && (
-                      <div className="relative group">
-                        <FontAwesomeIcon
-                          icon={faRectangleXmark}
-                          transform={{ rotate: 90 }}
-                          className="text-yellow-400"
-                        />
-                        <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-yellow-400 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
-                          Yellow Card
-                        </span>
-                      </div>
+                      <FontAwesomeIcon
+                        icon={faRectangleXmark}
+                        className="text-yellow-400"
+                        title="Yellow Card"
+                        transform={{ rotate: 90 }}
+                      />
                     )}
                     {pick.redCarded && (
-                      <div className="relative group">
-                        <FontAwesomeIcon
-                          icon={faRectangleXmark}
-                          transform={{ rotate: 90 }}
-                          className="text-red-500"
-                        />
-                        <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-red-500 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
-                          Red Card
-                        </span>
-                      </div>
+                      <FontAwesomeIcon
+                        icon={faRectangleXmark}
+                        className="text-red-500"
+                        title="Red Card"
+                        transform={{ rotate: 90 }}
+                      />
                     )}
                   </span>
+
+                  {/* Player Points */}
                   <span
-                    className={`text-sm font-semibold ${
+                    className={`font-semibold ${
                       pick.hasPlayed
                         ? pick.points > 0
                           ? "text-green-600"
@@ -106,6 +102,6 @@ export default function ScoreBoard({
               ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

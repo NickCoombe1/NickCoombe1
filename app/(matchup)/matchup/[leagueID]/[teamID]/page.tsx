@@ -93,7 +93,7 @@ export default function MatchupPage({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-secondary text-gray-900 dark:text-gray-100 flex flex-col gap-6 p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-secondary text-gray-900 dark:text-gray-100 flex flex-col gap-6">
       <div className="text-center">
         <h1 className="text-3xl font-bold">
           Gameweek {gameweekInfo?.current_event}
@@ -108,20 +108,24 @@ export default function MatchupPage({
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-center gap-8">
+      <div className="flex flex-col lg:flex-row justify-center gap-2 lg:gap-8">
         <div className="w-full max-w-md">
-          <ScoreBoard
-            picks={teamScoring?.picks || []}
-            team={team || undefined}
-            totalPoints={teamScoring?.totalPoints || 0}
-          />
+          <div className="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md max-w-3xl mx-auto">
+            <ScoreBoard
+              picks={teamScoring?.picks || []}
+              team={team || undefined}
+              totalPoints={teamScoring?.totalPoints || 0}
+            />
+          </div>
         </div>
         <div className="w-full max-w-md">
-          <ScoreBoard
-            picks={opponentScoring?.picks || []}
-            team={opponent || undefined}
-            totalPoints={opponentScoring?.totalPoints || 0}
-          />
+          <div className="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md max-w-3xl mx-auto">
+            <ScoreBoard
+              picks={opponentScoring?.picks || []}
+              team={opponent || undefined}
+              totalPoints={opponentScoring?.totalPoints || 0}
+            />{" "}
+          </div>
         </div>
       </div>
     </div>
