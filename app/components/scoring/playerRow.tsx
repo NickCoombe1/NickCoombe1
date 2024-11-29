@@ -18,7 +18,6 @@ const PlayerPickCard: React.FC<PlayerPickCardProps> = ({ pick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleDetails = () => setIsExpanded(!isExpanded);
-
   return (
     <div className="border border-gray-200 dark:border-gray-500 rounded-md mb-2 bg-white dark:bg-gray-600 shadow-sm">
       <div

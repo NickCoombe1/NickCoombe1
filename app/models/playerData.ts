@@ -1,5 +1,5 @@
 export interface PlayerData {
-  explain: [[StatExplanation[], number][]];
+  explain: [[StatExplanation][]];
   stats: PlayerStats;
   web_name: string;
 }

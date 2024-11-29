@@ -7,7 +7,7 @@ export interface PlayerPick {
   multiplier: number;
   isSub: boolean;
   points: number;
-  pointDetails?: [StatExplanation[], number][];
+  pointDetails?: [[StatExplanation][]];
   stats?: PlayerStats;
   name: string;
   hasPlayed: boolean;
