@@ -85,14 +85,16 @@ export default function ScoringPage({
             </h1>
           </div>
           <div className="flex flex-col lg:flex-row justify-center gap-8">
-            <div className="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md max-w-3xl">
-              <ScoreBoard
-                picks={teamScoringData.picks}
-                team={leagueData?.league_entries.find(
-                  (team) => team.entry_id == teamID,
-                )}
-                totalPoints={teamScoringData.totalPoints}
-              />
+            <div className="w-full max-w-md">
+              <div className="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md ">
+                <ScoreBoard
+                  picks={teamScoringData.picks}
+                  team={leagueData?.league_entries.find(
+                    (team) => team.entry_id == teamID,
+                  )}
+                  totalPoints={teamScoringData.totalPoints}
+                />
+              </div>{" "}
             </div>
           </div>
         </>
