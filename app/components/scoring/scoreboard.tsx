@@ -23,7 +23,6 @@ export default function ScoreBoard({
 
   return (
     <>
-      {/* Team Name and Points */}
       <div className="text-center mb-4">
         <h2 className="text-xl font-bold text-gray-800 dark:text-white truncate">
           {team?.entry_name}

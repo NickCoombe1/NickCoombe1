@@ -70,9 +70,6 @@ export default function LeaguePage({
   }, [fetchData, params.leagueID]);
 
   const handleRefresh = () => {
-    setGameweekInfo(null);
-    setLeagueData(null);
-    setTeamsScoringData(null);
     setError("");
     fetchData();
   };
@@ -146,12 +143,12 @@ export default function LeaguePage({
                         team1={{
                           picks: team1Data.picks,
                           team: team1,
-                          totalPoints: match.league_entry_1_points,
+                          totalPoints: team1Data.totalPoints,
                         }}
                         team2={{
                           picks: team2Data.picks,
                           team: team2,
-                          totalPoints: match.league_entry_2_points,
+                          totalPoints: team2Data.totalPoints,
                         }}
                       />
                     </div>
