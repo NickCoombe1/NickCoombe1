@@ -7,6 +7,7 @@ import {
   faRectangleXmark,
   faChevronDown,
   faChevronUp,
+  faRunning,
 } from "@fortawesome/free-solid-svg-icons";
 import { PlayerPick } from "@/app/models/playerPick";
 
@@ -27,36 +28,55 @@ const PlayerPickCard: React.FC<PlayerPickCardProps> = ({ pick }) => {
         <span className="text-gray-800 dark:text-gray-100 flex gap-1 items-center">
           {pick.name}
           {pick.willBeAutosubbed && (
-            <FontAwesomeIcon icon={faArrowRightArrowLeft} title="Autosubbed" />
+            <div className="relative group">
+              <FontAwesomeIcon icon={faArrowRightArrowLeft} />
+              <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs dark:bg-white dark:text-black bg-gray-600 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
+                Autosubbed
+              </span>
+            </div>
           )}
           {pick.gameStatus.isInProgress && pick.wasSubbedOn && (
-            <FontAwesomeIcon icon={faPersonRunning} title="Subbed On" />
+            <div className="relative group">
+              <FontAwesomeIcon icon={faRunning} />
+              <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs dark:bg-white dark:text-black bg-gray-600 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
+                On the Pitch
+              </span>
+            </div>
           )}
           {pick.points <= 0 &&
             !pick.isSub &&
             pick.hasPlayed &&
             pick.gameStatus.isFinished && (
-              <FontAwesomeIcon
-                icon={faAward}
-                className="text-red-500"
-                title="Certified Bum"
-              />
+              <div className="relative group">
+                <FontAwesomeIcon icon={faAward} className="text-red-500" />
+                <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-red-500 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
+                  Certified Bum
+                </span>
+              </div>
             )}
           {pick.yellowCarded && (
-            <FontAwesomeIcon
-              icon={faRectangleXmark}
-              className="text-yellow-400"
-              title="Yellow Card"
-              transform={{ rotate: 90 }}
-            />
+            <div className="relative group">
+              <FontAwesomeIcon
+                icon={faRectangleXmark}
+                transform={{ rotate: 90 }}
+                className="text-yellow-400"
+              />
+              <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-yellow-400 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
+                Yellow Card
+              </span>
+            </div>
           )}
           {pick.redCarded && (
-            <FontAwesomeIcon
-              icon={faRectangleXmark}
-              className="text-red-500"
-              title="Red Card"
-              transform={{ rotate: 90 }}
-            />
+            <div className="relative group">
+              <FontAwesomeIcon
+                icon={faRectangleXmark}
+                transform={{ rotate: 90 }}
+                className="text-red-500"
+              />
+              <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs bg-red-500 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
+                Red Card
+              </span>
+            </div>
           )}
         </span>
         <div className="flex items-center gap-2">
