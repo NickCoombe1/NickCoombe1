@@ -7,7 +7,6 @@ import {
   faRectangleXmark,
   faChevronDown,
   faChevronUp,
-  faRunning,
 } from "@fortawesome/free-solid-svg-icons";
 import { PlayerPick } from "@/app/models/playerPick";
 
@@ -37,7 +36,7 @@ const PlayerPickCard: React.FC<PlayerPickCardProps> = ({ pick }) => {
           )}
           {pick.gameStatus.isInProgress && pick.wasSubbedOn && (
             <div className="relative group">
-              <FontAwesomeIcon icon={faRunning} />
+              <FontAwesomeIcon icon={faPersonRunning} />
               <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0.5 text-xs dark:bg-white dark:text-black bg-gray-600 text-white py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-lg whitespace-nowrap">
                 On the Pitch
               </span>
