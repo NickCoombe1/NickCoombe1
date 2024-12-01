@@ -74,12 +74,12 @@ async function processTeamData(
     teamData,
     gameweekFixtureData,
   );
+  const benchPlayers = picks.filter((pick) => pick.position > 11);
+  const sortedTeam = calculateAutoSubs(picks, benchPlayers);
   const totalPoints = picks.reduce(
     (acc, pick) => acc + (pick.isSub ? 0 : pick.points),
     0,
   );
-  const benchPlayers = teamData.picks.filter((pick) => pick.position > 11);
-  const sortedTeam = calculateAutoSubs(picks, benchPlayers);
   return { picks: sortedTeam, totalPoints };
 }
 

@@ -32,13 +32,16 @@ const PlayerPickCard: React.FC<PlayerPickCardProps> = ({ pick }) => {
           {pick.gameStatus.isInProgress && pick.wasSubbedOn && (
             <FontAwesomeIcon icon={faPersonRunning} title="Subbed On" />
           )}
-          {pick.points <= 0 && !pick.isSub && pick.hasPlayed && (
-            <FontAwesomeIcon
-              icon={faAward}
-              className="text-red-500"
-              title="Certified Bum"
-            />
-          )}
+          {pick.points <= 0 &&
+            !pick.isSub &&
+            pick.hasPlayed &&
+            pick.gameStatus.isFinished && (
+              <FontAwesomeIcon
+                icon={faAward}
+                className="text-red-500"
+                title="Certified Bum"
+              />
+            )}
           {pick.yellowCarded && (
             <FontAwesomeIcon
               icon={faRectangleXmark}

@@ -42,6 +42,7 @@ export function calculateAutoSubs(
           !benchPick.isInjured
         );
       });
+
       const replacement = eligibleSubs.find((sub) => {
         // Check if this substitution is valid by simulating the change
         const originalTeam = JSON.parse(JSON.stringify(team)); // Clone team for validation
@@ -73,10 +74,11 @@ export function calculateAutoSubs(
           const tempPosition = team[pickIndex].position;
           team[pickIndex].position = team[replacementIndex].position;
           team[replacementIndex].position = tempPosition;
-
+          team[replacementIndex].isSub = false;
           team[replacementIndex].willBeAutosubbed = true;
         }
 
+        pick.isSub = true;
         pick.willBeAutosubbed = true; // Set to true as substitution is happening
       } else {
         pick.willBeAutosubbed = false; // No valid replacement found
