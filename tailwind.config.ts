@@ -22,7 +22,6 @@ const config: Config = {
         "container-light-stroke": "rgba(255, 255, 255, 1)",
         //light mode - graphics
         "graphics-light-background": "#EAEDF7",
-        "graphics-light-depth": "rgba(0, 0, 0, 0.03)",
         "graphics-light-lines": "rgba(4, 4, 4, 0.2)",
         //light mode - colours
         "light-red": "#E40004",
@@ -41,7 +40,6 @@ const config: Config = {
         "container-dark-stroke": "rgba(255, 255, 255, 0.5)",
         //dark mode - graphics
         "graphics-dark-background": "#0C1226",
-        "graphics-dark-depth": "rgba(0, 0, 0, 0.15)",
         "graphics-dark-lines": "rgba(255, 255, 255, 0.2)",
         //dark mode - colours
         "dark-red": "#FF4D50",
@@ -59,6 +57,8 @@ const config: Config = {
         "button-light-bg": "rgba(255, 255, 255, 1)",
         "button-light-bg-20": "rgba(255, 255, 255, 0.2)",
         "button-dark-bg": "rgba(157, 157, 157, 0.2)",
+        "graphics-light-depth": "rgba(0, 0, 0, 0.05)",
+        "graphics-dark-depth": "rgba(0, 0, 0, 0.20)",
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
