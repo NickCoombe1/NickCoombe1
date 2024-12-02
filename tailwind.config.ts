@@ -24,9 +24,6 @@ const config: Config = {
         "graphics-light-background": "#EAEDF7",
         "graphics-light-depth": "rgba(0, 0, 0, 0.03)",
         "graphics-light-lines": "rgba(4, 4, 4, 0.2)",
-        "button-light-primary": "#FFFFFF",
-        "button-light-secondary":
-          "linear-gradient(rgba(205, 255, 255, 0.1), rgba(255, 212, 212, 0.1))",
         //light mode - colours
         "light-red": "#E40004",
         "light-orange": "#F76F00",
@@ -46,15 +43,21 @@ const config: Config = {
         "graphics-dark-background": "#0C1226",
         "graphics-dark-depth": "rgba(0, 0, 0, 0.15)",
         "graphics-dark-lines": "rgba(255, 255, 255, 0.2)",
-        "button-dark-primary":
-          "linear-gradient(rgba(205, 255, 255, 0.3), rgba(255, 212, 212, 0.3))",
-        "button-dark-secondary":
-          "linear-gradient(rgba(205, 255, 255, 0.1), rgba(255, 212, 212, 0.1))",
         //dark mode - colours
         "dark-red": "#FF4D50",
         "dark-green": "rgba(97, 255, 121, 0.9)",
         "dark-yellow": "#FFF564",
         "dark-orange": "#FF9D4D",
+      },
+      backgroundImage: {
+        "button-dark-secondary":
+          "linear-gradient(270deg, rgba(205, 255, 255, 0.3) 0%, rgba(255, 212, 212, 0.3) 100%)",
+        "button-light-secondary":
+          "linear-gradient(270deg, rgba(205, 255, 255, 0.1) 0%, rgba(255, 212, 212, 0.1) 100%)",
+      },
+      backgroundColor: {
+        "button-light-bg": "rgba(255, 255, 255, 0.2)",
+        "button-dark-bg": "rgba(157, 157, 157, 0.2)",
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],

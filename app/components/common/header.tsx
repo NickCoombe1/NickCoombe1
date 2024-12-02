@@ -4,6 +4,7 @@ import ThemeToggle from "@/app/components/utility/themeToggle";
 import Link from "next/link";
 import NextImage from "next/image";
 import { useParams, useRouter } from "next/navigation";
+import FigmaComponent from "@/app/components/common/testFile";
 
 interface HeaderProps {
   initialTheme: string;
@@ -24,6 +25,7 @@ export default function Header({
   };
   return (
     <header>
+      <FigmaComponent />
       <nav className="border-gray-200 dark:bg-secondary mb-6">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <div className="flex items-center">
