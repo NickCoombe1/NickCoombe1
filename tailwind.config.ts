@@ -54,6 +54,8 @@ const config: Config = {
           "linear-gradient(270deg, rgba(205, 255, 255, 0.1) 0%, rgba(255, 212, 212, 0.1) 100%)",
       },
       backgroundColor: {
+        "light-container": "#eaecf7",
+        "dark-container": "#0c1125",
         "button-light-bg": "rgba(255, 255, 255, 1)",
         "button-light-bg-20": "rgba(255, 255, 255, 0.2)",
         "button-dark-bg": "rgba(157, 157, 157, 0.2)",

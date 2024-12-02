@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 
 import { useRouter } from "next/navigation";
+import Title from "@/app/components/svgs/title";
 export default function WelcomePage() {
   const router = useRouter();
   const [teamInput, setTeamInput] = useState("");
@@ -25,8 +26,30 @@ export default function WelcomePage() {
   };
 
   return (
-    <div className="min-h-[80vh] bg-gray-50 dark:bg-secondary flex flex-col items-center justify-center p-6">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full text-center">
+    <div className="min-h-[80vh]  flex flex-col items-center justify-center p-6">
+      <div className="w-[329.15px] h-44 flex-col justify-start items-center gap-14 inline-flex">
+        <div className="self-stretch text-center text-[#040404]/80 text-xs font-medium font-['Roobert Mono TRIAL'] uppercase leading-[10.80px] tracking-tight">
+          WELCOME TO THE
+        </div>
+        <div className="w-[329.15px] h-[109px] relative">
+          <div className="w-[321.63px] h-[84.45px] left-0 top-0 absolute">
+            <Title mode={"light"} />
+          </div>
+          <div className="w-[160.18px] h-[28.91px] left-[78.20px] top-[80.09px] absolute">
+            <div className="left-[13.74px] top-[6.16px] absolute text-center text-[#00fdfd] text-base font-normal font-['Digital Numbers'] leading-[15.09px]">
+              SCOREBOARD
+            </div>
+          </div>
+          <div className="left-[315.15px] top-[73.46px] absolute text-center text-[#030303] text-xl font-normal font-['Hexaframe CF'] leading-[17.98px]">
+            ©
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/*<div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Welcome to the Draft Fantasy Scoreboard!
         </h1>
@@ -92,7 +115,4 @@ export default function WelcomePage() {
             </div>
           )}
         </div>
-      </div>
-    </div>
-  );
-}
+      </div> */

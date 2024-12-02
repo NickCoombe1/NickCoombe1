@@ -82,10 +82,14 @@ export default function Header({ initialTheme }: HeaderProps): ReactNode {
           <div className="justify-start items-center gap-1 flex">
             <div className="w-[35px] h-[35px] px-3.5 py-3 bg-button-light-bg-20 bg-graphics-light-depth bg-button-light-secondary dark:bg-button-dark-bg dark:bg-button-dark-secondary bg-blend-overlay  rounded justify-center items-center gap-2.5 flex">
               <div className="w-5 h-5 relative dark:hidden">
-                <About mode={"light"} />
+                <Link href="/about">
+                  <About mode={"light"} />
+                </Link>
               </div>
               <div className="w-5 h-5 relative hidden dark:block">
-                <About mode={"dark"} />
+                <Link href="/about">
+                  <About mode={"dark"} />{" "}
+                </Link>
               </div>
             </div>
             <div className="w-[35px] h-[35px] px-3.5 py-3 bg-button-light-bg-20 bg-graphics-light-depth bg-button-light-secondary dark:bg-button-dark-bg dark:bg-button-dark-secondary bg-blend-overlay  rounded flex-col justify-center items-center gap-[5px] inline-flex">

@@ -63,7 +63,7 @@ export default function Layout({
         <link rel="manifest" href="/site.webmanifest" />
         <title>{metadata.title?.toString()}</title>
       </head>
-      <body className="bg-gray-50 text-gray-700 dark:bg-secondary dark:text-primary">
+      <body className="bg-light-container dark:bg-dark-container ">
         <div className="w-screen">
           {" "}
           <Header initialTheme={theme} />
