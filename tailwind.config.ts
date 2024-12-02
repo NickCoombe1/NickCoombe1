@@ -61,7 +61,8 @@ const config: Config = {
         "graphics-dark-depth": "rgba(0, 0, 0, 0.20)",
       },
       fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
+        roobert: ["var(--font-roobert)", "sans-serif"],
+        roobertMono: ["var(--font-roobert-mono)", "monospace"],
       },
     },
   },

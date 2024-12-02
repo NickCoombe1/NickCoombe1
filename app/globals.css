@@ -17,11 +17,14 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Roboto", sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+html {
+  font-family: var(--font-roobert), sans-serif;
 }

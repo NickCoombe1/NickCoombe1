@@ -2,6 +2,7 @@ import React from "react";
 
 interface ButtonProps {
   label: string;
+  children: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({ label }) => {

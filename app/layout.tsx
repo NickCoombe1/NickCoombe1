@@ -3,11 +3,40 @@ import "./globals.css";
 import "dotenv/config";
 import Header from "@/app/components/common/header";
 import { cookies } from "next/headers";
+import localFont from "next/font/local";
+
+const roobert = localFont({
+  src: [
+    {
+      path: "/fonts/Roobert-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "/fonts/Roobert-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-roobert",
+});
+
+const roobertMono = localFont({
+  src: [
+    {
+      path: "/fonts/RoobertMono-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-roobert-mono", // Optional: Define a CSS variable
+});
 
 export const metadata: Metadata = {
   title: "FPL Scoreboard",
   description: "",
 };
+
 export default function Layout({
   children,
 }: Readonly<{
@@ -37,14 +66,10 @@ export default function Layout({
         <title>{metadata.title?.toString()}</title>
       </head>
       <body className="bg-gray-50 text-gray-700 dark:bg-secondary dark:text-primary">
-        <div className="max-w-7xl mx-auto p-5">
+        <div className="w-screen">
           {" "}
           <Header initialTheme={theme} />
-          <main>
-            {" "}
-            <div>Under maintenance...</div>
-          </main>
-          {/*     <main> {children}</main>*/}
+          <main> {children}</main>
         </div>
       </body>
     </html>
