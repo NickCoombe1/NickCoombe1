@@ -40,7 +40,11 @@ export default function Layout({
         <div className="max-w-7xl mx-auto p-5">
           {" "}
           <Header initialTheme={theme} />
-          <main> {children}</main>
+          <main>
+            {" "}
+            <div>Under maintenance...</div>
+          </main>
+          {/*     <main> {children}</main>*/}
         </div>
       </body>
     </html>
