@@ -4,7 +4,6 @@ import ThemeToggle from "@/app/components/utility/themeToggle";
 import Link from "next/link";
 import NextImage from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import FigmaComponent from "@/app/components/common/testFile";
 import Button from "./button";
 import About from "../svgs/about";
 import Menu from "../svgs/menu";

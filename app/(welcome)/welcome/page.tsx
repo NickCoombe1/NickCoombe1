@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
-import { useRouter } from "next/navigation";
 import Title from "@/app/components/svgs/title";
 export default function WelcomePage() {
-  const router = useRouter();
-  const [teamInput, setTeamInput] = useState("");
-  const [showTutorial, setShowTutorial] = useState(false);
-  const [error, setError] = useState("");
+  //const router = useRouter();
+  //const [teamInput, setTeamInput] = useState("");
+  //const [showTutorial, setShowTutorial] = useState(false);
+  //const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  /*  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const match = teamInput.match(/entry\/(\d+)/);
@@ -23,7 +22,7 @@ export default function WelcomePage() {
 
     document.cookie = `teamID=${teamID}; path=/; max-age=${60 * 60 * 24 * 30}`; // Expires in 30 days
     router.push(`/team/${teamID}`);
-  };
+  };*/
 
   return (
     <div className="min-h-[80vh]  flex flex-col items-center justify-center p-6">

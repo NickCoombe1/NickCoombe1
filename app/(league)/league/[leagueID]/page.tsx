@@ -91,7 +91,7 @@ export default function LeaguePage({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6">
+    <div className="min-h-screen  text-gray-900 dark:text-gray-100 flex flex-col gap-6">
       {teamsScoringData && (
         <>
           <div className="flex items-center justify-center gap-4 w-full">

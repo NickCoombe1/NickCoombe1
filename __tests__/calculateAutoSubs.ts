@@ -411,4 +411,40 @@ describe("Team substitution tests", () => {
     expect(injuredForward?.willBeAutosubbed).toBe(true);
     expect(sub?.willBeAutosubbed).toBe(true);
   });
+
+  it("It doesn't sub a goalkeeper for a midfielder", () => {
+    const startingTeam: PlayerPick[] = JSON.parse(JSON.stringify(mockFullTeam));
+
+    // Simulate unavailable forward
+    startingTeam[7].hasPlayed = false; // Forward 1 hasn't played
+    startingTeam[7].isInjured = true; // Forward 1 is injured
+
+    // Ensure the bench GK is available
+    startingTeam[11].hasPlayed = true;
+    startingTeam[11].isInjured = false;
+
+    // Ensure the bench Forward is available
+    startingTeam[14].hasPlayed = true;
+    startingTeam[14].isInjured = false;
+
+    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
+
+    // Apply substitution logic
+    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+
+    // Validate the results
+    const injuredForward = updatedTeam.find((p) => p.id === 8);
+    const subGK = updatedTeam.find((p) => p.id === 12);
+    const subForward = updatedTeam.find((p) => p.id === 15);
+
+    // Original injured forward should have been substituted
+    expect(injuredForward?.position).toBeGreaterThan(11);
+    expect(subGK?.position).toBe(12);
+    expect(subForward?.position).toBe(8);
+
+    // Confirm substitution occurred
+    expect(injuredForward?.willBeAutosubbed).toBe(true);
+    expect(subGK?.willBeAutosubbed).toBe(false);
+    expect(subForward?.willBeAutosubbed).toBe(true);
+  });
 });

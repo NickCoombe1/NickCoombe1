@@ -5,22 +5,34 @@ export function calculateAutoSubs(
   team: PlayerPick[],
   benchPlayers: PlayerPick[],
 ): PlayerPick[] {
-  const FORMATION_REQUIREMENTS = {
+  const MinimumFormationRequirements = {
     [ElementType.Goalkeeper]: 1,
     [ElementType.Defender]: 3,
     [ElementType.Midfielder]: 2,
     [ElementType.Forward]: 1,
   };
+  const MaximumFormationRequirements = {
+    [ElementType.Goalkeeper]: 1,
+  };
 
   const isFormationValid = (updatedTeam: PlayerPick[]): boolean => {
     for (const [position, minRequired] of Object.entries(
-      FORMATION_REQUIREMENTS,
+      MinimumFormationRequirements,
     )) {
       const count = getFieldPlayersByType(
         Number(position) as ElementType,
         updatedTeam,
       ).length;
       if (count < minRequired) return false;
+    }
+    for (const [position, maxRequired] of Object.entries(
+      MaximumFormationRequirements,
+    )) {
+      const count = getFieldPlayersByType(
+        Number(position) as ElementType,
+        updatedTeam,
+      ).length;
+      if (count > maxRequired) return false;
     }
     return true;
   };
