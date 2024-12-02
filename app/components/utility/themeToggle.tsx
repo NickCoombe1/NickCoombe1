@@ -1,8 +1,9 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Button } from "@headlessui/react";
-import { SunIcon, MoonIcon } from "@heroicons/react/20/solid";
+import LightMode from "@/app/components/svgs/lightMode";
+import DarkMode from "@/app/components/svgs/darkMode";
 
 interface ThemeToggleProps {
   initialTheme: string;
@@ -31,12 +32,20 @@ export default function ThemeToggle({
   };
 
   return (
-    <Button
-      className="dark:text-white text-gray-700 inline-flex items-center gap-2 rounded-md py-1.5 px-3 text-sm/6 font-semibold hover:outline outline-2"
-      onClick={toggleTheme}
-    >
-      <MoonIcon className="h-5 w-5 dark:hidden" aria-hidden="true" />
-      <SunIcon className="h-5 w-5 hidden dark:block" aria-hidden="true" />
-    </Button>
+    <div className="flex flex-row items-center p-1 gap-1 w-[82px] h-[43px] bg-[rgba(0,0,0,0.15)] shadow-[0_0_100px_rgba(255,255,255,0.18)] backdrop-blur-[20px] rounded-lg">
+      <Button
+        onClick={toggleTheme}
+        className="flex flex-row justify-center items-center  gap-2 w-[35px] h-[35px] bg-white rounded-md"
+      >
+        <LightMode mode={"light"}></LightMode>
+      </Button>
+
+      <Button
+        onClick={toggleTheme}
+        className="flex flex-row justify-center items-center  gap-2 w-[35px] h-[35px] bg-gradient-to-l from-[rgba(205,255,255,0.3)] to-[rgba(255,212,212,0.3)] rounded-md"
+      >
+        <DarkMode mode={"light"}></DarkMode>
+      </Button>
+    </div>
   );
 }
