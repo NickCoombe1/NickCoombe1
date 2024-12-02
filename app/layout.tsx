@@ -8,28 +8,23 @@ import localFont from "next/font/local";
 const roobert = localFont({
   src: [
     {
-      path: "/fonts/Roobert-Regular.woff2",
+      path: "fonts/DP_roobert_TRIAL/RoobertTRIAL-Regular.woff2",
       weight: "400",
-      style: "normal",
     },
     {
-      path: "/fonts/Roobert-Bold.woff2",
+      path: "fonts/DP_roobert_TRIAL/RoobertTRIAL-Bold.woff2",
       weight: "700",
-      style: "normal",
     },
   ],
-  variable: "--font-roobert",
 });
 
 const roobertMono = localFont({
   src: [
     {
-      path: "/fonts/RoobertMono-Regular.woff2",
+      path: "fonts/DP_roobert-mono_TRIAL/RoobertMonoTRIAL-Regular.woff2",
       weight: "400",
-      style: "normal",
     },
   ],
-  variable: "--font-roobert-mono", // Optional: Define a CSS variable
 });
 
 export const metadata: Metadata = {
@@ -45,7 +40,10 @@ export default function Layout({
   const cookieStore = cookies();
   const theme = cookieStore.get("theme")?.value || "light";
   return (
-    <html lang="en" className={theme}>
+    <html
+      lang="en"
+      className={`${theme} ${roobert.className} ${roobertMono.className}`}
+    >
       <head title={metadata.title?.toString()}>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link

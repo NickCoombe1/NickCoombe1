@@ -9,12 +9,8 @@ import Button from "./button";
 
 interface HeaderProps {
   initialTheme: string;
-  headerText?: string;
 }
-export default function Header({
-  initialTheme,
-  headerText,
-}: HeaderProps): ReactNode {
+export default function Header({ initialTheme }: HeaderProps): ReactNode {
   const params = useParams();
   const router = useRouter();
   const teamID = params?.teamID;
