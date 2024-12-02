@@ -27,7 +27,12 @@ const config: Config = {
         "button-light-primary": "#FFFFFF",
         "button-light-secondary":
           "linear-gradient(rgba(205, 255, 255, 0.1), rgba(255, 212, 212, 0.1))",
-
+        //light mode - colours
+        "light-red": "#E40004",
+        "light-orange": "#F76F00",
+        "light-yellow": "#F4C700",
+        "light-green": "#00BD1C",
+        "light-dark-blue": "#00A5A5",
         //dark mode - text
         "text-dark-default": "#FFFFFF",
         "text-dark-90": "rgba(249, 249, 249, 0.9)",
@@ -45,6 +50,11 @@ const config: Config = {
           "linear-gradient(rgba(205, 255, 255, 0.3), rgba(255, 212, 212, 0.3))",
         "button-dark-secondary":
           "linear-gradient(rgba(205, 255, 255, 0.1), rgba(255, 212, 212, 0.1))",
+        //dark mode - colours
+        "dark-red": "#FF4D50",
+        "dark-green": "rgba(97, 255, 121, 0.9)",
+        "dark-yellow": "#FFF564",
+        "dark-orange": "#FF9D4D",
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
