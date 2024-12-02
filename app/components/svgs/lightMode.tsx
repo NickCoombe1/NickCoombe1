@@ -1,7 +1,7 @@
 import React from "react";
 
 interface IconProps {
-  mode: "light" | "dark";
+  mode: string;
 }
 
 const LightMode: React.FC<IconProps> = ({ mode }) => {

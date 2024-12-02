@@ -32,20 +32,17 @@ export default function ThemeToggle({
   };
 
   return (
-    <div className="flex flex-row items-center p-1 gap-1 w-[82px] h-[43px] bg-[rgba(0,0,0,0.15)] shadow-[0_0_100px_rgba(255,255,255,0.18)] backdrop-blur-[20px] rounded-lg">
-      <Button
-        onClick={toggleTheme}
-        className="flex flex-row justify-center items-center  gap-2 w-[35px] h-[35px] bg-white rounded-md"
-      >
-        <LightMode mode={"light"}></LightMode>
-      </Button>
-
-      <Button
-        onClick={toggleTheme}
-        className="flex flex-row justify-center items-center  gap-2 w-[35px] h-[35px] bg-gradient-to-l from-[rgba(205,255,255,0.3)] to-[rgba(255,212,212,0.3)] rounded-md"
-      >
-        <DarkMode mode={"light"}></DarkMode>
-      </Button>
+    <div className="h-[43px] p-1 bg-black/5 dark:bg-black/20 rounded-lg shadow backdrop-blur-2xl justify-start items-center gap-1 inline-flex">
+      <div className="bg-button-light-bg dark:bg-transparent w-[35px] h-[35px] px-3.5 py-3 rounded justify-center items-center gap-2.5 inline-flex ">
+        <Button onClick={toggleTheme}>
+          <LightMode mode={theme}></LightMode>
+        </Button>
+      </div>
+      <div className="w-[35px] h-[35px] px-3.5 py-3 dark:bg-button-dark-bg dark:bg-button-dark-secondary rounded justify-center items-center gap-2.5 inline-flex">
+        <Button onClick={toggleTheme}>
+          <DarkMode mode={theme}></DarkMode>
+        </Button>
+      </div>
     </div>
   );
 }
