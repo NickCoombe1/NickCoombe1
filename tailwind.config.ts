@@ -12,11 +12,11 @@ const config: Config = {
         primary: "white",
         secondary: "#0C1226",
         //light mode - text
-        "text-light-default": "#040404",
-        "text-light-90": "rgba(14, 14, 14, 0.9)",
-        "text-light-80": "rgba(4, 4, 4, 0.8)",
-        "text-light-60": "rgba(0, 0, 0, 0.6)",
-        "text-light-inverted": "#EAE8F1",
+        "light-default": "#030303",
+        "light-90": "rgba(14, 14, 14, 0.9)",
+        "light-80": "rgba(4, 4, 4, 0.8)",
+        "light-60": "rgba(0, 0, 0, 0.6)",
+        "light-inverted": "#EAE8F1",
         //light mode - container
         "container-light-fill": "rgba(255, 255, 255, 0.70)",
         "container-light-stroke": "rgba(255, 255, 255, 1)",
@@ -30,11 +30,11 @@ const config: Config = {
         "light-green": "#00BD1C",
         "light-dark-blue": "#00A5A5",
         //dark mode - text
-        "text-dark-default": "#FFFFFF",
-        "text-dark-90": "rgba(249, 249, 249, 0.9)",
-        "text-dark-80": "rgba(249, 249, 249, 0.8)",
-        "text-dark-60": "rgba(255, 255, 255, 0.6)",
-        "text-dark-inverted": "rgba(14, 14, 14, 0.9)",
+        "dark-default": "#FFFFFF",
+        "dark-90": "rgba(249, 249, 249, 0.9)",
+        "dark-80": "rgba(249, 249, 249, 0.8)",
+        "dark-60": "rgba(255, 255, 255, 0.6)",
+        "dark-inverted": "rgba(14, 14, 14, 0.9)",
         //dark mode - container
         "container-dark-fill": "rgba(255, 255, 255, 0.05)",
         "container-dark-stroke": "rgba(255, 255, 255, 0.5)",
