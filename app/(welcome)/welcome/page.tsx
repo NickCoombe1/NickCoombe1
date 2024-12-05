@@ -23,7 +23,7 @@ export default function WelcomePage() {
     const teamID = match ? match[1] : teamInput;
 
     if (!teamID || isNaN(Number(teamID))) {
-      setError("Please enter a valid Team ID or Points Page URL.");
+      //setError("Please enter a valid Team ID or Points Page URL.");
       return;
     }
 
