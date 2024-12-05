@@ -38,13 +38,12 @@ export function calculateAutoSubs(team: PlayerPick[]): PlayerPick[] {
     players.filter(
       (player) => player.fieldPosition === type && player.position < 12,
     );
-
+  const benchPlayers = team.filter((pick) => pick.position > 11);
   team.forEach((pick) => {
     if (
       (pick.gameStatus.isFinished && !pick.hasPlayed && !pick.isSub) ||
       (pick.isInjured && pick.position < 12)
     ) {
-      const benchPlayers = team.filter((pick) => pick.position > 11);
       const eligibleSubs = benchPlayers.filter((benchPick) => {
         return (
           benchPick.position >= 12 && // Ensure the player is on the bench
