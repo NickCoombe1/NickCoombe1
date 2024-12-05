@@ -16,6 +16,7 @@ const roobert = localFont({
       weight: "700",
     },
   ],
+  variable: "--font-roobert",
 });
 
 const roobertMono = localFont({
@@ -25,6 +26,7 @@ const roobertMono = localFont({
       weight: "400",
     },
   ],
+  variable: "--font-roobert-mono",
 });
 
 export const metadata: Metadata = {
@@ -42,7 +44,7 @@ export default function Layout({
   return (
     <html
       lang="en"
-      className={`${theme} ${roobert.className} ${roobertMono.className}`}
+      className={`${theme} ${roobert.variable} ${roobertMono.variable}`}
     >
       <head title={metadata.title?.toString()}>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -31,7 +31,7 @@ export default function WelcomePage() {
     <div className="min-h-[80vh]  flex flex-col items-center justify-center p-6">
       <div className="w-full max-w-4xl flex-col justify-start items-center gap-30 inline-flex">
         <div className="self-stretch flex-col justify-start items-center gap-20 flex">
-          <div className="self-stretch text-center dark:text-dark-80 text-light-80 md:text-sm font-medium font-['Roobert Mono TRIAL'] uppercase md:leading-3 md:tracking-wide text-xs leading-[10.80px] tracking-tight">
+          <div className="self-stretch text-center text-light-80 dark:text-dark-80 md:text-sm font-medium font-roobertMono uppercase md:leading-3 md:tracking-wide text-xs leading-[10.80px] tracking-tight">
             WELCOME TO THE
           </div>
           <div className="mx-auto h-[63.71px] relative md:hidden">
@@ -60,14 +60,14 @@ export default function WelcomePage() {
                 <ScoreboardDesktop />
               </div>
             </div>
-            <div className="left-[665px] top-[59.43px] absolute text-center text-white text-[42.16px] font-normal font-['Hexaframe CF'] leading-[37.94px]">
+            <div className="left-[665px] top-[59.43px] absolute text-center text-light-80 dark:text-dark-80 text-[42.16px] font-normal font-['Hexaframe CF'] leading-[37.94px]">
               ©
             </div>
           </div>
         </div>
         <div className="h-[113px] flex-col justify-start items-center gap-[35px] flex">
           <div className="justify-start items-start gap-1 inline-flex">
-            <div className="text-center text-[#f8f8f8]/90 text-sm font-medium font-['Roobert'] leading-3 tracking-tight">
+            <div className="text-center text-light-90 dark:text-dark-90 text-sm font-medium leading-normal font-roobert tracking-tight md:leading-3">
               Enter your Team ID or your Points Page URL to get started
             </div>
             <div className="w-3.5 h-3.5 relative">
@@ -75,7 +75,7 @@ export default function WelcomePage() {
             </div>
           </div>
           <div className="self-stretch px-8 py-5 bg-black/20 rounded-lg shadow justify-center items-center gap-2.5 inline-flex">
-            <div className="text-center text-white/60 text-base font-normal font-['Roobert'] leading-normal tracking-tight">
+            <div className="text-center text-white/60 text-base font-normal font-roobert leading-normal tracking-tight">
               Team ID or Points Page URL
             </div>
           </div>
