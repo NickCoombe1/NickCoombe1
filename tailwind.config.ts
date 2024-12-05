@@ -31,8 +31,8 @@ const config: Config = {
         "light-dark-blue": "#00A5A5",
         //dark mode - text
         "dark-default": "#FFFFFF",
-        "dark-90": "rgba(249, 249, 249, 0.9)",
-        "dark-80": "rgba(249, 249, 249, 0.8)",
+        "dark-90": "rgba(248, 248, 248, 0.9)",
+        "dark-80": "rgba(248, 248, 248, 0.8)",
         "dark-60": "rgba(255, 255, 255, 0.6)",
         "dark-inverted": "rgba(14, 14, 14, 0.9)",
         //dark mode - container
@@ -65,6 +65,9 @@ const config: Config = {
       fontFamily: {
         roobert: ["var(--font-roobert)", "sans-serif"],
         roobertMono: ["var(--font-roobert-mono)", "monospace"],
+      },
+      spacing: {
+        "30": "7.5rem",
       },
     },
   },
