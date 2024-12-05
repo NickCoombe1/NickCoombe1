@@ -13,8 +13,8 @@ export default function WelcomePage() {
   const router = useRouter();
   const { theme } = useTheme();
   const [teamInput, setTeamInput] = useState("");
-  const [showTutorial, setShowTutorial] = useState(false);
-  const [error, setError] = useState("");
+  // const [showTutorial, setShowTutorial] = useState(false);
+  //const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
