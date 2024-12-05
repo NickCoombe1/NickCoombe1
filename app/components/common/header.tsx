@@ -4,7 +4,7 @@ import ThemeToggle from "@/app/components/utility/themeToggle";
 import Link from "next/link";
 import NextImage from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import Button from "./button";
+import StyledButton from "./styledButton";
 import About from "../svgs/about";
 import Menu from "../svgs/menu";
 interface HeaderProps {
@@ -43,14 +43,14 @@ export default function Header({ initialTheme }: HeaderProps): ReactNode {
           />
         </div>
         <div className="justify-start items-center gap-2 flex">
-          <Button label="MY LEAGUES">
+          <StyledButton label="MY LEAGUES" secondary={true} type={"button"}>
             {" "}
             <Link href="/about">About</Link>
-          </Button>
-          <Button label="ABOUT">
+          </StyledButton>
+          <StyledButton label="ABOUT" secondary={true} type={"button"}>
             {" "}
             <Link href="/about">About</Link>
-          </Button>
+          </StyledButton>
           <ThemeToggle initialTheme={initialTheme} />
         </div>
       </div>

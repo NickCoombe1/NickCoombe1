@@ -1,18 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import TitleDesktop from "@/app/components/svgs/titleDesktop";
 import ScoreboardDesktop from "@/app/components/svgs/scoreboardDesktop";
 import TitleMobile from "@/app/components/svgs/titleMobile";
 import ScoreboardMobile from "@/app/components/svgs/scoreboardMobile";
+import StyledButton from "@/app/components/common/styledButton";
+import { useRouter } from "next/navigation";
 export default function WelcomePage() {
-  //const router = useRouter();
-  //const [teamInput, setTeamInput] = useState("");
-  //const [showTutorial, setShowTutorial] = useState(false);
-  //const [error, setError] = useState("");
+  const router = useRouter();
+  const [teamInput, setTeamInput] = useState("");
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [error, setError] = useState("");
 
-  /*  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const match = teamInput.match(/entry\/(\d+)/);
@@ -25,12 +27,12 @@ export default function WelcomePage() {
 
     document.cookie = `teamID=${teamID}; path=/; max-age=${60 * 60 * 24 * 30}`; // Expires in 30 days
     router.push(`/team/${teamID}`);
-  };*/
+  };
 
   return (
-    <div className="min-h-[80vh]  flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-4xl flex-col justify-start items-center gap-30 inline-flex">
-        <div className="self-stretch flex-col justify-start items-center gap-20 flex">
+    <div className="min-h-[80vh] flex flex-col items-center justify-center p-6">
+      <div className="w-full max-w-4xl h-80 md:h-[461.43px] flex-col justify-start items-center gap-40 md:gap-30 inline-flex">
+        <div className="self-stretch flex-col justify-start items-center md:gap-20 gap-12 flex">
           <div className="self-stretch text-center text-light-80 dark:text-dark-80 md:text-sm font-medium font-roobertMono uppercase md:leading-3 md:tracking-wide text-xs leading-[10.80px] tracking-tight">
             WELCOME TO THE
           </div>
@@ -65,59 +67,32 @@ export default function WelcomePage() {
             </div>
           </div>
         </div>
-        <div className="h-[113px] flex-col justify-start items-center gap-[35px] flex">
-          <div className="justify-start items-start gap-1 inline-flex">
-            <div className="text-center text-light-90 dark:text-dark-90 text-sm font-medium leading-normal font-roobert tracking-tight md:leading-3">
-              Enter your Team ID or your Points Page URL to get started
+        <form onSubmit={handleSubmit}>
+          <div className="h-[113px] flex-col justify-start items-center gap-8 flex">
+            <div className="justify-start items-start gap-1 inline-flex">
+              <div className="text-center text-light-90 dark:text-dark-90 text-sm font-medium leading-normal font-roobert tracking-tight md:leading-3">
+                Enter your Team ID or your Points Page URL to get started
+              </div>
+              <div className="w-3.5 h-3.5 relative">
+                <div className="w-[10.50px] h-[10.50px] left-[1.75px] top-[1.75px] absolute"></div>
+              </div>
             </div>
-            <div className="w-3.5 h-3.5 relative">
-              <div className="w-[10.50px] h-[10.50px] left-[1.75px] top-[1.75px] absolute"></div>
+            <div className="self-stretch px-8 py-5 bg-black/5 dark:bg-black/20 rounded-lg shadow justify-center items-center gap-2.5 inline-flex">
+              <div className="text-center text-light-60 dark:text-dark-60 text-base font-normal font-roobert leading-normal tracking-tight">
+                Team ID or Points Page URL
+              </div>
             </div>
-          </div>
-          <div className="self-stretch px-8 py-5 bg-black/20 rounded-lg shadow justify-center items-center gap-2.5 inline-flex">
-            <div className="text-center text-white/60 text-base font-normal font-roobert leading-normal tracking-tight">
-              Team ID or Points Page URL
+            <div>
+              <StyledButton label={"GET IN"} type={"submit"} />
             </div>
-          </div>
-        </div>
+          </div>{" "}
+        </form>
       </div>
     </div>
   );
 }
 
-/*  <div className="self-stretch text-center text-[#f8f8f8]/80 text-sm font-medium font-['Roobert Mono TRIAL'] uppercase leading-3 tracking-wide">
-          WELCOME TO THE
-        </div>
-        <div className="w-[693px] h-[134.43px] relative">
-          <div className="w-[678.68px] h-[82.64px] left-0 top-0 absolute">
-            {" "}
-            <Title mode={"light"} />
-          </div>
-          <div className="w-[338px] h-[61px] left-[165px] top-[73.43px] absolute">
-            <div className="w-[272.79px] h-[35.95px] left-[34.11px] top-[12.59px] absolute">
-              <Scoreboard />
-            </div>
-          </div>
-          <div className="left-[665px] top-[59.43px] absolute text-center text-white text-[42.16px] font-normal font-['Hexaframe CF'] leading-[37.94px]">
-            ©
-          </div>
-        </div>{" "}
-      </div>
-      <div className="h-[113px] flex-col justify-start items-center gap-[35px] inline-flex">
-        <div className="justify-start items-start gap-1 inline-flex">
-          <div className="text-center text-[#f8f8f8]/90 text-sm font-medium font-['Roobert'] leading-3 tracking-tight">
-            Enter your Team ID or your Points Page URL to get started
-          </div>
-          <div className="w-3.5 h-3.5 relative">
-            <div className="w-[10.50px] h-[10.50px] left-[1.75px] top-[1.75px] absolute"></div>
-          </div>
-        </div>
-        <div className="self-stretch px-8 py-5 bg-black/20 rounded-lg shadow justify-center items-center gap-2.5 inline-flex">
-          <div className="text-center text-white/60 text-base font-normal font-['Roobert'] leading-normal tracking-tight">
-            Team ID or Points Page URL
-          </div>
-        </div>
-      </div>
+/*
 <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           Welcome to the Draft Fantasy Scoreboard!
