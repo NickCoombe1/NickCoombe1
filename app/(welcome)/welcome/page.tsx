@@ -8,8 +8,10 @@ import TitleMobile from "@/app/components/svgs/titleMobile";
 import ScoreboardMobile from "@/app/components/svgs/scoreboardMobile";
 import StyledButton from "@/app/components/common/styledButton";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@/app/hooks/getTheme";
 export default function WelcomePage() {
   const router = useRouter();
+  const { theme, toggleTheme } = useTheme();
   const [teamInput, setTeamInput] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
   const [error, setError] = useState("");
@@ -39,7 +41,7 @@ export default function WelcomePage() {
           <div className="mx-auto h-[63.71px] relative md:hidden">
             <div className="h-[39.16px] mx-auto">
               {" "}
-              <TitleMobile mode={"light"} />
+              <TitleMobile mode={theme} />
             </div>
             <div className="h-[28.91px] left-[65px] top-[30.80px] absolute">
               <div className="w-[129.28px] h-[17.04px] left-[12.61px] top-[2px] absolute">
@@ -54,7 +56,7 @@ export default function WelcomePage() {
           <div className="mx-auto h-[134.43px] relative hidden md:block">
             <div className="mx-auto h-[82.64px]">
               {" "}
-              <TitleDesktop mode={"light"} />
+              <TitleDesktop mode={theme} />
             </div>
             <div className="w-[338px] h-[61px] left-[165px] top-[70.43px] absolute">
               <div className="w-[272.79px] h-[35.95px] absolute">
