@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "@/app/hooks/getTheme";
 export default function WelcomePage() {
   const router = useRouter();
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const [teamInput, setTeamInput] = useState("");
   const [showTutorial, setShowTutorial] = useState(false);
   const [error, setError] = useState("");

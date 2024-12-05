@@ -7,10 +7,8 @@ import { useParams, useRouter } from "next/navigation";
 import StyledButton from "./styledButton";
 import About from "../svgs/about";
 import Menu from "../svgs/menu";
-interface HeaderProps {
-  initialTheme: string;
-}
-export default function Header({ initialTheme }: HeaderProps): ReactNode {
+
+export default function Header(): ReactNode {
   const params = useParams();
   const router = useRouter();
   const teamID = params?.teamID;
@@ -51,12 +49,12 @@ export default function Header({ initialTheme }: HeaderProps): ReactNode {
             {" "}
             <Link href="/about">About</Link>
           </StyledButton>
-          <ThemeToggle initialTheme={initialTheme} />
+          <ThemeToggle />
         </div>
       </div>
       <div className="md:hidden">
         <div className="w-full h-20 p-6 justify-between items-center inline-flex">
-          <ThemeToggle initialTheme={initialTheme} />
+          <ThemeToggle />
           <div className="w-[72px] h-[17.56px] relative">
             <div className="w-[64.12px] h-[17.56px] left-0 top-0 absolute">
               {" "}

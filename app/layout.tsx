@@ -68,7 +68,7 @@ export default function Layout({
       <body className="bg-light-container dark:bg-dark-container ">
         <div className="w-screen">
           {" "}
-          <Header initialTheme={theme} />
+          <Header />
           <main> {children}</main>
         </div>
       </body>
