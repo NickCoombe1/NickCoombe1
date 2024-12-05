@@ -40,7 +40,7 @@ export default function WelcomePage() {
               <TitleMobile mode={"light"} />
             </div>
             <div className="h-[28.91px] left-[65px] top-[30.80px] absolute">
-              <div className="w-[129.28px] h-[17.04px] left-[16.61px] top-[5.70px] absolute">
+              <div className="w-[129.28px] h-[17.04px] left-[12.61px] top-[2px] absolute">
                 {" "}
                 <ScoreboardMobile />
               </div>
@@ -54,8 +54,8 @@ export default function WelcomePage() {
               {" "}
               <TitleDesktop mode={"light"} />
             </div>
-            <div className="w-[338px] h-[61px] left-[165px] top-[73.43px] absolute">
-              <div className="w-[272.79px] h-[35.95px] left-[34.11px] top-[12.59px] absolute">
+            <div className="w-[338px] h-[61px] left-[165px] top-[70.43px] absolute">
+              <div className="w-[272.79px] h-[35.95px] absolute">
                 {" "}
                 <ScoreboardDesktop />
               </div>
