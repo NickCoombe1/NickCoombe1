@@ -19,24 +19,24 @@ const Menu: React.FC<IconProps> = ({ mode }) => {
         stroke={
           mode === "light" ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)"
         }
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <path
         d="M9 18H26"
         stroke={
           mode === "light" ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)"
         }
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <path
         d="M9 23H26"
         stroke={
           mode === "light" ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)"
         }
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <defs>
         <linearGradient
@@ -47,8 +47,8 @@ const Menu: React.FC<IconProps> = ({ mode }) => {
           y2="18"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#CDFFFF" />
-          <stop offset="1" stop-color="#FFD4D4" />
+          <stop stopColor="#CDFFFF" />
+          <stop offset="1" stopColor="#FFD4D4" />
         </linearGradient>
       </defs>
     </svg>

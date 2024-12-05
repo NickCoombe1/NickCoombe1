@@ -18,13 +18,13 @@ const About: React.FC<IconProps> = ({ mode }) => {
         stroke={
           mode === "light" ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)"
         }
-        stroke-width="1.66667"
-        stroke-linecap="round"
+        strokeWidth="1.66667"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M10.5 6.6665H10.5089V6.67543H10.5V6.6665Z"
-        stroke-width="2.5"
+        strokeWidth="2.5"
         strokeLinejoin="round"
         stroke={
           mode === "light" ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)"
@@ -32,8 +32,8 @@ const About: React.FC<IconProps> = ({ mode }) => {
       />
       <path
         d="M10.5 10V13.3333"
-        stroke-width="1.66667"
-        stroke-linecap="round"
+        strokeWidth="1.66667"
+        strokeLinecap="round"
         strokeLinejoin="round"
         stroke={
           mode === "light" ? "rgba(0, 0, 0, 1)" : "rgba(255, 255, 255, 1)"

@@ -280,10 +280,8 @@ describe("Team substitution tests", () => {
     startingTeam[13].isInjured = false;
     startingTeam[13].fieldPosition = ElementType.Defender;
 
-    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
-
     // Apply substitution logic
-    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+    const updatedTeam = calculateAutoSubs(startingTeam);
 
     // Validate the results
     const injuredDefender = updatedTeam.find((p) => p.id === 3); // Original Defender 2
@@ -307,9 +305,7 @@ describe("Team substitution tests", () => {
     startingTeam[11].hasPlayed = true;
     startingTeam[11].isInjured = false;
 
-    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
-
-    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+    const updatedTeam = calculateAutoSubs(startingTeam);
 
     const injuredGK = updatedTeam.find((p) => p.id === 1);
     const subGK = updatedTeam.find((p) => p.id === 12);
@@ -333,10 +329,9 @@ describe("Team substitution tests", () => {
     //bench keeper injured
     startingTeam[11].hasPlayed = false;
     startingTeam[11].isInjured = true;
-    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
 
     // Apply substitution logic
-    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+    const updatedTeam = calculateAutoSubs(startingTeam);
 
     // Validate no substitution occurred
     const injuredGK = updatedTeam.find((p) => p.id === 1);
@@ -361,10 +356,8 @@ describe("Team substitution tests", () => {
     startingTeam[14].hasPlayed = true;
     startingTeam[14].isInjured = false;
 
-    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
-
     // Apply substitution logic
-    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+    const updatedTeam = calculateAutoSubs(startingTeam);
 
     // Validate the results
     const injuredForward = updatedTeam.find((p) => p.id === 8); // Original Forward 1
@@ -394,10 +387,8 @@ describe("Team substitution tests", () => {
     startingTeam[14].hasPlayed = true;
     startingTeam[14].isInjured = false;
 
-    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
-
     // Apply substitution logic
-    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+    const updatedTeam = calculateAutoSubs(startingTeam);
 
     // Validate the results
     const injuredForward = updatedTeam.find((p) => p.id === 8); // Original Forward 1
@@ -427,10 +418,8 @@ describe("Team substitution tests", () => {
     startingTeam[14].hasPlayed = true;
     startingTeam[14].isInjured = false;
 
-    const benchPlayers = startingTeam.filter((pick) => pick.position > 11);
-
     // Apply substitution logic
-    const updatedTeam = calculateAutoSubs(startingTeam, benchPlayers);
+    const updatedTeam = calculateAutoSubs(startingTeam);
 
     // Validate the results
     const injuredForward = updatedTeam.find((p) => p.id === 8);
