@@ -25,7 +25,7 @@ export default function Header(): ReactNode {
           {" "}
           <NextImage
             src="/dfs-logo-light.svg"
-            className="w-[92.61px] h-[25.36px] left-0 top-0 absolute dark:hidden"
+            className="w-[65.44px] h-[25.36px] left-0 top-0 absolute dark:hidden"
             alt="dfsFPL"
             width={24}
             height={24}
@@ -33,7 +33,7 @@ export default function Header(): ReactNode {
           />
           <NextImage
             src="/dfs-logo-dark.svg"
-            className="w-[92.61px] h-[25.36px] left-0 top-0 absolute hidden dark:block"
+            className="w-[65.44px] h-[25.36px] left-0 top-0 absolute hidden dark:block"
             alt="dfsFPL"
             width={24}
             height={24}
