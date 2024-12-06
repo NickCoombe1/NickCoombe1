@@ -2,16 +2,18 @@
 import { ReactNode } from "react";
 import ThemeToggle from "@/app/components/utility/themeToggle";
 import Link from "next/link";
-import NextImage from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import StyledButton from "./styledButton";
 import About from "../svgs/about";
 import Menu from "../svgs/menu";
+import Logo from "@/app/components/svgs/logo";
+import { useTheme } from "@/app/hooks/getTheme";
 
 export default function Header(): ReactNode {
   const params = useParams();
   const router = useRouter();
   const teamID = params?.teamID;
+  const { theme } = useTheme();
   const handleBackClick = () => {
     if (teamID) router.push(`/team/${teamID}`);
     else {
@@ -23,22 +25,9 @@ export default function Header(): ReactNode {
       <div className="w-full h-20 px-10 py-6 justify-between items-center inline-flex hidden md:flex">
         <div className="w-[104px] h-[25.36px] relative ">
           {" "}
-          <NextImage
-            src="/dfs-logo-light.svg"
-            className="w-[65.44px] h-[25.36px] left-0 top-0 absolute dark:hidden"
-            alt="dfsFPL"
-            width={24}
-            height={24}
-            onClick={handleBackClick}
-          />
-          <NextImage
-            src="/dfs-logo-dark.svg"
-            className="w-[65.44px] h-[25.36px] left-0 top-0 absolute hidden dark:block"
-            alt="dfsFPL"
-            width={24}
-            height={24}
-            onClick={handleBackClick}
-          />
+          <div onClick={handleBackClick}>
+            <Logo mode={theme} />
+          </div>
         </div>
         <div className="justify-start items-center gap-2 flex">
           <StyledButton label="MY LEAGUES" secondary={true} type={"button"}>
@@ -53,50 +42,23 @@ export default function Header(): ReactNode {
         </div>
       </div>
       <div className="md:hidden">
-        <div className="w-full h-20 p-6 justify-between items-center inline-flex">
+        <div className="w-full h-20 p-6 justify-between items-center inline-flex align-middle">
           <ThemeToggle />
-          <div className="w-[72px] h-[17.56px] relative">
-            <div className="w-[64.12px] h-[17.56px] left-0 top-0 absolute">
-              {" "}
-              <NextImage
-                src="/dfs-logo-light.svg"
-                className="w-[92.61px] h-[25.36px] left-0 top-0 absolute dark:hidden"
-                alt="dfsFPL"
-                width={24}
-                height={24}
-                onClick={handleBackClick}
-              />
-              <NextImage
-                src="/dfs-logo-dark.svg"
-                className="w-[92.61px] h-[25.36px] left-0 top-0 absolute hidden dark:block"
-                alt="dfsFPL"
-                width={24}
-                height={24}
-                onClick={handleBackClick}
-              />
-            </div>
+          <div onClick={handleBackClick}>
+            <Logo mode={theme} />
           </div>
           <div className="justify-start items-center gap-1 flex">
-            <div className="w-[35px] h-[35px] px-3.5 py-3 bg-button-light-bg-20 bg-graphics-light-depth bg-button-light-secondary dark:bg-button-dark-bg dark:bg-button-dark-secondary bg-blend-overlay  rounded justify-center items-center gap-2.5 flex">
-              <div className="w-5 h-5 relative dark:hidden">
+            <div className="w-[35px] h-[35px] px-3.5 py-3 bg-button-light-bg-20  bg-button-light-secondary dark:bg-button-dark-bg bg-blend-overlay  rounded justify-center items-center gap-2.5 flex">
+              <div className="w-5 h-5 relative">
                 <Link href="/about">
-                  <About mode={"light"} />
-                </Link>
-              </div>
-              <div className="w-5 h-5 relative hidden dark:block">
-                <Link href="/about">
-                  <About mode={"dark"} />{" "}
+                  <About mode={theme} />
                 </Link>
               </div>
             </div>
-            <div className="w-[35px] h-[35px] px-3.5 py-3 bg-button-light-bg-20 bg-graphics-light-depth bg-button-light-secondary dark:bg-button-dark-bg dark:bg-button-dark-secondary bg-blend-overlay  rounded flex-col justify-center items-center gap-[5px] inline-flex">
+            <div className="w-[35px] h-[35px] px-3.5 py-3 bg-button-light-bg-20  bg-button-light-secondary dark:bg-button-dark-bg bg-blend-overlay  rounded flex-col justify-center items-center gap-[5px] inline-flex">
               {" "}
-              <div className="w-5 h-5 relative flex justify-center items-center dark:hidden">
-                <Menu mode={"light"} />
-              </div>
-              <div className="w-5 h-5 relative flex justify-center items-center hidden dark:flex">
-                {" "}
-                <Menu mode={"dark"} />
+              <div className="w-5 h-5 relative flex justify-center items-center">
+                <Menu mode={theme} />
               </div>
             </div>
           </div>
