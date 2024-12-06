@@ -83,7 +83,7 @@ export function Modal({ isOpen, closeDialog }: ModalProps) {
                   <br />
                 </li>{" "}
               </ol>
-              <div className={"m-auto"}>
+              <div className="m-auto text-center">
                 <span className="text-light-90 dark:text-dark-90 text-base font-normal font-roobert leading-normal tracking-tight">
                   Need more help? Visit{" "}
                   <span className="text-light-dark-blue text-base font-normal font-roobert leading-normal tracking-tight">
