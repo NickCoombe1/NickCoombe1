@@ -29,6 +29,20 @@ const roobertMono = localFont({
   variable: "--font-roobert-mono",
 });
 
+const hexaframeCF = localFont({
+  src: [
+    {
+      path: "fonts/HexaframeCF/HexaframeCF-Regular.ttf",
+      weight: "400",
+    },
+    {
+      path: "fonts/HexaframeCF/HexaframeCF-Bold.ttf",
+      weight: "700",
+    },
+  ],
+  variable: "--font-hexaframe",
+});
+
 export const metadata: Metadata = {
   title: "FS.",
   description: "",
@@ -43,7 +57,7 @@ export default function Layout({
   return (
     <html
       lang="en"
-      className={`${theme} ${roobert.variable} ${roobertMono.variable}`}
+      className={`${theme} ${roobert.variable} ${roobertMono.variable} ${hexaframeCF.variable}`}
     >
       <head title={metadata.title?.toString()}>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

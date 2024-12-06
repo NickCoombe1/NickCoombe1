@@ -50,7 +50,7 @@ export default function WelcomePage() {
                 <ScoreboardMobile />
               </div>
             </div>
-            <div className="left-[315.15px] top-[28.17px] absolute text-center text-[#030303] text-xl font-normal font-['Hexaframe CF'] leading-[17.98px]">
+            <div className="left-[315.15px] top-[28.17px] absolute text-center dark:text-white text-black text-xl font-normal font-hexaframe leading-[17.98px]">
               ©
             </div>
           </div>

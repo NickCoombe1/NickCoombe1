@@ -68,6 +68,7 @@ const config: Config = {
       fontFamily: {
         roobert: ["var(--font-roobert)", "sans-serif"],
         roobertMono: ["var(--font-roobert-mono)", "monospace"],
+        hexaframe: ["var(--font-hexaframe)", "sans-serif"],
       },
       spacing: {
         "30": "7.5rem",
