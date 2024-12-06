@@ -65,7 +65,7 @@ export default function WelcomePage() {
                 <ScoreboardDesktop />
               </div>
             </div>
-            <div className="left-[665px] top-[59.43px] absolute text-center text-light-80 dark:text-dark-80 text-[42.16px] font-normal font-['Hexaframe CF'] leading-[37.94px]">
+            <div className="left-[665px] top-[59.43px] absolute text-center dark:text-white text-black  text-[42.16px] font-normal font-hexaframe leading-[37.94px]">
               ©
             </div>
           </div>
