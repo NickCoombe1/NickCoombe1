@@ -83,12 +83,12 @@ export default function WelcomePage() {
                 </span>
               </div>
             </div>
-            <div className="self-stretch px-8 py-5 bg-black/5 dark:bg-black/20 rounded-lg shadow justify-center items-center gap-2.5 inline-flex">
+            <div className="self-stretch px-8 py-5 bg-black/5 dark:bg-black/20 rounded-lg  shadow-custom-light justify-center items-center gap-2.5 inline-flex">
               <input
                 type="text"
                 placeholder="Team ID or Points Page URL"
                 onChange={(e) => setTeamInput(e.target.value)}
-                className="w-full text-center text-light-60 dark:text-dark-60 text-base font-normal font-roobert leading-normal tracking-tight bg-transparent dark:bg-black/20 border-0 focus:ring-0 focus:outline-none"
+                className="w-full text-center text-light-60 dark:text-dark-60 text-base font-normal font-roobert leading-normal tracking-tight bg-transparent  border-0 focus:ring-0 focus:outline-none"
               />
             </div>
             <div>

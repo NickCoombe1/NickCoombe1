@@ -62,6 +62,9 @@ const config: Config = {
         "graphics-light-depth": "rgba(0, 0, 0, 0.05)",
         "graphics-dark-depth": "rgba(0, 0, 0, 0.20)",
       },
+      boxShadow: {
+        "custom-light": "0px 0px 110px 0px rgba(255, 255, 255, 0.20)",
+      },
       fontFamily: {
         roobert: ["var(--font-roobert)", "sans-serif"],
         roobertMono: ["var(--font-roobert-mono)", "monospace"],
