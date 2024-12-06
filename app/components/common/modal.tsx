@@ -37,7 +37,7 @@ export function Modal({ isOpen, closeDialog }: ModalProps) {
           <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-[90px]" />
         </Transition.Child>
 
-        <div className="fixed inset-0 flex flex-col items-center justify-center p-4 gap-8">
+        <div className="fixed inset-0 flex flex-col items-center justify-center p-6 gap-4 md:gap-8">
           <Transition.Child
             as={Fragment}
             enter="transition-transform duration-300"
@@ -47,12 +47,12 @@ export function Modal({ isOpen, closeDialog }: ModalProps) {
             leaveFrom="scale-100 opacity-100"
             leaveTo="scale-95 opacity-0"
           >
-            <DialogPanel className="max-w-xl space-y-4 border bg-white dark:bg-white/5  p-12 rounded-lg shadow-md flex flex-col gap-4">
+            <DialogPanel className="w-full md:max-w-xl space-y-4 border bg-white dark:bg-white/5 p-8 md:p-12 rounded-2xl shadow-md flex flex-col gap-4">
               <DialogTitle className="text-center text-light-80 dark:text-dark-80 text-sm font-medium font-roobertMono uppercase leading-3 tracking-wide">
                 How to find your Team ID or URL?
               </DialogTitle>
               <ol
-                className="self-stretch text-center list-decimal list-inside space-y-3"
+                className="self-stretch text-center list-decimal list-inside space-y-2 md:space-y-3"
                 type="1"
               >
                 <li className="text-light-90 dark:text-dark-90 text-base font-normal font-roobert leading-normal tracking-tight">
@@ -65,7 +65,7 @@ export function Modal({ isOpen, closeDialog }: ModalProps) {
                 <li className="text-light-90 dark:text-dark-90 text-base font-normal font-roobert leading-normal tracking-tight">
                   Copy the URL from your browser's address bar. It will look
                   like this:{" "}
-                  <span className="text-light-60 dark:text-dark-60 text-base font-normal font-roobert leading-normal tracking-tight">
+                  <span className="text-light-60 dark:text-dark-60 text-base font-normal font-roobert leading-normal tracking-tight break-words md:break-normal">
                     <a
                       target={"_blank"}
                       href={
