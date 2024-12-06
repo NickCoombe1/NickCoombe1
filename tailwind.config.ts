@@ -59,11 +59,15 @@ const config: Config = {
         "button-light-bg": "rgba(255, 255, 255, 1)",
         "button-light-bg-20": "rgba(255, 255, 255, 0.2)",
         "button-dark-bg": "rgba(157, 157, 157, 0.2)",
-        "graphics-light-depth": "rgba(0, 0, 0, 0.05)",
-        "graphics-dark-depth": "rgba(0, 0, 0, 0.20)",
+        "graphics-light-depth": "rgba(0, 0, 0, 0.03)",
+        "graphics-dark-depth": "rgba(0, 0, 0, 0.15)",
       },
       boxShadow: {
         "custom-light": "0px 0px 110px 0px rgba(255, 255, 255, 0.20)",
+        "custom-light-header": "0 0 100px 0 rgba(255, 255, 255, 0.18)",
+      },
+      backdropBlur: {
+        20: "20px",
       },
       fontFamily: {
         roobert: ["var(--font-roobert)", "sans-serif"],

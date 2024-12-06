@@ -10,7 +10,7 @@ export default function ThemeToggle(): React.ReactNode {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="h-[43px] p-1 bg-graphics-light-depth dark:bg-graphics-dark-depth rounded-lg shadow backdrop-blur-2xl justify-start items-center gap-1 inline-flex">
+    <div className="h-[43px] p-1 bg-graphics-light-depth dark:bg-graphics-dark-depth rounded-lg shadow-custom-light-header backdrop-blur-20 justify-start items-center gap-1 inline-flex">
       <div className="bg-button-light-bg dark:bg-transparent w-[35px] h-[35px] px-3.5 py-3 rounded justify-center items-center gap-2.5 inline-flex ">
         <Button onClick={toggleTheme}>
           <LightMode mode={theme} />
