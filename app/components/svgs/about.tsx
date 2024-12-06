@@ -2,13 +2,15 @@ import React from "react";
 
 interface IconProps {
   mode: string;
+  width?: number;
+  height?: number;
 }
 
-const About: React.FC<IconProps> = ({ mode }) => {
+const About: React.FC<IconProps> = ({ mode, width, height }) => {
   return (
     <svg
-      width="21"
-      height="20"
+      width={`${width ? width : 21}`}
+      height={`${height ? height : 20}`}
       viewBox="0 0 21 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
