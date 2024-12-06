@@ -30,10 +30,9 @@ const roobertMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "FPL Scoreboard",
+  title: "FS.",
   description: "",
 };
-
 export default function Layout({
   children,
 }: Readonly<{
@@ -65,11 +64,18 @@ export default function Layout({
         <link rel="manifest" href="/site.webmanifest" />
         <title>{metadata.title?.toString()}</title>
       </head>
-      <body className="bg-light-container dark:bg-dark-container ">
-        <div className="w-screen">
-          {" "}
+      <body className="bg-light-container dark:bg-dark-container relative">
+        <div
+          className="absolute inset-0 pointer-events-none mix-blend-difference"
+          style={{
+            backgroundImage: 'url("/Lights.png")',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        ></div>
+        <div className="w-screen h-screen relative z-10">
           <Header />
-          <main> {children}</main>
+          <main>{children}</main>
         </div>
       </body>
     </html>
