@@ -29,6 +29,12 @@ export function useTheme() {
     };
   }, []);
 
+  useEffect(() => {
+    const root = window.document.documentElement;
+
+    // Remove hidden class after theme is applied
+    root.classList.remove("hidden");
+  }, []);
   const toggleTheme = () => {
     const root = window.document.documentElement;
     const newTheme = theme === "light" ? "dark" : "light";
@@ -36,7 +42,7 @@ export function useTheme() {
     root.classList.remove(theme);
     root.classList.add(newTheme);
 
-    document.cookie = `theme=${newTheme}; path=/; SameSite=Lax`;
+    document.cookie = `theme=${newTheme}; path=/; SameqwSite=Lax`;
 
     setTheme(newTheme);
   };

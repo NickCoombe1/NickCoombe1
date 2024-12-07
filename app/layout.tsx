@@ -57,7 +57,7 @@ export default function Layout({
   return (
     <html
       lang="en"
-      className={`${theme} ${roobert.variable} ${roobertMono.variable} ${hexaframeCF.variable}`}
+      className={`${theme} ${roobert.variable} ${roobertMono.variable} ${hexaframeCF.variable} hidden`}
     >
       <head title={metadata.title?.toString()}>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
