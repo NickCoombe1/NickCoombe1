@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { FplTeamResponse } from "@/app/models/fplTeamResponse";
 import { LeagueData } from "@/app/models/league";
+import StyledButton from "@/app/components/common/styledButton";
 import LoadingSpinner from "@/app/components/common/loadingSpinner";
+import { Button } from "@headlessui/react";
 
 export default function TeamPage() {
   const router = useRouter();
@@ -74,66 +76,34 @@ export default function TeamPage() {
   }
 
   return (
-    <div className="min-h-[80vh] bg-gray-50 dark:bg-secondary flex flex-col items-center justify-center p-6">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 max-w-md w-full text-center">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-          Select a League
-        </h1>
-        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
-          <thead>
-            <tr className="text-left bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
-              <th className="py-3 px-4">Leagues</th>
-              <th className="py-3 px-4 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {!teamData && !error && (
-              <tr>
-                <td colSpan={2} className="py-3 px-4 flex justify-center">
-                  <LoadingSpinner />
-                </td>
-              </tr>
-            )}
-            {leagueData?.map((league, index) => (
-              <tr
-                key={index}
-                className="hover:bg-gray-200 dark:hover:bg-gray-600"
-              >
-                <td className="py-3 px-4">{league.league.name}</td>
-                <td className="py-3 px-4 border-l-2 border-gray-300 dark:border-gray-600 flex flex-wrap justify-center gap-2">
-                  <button
-                    onClick={() =>
-                      router.push(`/scoring/${league.league.id}/${teamID}`)
-                    }
-                    className="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                  >
-                    View Scoring
-                  </button>
-                  <button
-                    onClick={() =>
-                      router.push(`/matchup/${league.league.id}/${teamID}`)
-                    }
-                    className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                  >
-                    View Matchup
-                  </button>
-                  <button
-                    onClick={() => router.push(`/league/${league.league.id}`)}
-                    className="px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-                  >
-                    League Scoring
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button
+    <div className="min-h-[80vh] flex flex-col items-center justify-center p-6">
+      <div className="w-full md:h-[330px] flex-col justify-start items-center gap-10 inline-flex mt-auto">
+        <div className="self-stretch text-center text-light-80 dark:text-dark-80 text-sm font-medium font-roobertMono uppercase leading-3 tracking-wide">
+          SELECT A LEAGUE
+        </div>
+        <div className="w-1/2 h-[277px] flex-col justify-start items-center gap-2 flex">
+          {!teamData && !error && <LoadingSpinner />}
+          {leagueData?.map((league, index) => (
+            <Button
+              key={index}
+              className="self-stretch px-10 py-8 bg-black/20 rounded-2xl shadow-custom-light justify-center items-center inline-flex"
+              onClick={() =>
+                router.push(`/scoring/${league.league.id}/${teamID}`)
+              }
+            >
+              <div className="text-center text-light-90 dark:text-dark-90 text-[26px] font-semibold font-roobert leading-normal">
+                {league.league.name}
+              </div>
+            </Button>
+          ))}
+        </div>
+      </div>
+      <div className="mt-auto">
+        <StyledButton
+          label={"BACK TO HOMEPAGE"}
+          type={"submit"}
           onClick={() => router.push("/")}
-          className="mt-6 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
-        >
-          Back to Welcome Page
-        </button>
+        />
       </div>
     </div>
   );

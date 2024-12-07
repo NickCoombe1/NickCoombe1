@@ -83,7 +83,7 @@ export default function WelcomePage() {
                 </span>
               </div>
             </div>
-            <div className="self-stretch px-8 py-5 bg-black/5 dark:bg-black/20 rounded-lg  shadow-custom-light justify-center items-center gap-2.5 inline-flex">
+            <div className="self-stretch px-8 py-5 bg-black/5 dark:bg-black/20 rounded-lg shadow-custom-light justify-center items-center gap-2.5 inline-flex">
               <input
                 type="text"
                 placeholder="Team ID or Points Page URL"
