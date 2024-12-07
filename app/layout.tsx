@@ -79,17 +79,19 @@ export default function Layout({
         <title>{metadata.title?.toString()}</title>
       </head>
       <body className="bg-light-container dark:bg-dark-container relative">
-        <div
-          className="absolute inset-0 pointer-events-none mix-blend-difference"
-          style={{
-            backgroundImage: 'url("/Lights.png")',
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        ></div>
-        <div className="w-screen h-screen relative z-10">
-          <Header />
-          <main>{children}</main>
+        <div className="relative min-h-screen">
+          <div
+            className="absolute inset-0 z-0 pointer-events-none mix-blend-difference"
+            style={{
+              backgroundImage: 'url("/Lights.png")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
+          <div className="relative z-10 w-full h-full">
+            <Header />
+            <main>{children}</main>
+          </div>
         </div>
       </body>
     </html>
